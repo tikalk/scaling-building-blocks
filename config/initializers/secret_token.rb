@@ -4,4 +4,4 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-ScalingBuildingBlocks::Application.config.secret_token = 'ae9a8929b02ea7358be01e83a773c88affb19933d426a1ecb84a51212bb0eac641db031fd82f9001b0e041698e960ce5ecd90637cd4c02b3a80226279e031962'
+Pinukimmm::Application.config.secret_token = '557fc101224efcd7a5a7af859056ec2bc26f35aa3ad7a97cd341a1c68dc1b3492a60957951ad7d4f00e75d0767eba7c982ac95f46867960a61788a43d251a107'

@@ -1,8 +1,8 @@
 # Be sure to restart your server when you modify this file.
 
-ScalingBuildingBlocks::Application.config.session_store :cookie_store, key: '_scaling_building_blocks_session'
+Pinukimmm::Application.config.session_store :cookie_store, key: '_pinukimmm_session'
 
 # Use the database for sessions instead of the cookie-based default,
 # which shouldn't be used to store highly confidential information
 # (create the session table with "rails generate session_migration")
-# ScalingBuildingBlocks::Application.config.session_store :active_record_store
+# Pinukimmm::Application.config.session_store :active_record_store

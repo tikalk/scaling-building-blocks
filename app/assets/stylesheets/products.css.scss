@@ -1,0 +1,38 @@
+@import 'bootstrap';
+@import 'bootstrap-responsive';
+@import "bootstrap/sprites";
+
+.hidden {
+	display: none;
+}
+
+#myCarousel {
+	width: 825px;
+	margin: 0 auto;
+}
+
+#notifications {
+	.user {
+		color: #666;
+	}
+	float: left;
+	height: 38px;
+}
+
+.notice {
+	color: #30CE36;
+}
+
+.navbar {
+	.navbar-inner {
+		border-radius: 0;
+		direction: rtl;
+		.nav {
+			float: right;
+			&> li {
+				float: right;
+				margin: 0;
+			}
+		}
+	}
+}

@@ -1,0 +1,27 @@
+<div class="navbar navbar-inverse">
+
+  <div class="navbar-inner" dir="rtl">
+    <div id="notifications">
+      <% if !@logged_in_user.blank? %>
+          <div class='logged_in user'>
+          <%= @logged_in_user.email %><br/>
+          <%= link_to 'Logout', destroy_user_session_path, :method => :delete  %>
+        </div>
+      <% end %>
+  
+      <p class="notice <%= 'hidden' if notice.blank? %>"><%= notice %></p>
+      <p class="alert <%= 'hidden' if alert.blank? %>"><%= alert %></p>
+    </div>
+    <ul class="nav">
+      <%= nav_primary_link_to 'עמוד הבית', root_path, 'products', '/' %>
+      <li class="divider-vertical"></li>
+      <%= nav_primary_link_to 'גלריה', products_path, 'products', '/products' %>
+      <li class="divider-vertical"></li>
+      <%= nav_primary_link_to 'הזמנות', orders_path, 'orders' %>
+      <li class="divider-vertical"></li>
+      <%= nav_primary_link_to 'אודותינו', '/', '' %>
+      <li class="divider-vertical"></li>
+      <%= nav_primary_link_to 'צרו קשר', '/', '' %>
+    </ul>
+  </div>
+</div>

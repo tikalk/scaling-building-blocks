@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-ScalingBuildingBlocks::Application.load_tasks
+Pinukimmm::Application.load_tasks

@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ScalingBuildingBlocks</title>
+  <title>Pinukimmm</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body dir="rtl">
+	<div class="header">
+	    <%= render :partial => "shared/navbar" %>
+	 </div>
 
-<%= yield %>
+	<%= yield %>
 
+	<div class="footer">
+	  </div>
+	</div>
 </body>
 </html>
