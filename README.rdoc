@@ -6,11 +6,9 @@ Orders - hazmanot (Paypal?)
 About
 Contact us
 
+==Installation
+
+  sudo apt-get install libmagickwand-dev
+
 == Devise
-User.create! email: 'val.hoffman@gmail.com', password: 'asdf1234'
-
-== Copyright
-All rights reserved to Val Kotlarov Hoffman and Tikal. 
-Base code was cloned from Val's own repository.
-
-Use on your own risk.
+User.create! email: 'val.hoffman@gmail.com', password: 'trap%973'

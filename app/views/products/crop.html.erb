@@ -1,0 +1,17 @@
+<h1>Crop Image</h1>
+
+<%= image_tag @product.image_url(:large), id: "cropbox" %>
+
+<h4>Preview</h4>
+<div id="preview_wrapper">
+  <%= image_tag @product.image.url(:large), :id => "preview" %>
+</div>
+
+<%= form_for @product do |f| %>
+  <% %w[x y w h].each do |attribute| %>
+    <%= f.hidden_field "crop_#{attribute}" %>
+  <% end %>
+  <div class="actions">
+    <%= f.submit "Crop" %>
+  </div>
+<% end %>

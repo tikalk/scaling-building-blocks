@@ -1,12 +1,21 @@
 class ProductsController < ApplicationController
+  before_filter :authenticate_user!, :only => [:destroy]
+
   # GET /products
   # GET /products.json
   def index
-    @products = Product.all
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @products }
+    end
+  end
+
+  def galery
+    @products = Product.all
+
+    respond_to do |format|
+      format.html 
+      format.json { }
     end
   end
 
@@ -42,15 +51,25 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(params[:product])
 
-    respond_to do |format|
-      if @product.save
-        format.html { redirect_to @product, notice: 'Product was successfully created.' }
-        format.json { render json: @product, status: :created, location: @product }
+    if @product.save
+      if params[:product][:image].present?
+        render :crop
       else
-        format.html { render action: "new" }
-        format.json { render json: @product.errors, status: :unprocessable_entity }
+        redirect_to @product, notice: "Successfully created the product."
       end
+    else
+      render :new
     end
+
+    # respond_to do |format|
+    #   if @product.save
+    #     format.html { redirect_to @product, notice: 'Product was successfully created.' }
+    #     format.json { render json: @product, status: :created, location: @product }
+    #   else
+    #     format.html { render action: "new" }
+    #     format.json { render json: @product.errors, status: :unprocessable_entity }
+    #   end
+    # end
   end
 
   # PUT /products/1
@@ -58,26 +77,39 @@ class ProductsController < ApplicationController
   def update
     @product = Product.find(params[:id])
 
-    respond_to do |format|
-      if @product.update_attributes(params[:product])
-        format.html { redirect_to @product, notice: 'Product was successfully updated.' }
-        format.json { head :no_content }
+    if @product.update_attributes(params[:product])
+      if params[:product][:image].present?
+        render :crop
       else
-        format.html { render action: "edit" }
-        format.json { render json: @product.errors, status: :unprocessable_entity }
+        redirect_to @product, notice: "Successfully updated the product."
       end
+    else
+      render :update
     end
+
+      # respond_to do |format|
+      # if @product.update_attributes(params[:product])
+      #   format.html { redirect_to @product, notice: 'Product was successfully updated.' }
+      #   format.json { head :no_content }
+      # else
+      #   format.html { render action: "edit" }
+      #   format.json { render json: @product.errors, status: :unprocessable_entity }
+      # end
+      # end
   end
 
   # DELETE /products/1
   # DELETE /products/1.json
   def destroy
-    # @product = Product.find(params[:id])
-    # @product.destroy
+    # ability = Ability.new(current_user)
+    # if (!@orders.empty? && !ability.can?(:manage, @order)) ....
 
-    # respond_to do |format|
-    #   format.html { redirect_to products_url }
-    #   format.json { head :no_content }
-    # end
+    @product = Product.find(params[:id])
+    @product.destroy
+
+    respond_to do |format|
+      format.html { redirect_to galery_products_url }
+      format.json { head :no_content }
+    end
   end
 end

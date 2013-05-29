@@ -13,9 +13,9 @@
       <p class="alert <%= 'hidden' if alert.blank? %>"><%= alert %></p>
     </div>
     <ul class="nav">
-      <%= nav_primary_link_to 'עמוד הבית', root_path, 'products', '/' %>
+      <%= nav_primary_link_to 'עמוד הבית', root_path, 'products', 'index' %>
       <li class="divider-vertical"></li>
-      <%= nav_primary_link_to 'גלריה', products_path, 'products', '/products' %>
+      <%= nav_primary_link_to 'גלריה', galery_products_path, 'products', 'galery' %>
       <li class="divider-vertical"></li>
       <%= nav_primary_link_to 'הזמנות', orders_path, 'orders' %>
       <li class="divider-vertical"></li>

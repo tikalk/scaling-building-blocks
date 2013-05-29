@@ -15,6 +15,14 @@
   <%= @product.serves %>
 </p>
 
+<div class="field">
+    <%#= link_to image_tag @product.image.url(:medium) %>
+    <%= link_to (image_tag @product.image.url(:thumb)), '/' %>
+  </div>
+
+<p><strong><%= @product.class.human_attribute_name(:image) %>:</strong></p>
+<p><%= image_tag @product.image_url(:thumb) if @product.image? %></p>
+
 
 <%= link_to 'Edit', edit_product_path(@product) %> |
 <%= link_to 'Back', products_path %>

@@ -23,6 +23,17 @@
     <%= f.label :serves %><br />
     <%= f.number_field :serves %>
   </div>
+  <div class="field">
+    <%= f.label :price %><br />
+    <%= f.number_field :price %>
+  </div>
+  <div class="control-group">
+    <%= f.label :image, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.file_field :image %>
+    </div>
+  </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>

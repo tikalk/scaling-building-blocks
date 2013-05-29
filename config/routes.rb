@@ -3,7 +3,11 @@ Pinukimmm::Application.routes.draw do
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
   resources :orders
-  resources :products
+  resources :products do
+    collection do
+      get 'galery'
+    end 
+  end
 
   resources :cart_items
   resources :carts
@@ -11,6 +15,7 @@ Pinukimmm::Application.routes.draw do
 
   root :to => 'products#index'
   match 'current_cart' => 'carts#show'
+  match 'current_cart_checkout' => 'carts#checkout'
 
 
   # The priority is based upon order of creation:

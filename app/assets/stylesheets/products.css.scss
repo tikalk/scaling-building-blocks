@@ -36,3 +36,14 @@
 		}
 	}
 }
+
+// Fixes squeesh bug (T.Bootstrap + Jcrop)
+#preview_wrapper {
+    width: 132px; 
+    height:100px; 
+    overflow:hidden;
+    display: inline-block;
+}
+#preview {
+    max-width: none;
+}

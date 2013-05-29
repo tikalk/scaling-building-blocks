@@ -1,30 +1,36 @@
-<%= "Cart" %>
+<h2>Cart</h2>
 
-<table id="cart_items">
-  <tr>
-    <th>Product</th>
-    <th>Qty</th>
-    <th class="price">Unit Price</th>
-    <th class="price">Full Price</th>
-  </tr>
-  <% for cart_item in @cart.cart_items %>
-    <tr class="<%= cycle :odd, :even %>">
-      <td><%=h cart_item.product.name %></td>
-      <td class="qty"><%= cart_item.quantity %></td>
-      <td class="price"><%= number_to_currency(cart_item.unit_price) %></td>
-      <td class="price"><%= number_to_currency(cart_item.full_price) %></td>
+<% if !@cart.nil? %>
+  <table id="cart_items">
+    <tr>
+      <th>Product</th>
+      <th>Qty</th>
+      <th class="price">Unit Price</th>
+      <th class="price">Full Price</th>
+      <th>Actions</th>
     </tr>
-  <% end %>
-  <tr>
-    <td class="total price" colspan="4">
-      Total: <%= number_to_currency @cart.total_price %>
-    </td>
-  </tr>
-</table>
+    
+      <% for cart_item in @cart.cart_items %>
+        <tr class="<%= cycle :odd, :even %>">
+          <td><%=h cart_item.product.name %></td>
+          <td class="qty"><%= cart_item.quantity %></td>
+          <td class="price"><%= number_to_currency(cart_item.unit_price) %></td>
+          <td class="price"><%= number_to_currency(cart_item.full_price) %></td>
+          <td><%= link_to 'Destroy', cart_item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+
+      <tr>
+        <td class="total price" colspan="4">
+          Total: <%= number_to_currency @cart.total_price %>
+        </td>
+      </tr>
+  </table>
+<% end %>
 
 <p>
   <% if session[:last_product_page] %>
     <%= link_to "Continue Shopping", session[:last_product_page] %> |
   <% end %>
-  <%= link_to "Checkout" %>
+  <%= link_to "Checkout", current_cart_checkout_path %>
 </p>

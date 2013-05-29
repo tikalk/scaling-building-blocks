@@ -10,7 +10,9 @@ gem 'devise'
 gem 'cancan'
 gem "rolify", :git => "git://github.com/EppO/rolify.git"
 gem 'rails_admin'
-gem 'cucumber'
+gem 'carrierwave', git: "git://github.com/jnicklas/carrierwave.git"
+gem "rmagick"
+gem 'activemerchant'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -40,6 +42,7 @@ end
 
 
 group :test do
+  gem 'cucumber'
   gem 'guard'
   gem 'libnotify'
   gem 'rspec-rails'
