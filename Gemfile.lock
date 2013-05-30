@@ -191,6 +191,8 @@ GEM
     pry-stack_explorer (0.4.9)
       binding_of_caller (>= 0.7)
       pry (~> 0.9.11)
+    puma (2.0.1)
+      rack (>= 1.1, < 2.0)
     rack (1.4.5)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -312,6 +314,7 @@ DEPENDENCIES
   pry-rails
   pry-remote
   pry-stack_explorer
+  puma
   rails (= 3.2.13)
   rails-dev-boost!
   rails_admin

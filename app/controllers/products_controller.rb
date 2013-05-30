@@ -1,6 +1,25 @@
 class ProductsController < ApplicationController
   before_filter :authenticate_user!, :only => [:destroy]
 
+  # Here our caching starts. It's similar to page caching, means very fast.
+  # But in addition to just caching a page, we can run a before filter!
+  caches_action :galery, :cache_path => :galery_cache_path.to_proc
+
+  # Here we build our unique sequences, each sequence is pointing to a cached
+  # version of a page. Extremely important for users, orders and other private
+  # or sensitive data.
+  def galery_cache_path
+    current_user_id = current_user.nil?? 0 : current_user.id
+    "home_index/#{params[:page]}/#{current_user_id}"
+  end
+
+
+  def index_cache_path
+    current_user_id = current_user.nil?? 0 : current_user.id
+    "home_index/#{params[:page]}/#{current_user_id}"
+  end
+
+
   # GET /products
   # GET /products.json
   def index

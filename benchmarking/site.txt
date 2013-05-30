@@ -1,0 +1,10 @@
+http://localhost:3000/products/galery?page=5
+http://localhost:3000/products/galery?page=125
+http://localhost:3000/products/galery?page=235
+http://localhost:3000/products/galery?page=320
+http://localhost:3000/products/galery?page=300
+http://localhost:3000/products/galery?page=350
+http://localhost:3000/products/galery?page=200
+http://localhost:3000/products/galery?page=150
+http://localhost:3000/products/galery?page=250
+http://localhost:3000/products/galery?page=400
