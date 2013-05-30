@@ -303,6 +303,7 @@ DEPENDENCIES
   guard-rspec
   guard-spork
   jquery-rails
+  kaminari
   libnotify
   mysql2
   pry

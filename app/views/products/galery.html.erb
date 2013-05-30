@@ -2,6 +2,11 @@
 <div class="page-header">
   <h2>מוצרים:</h2>
 </div>
+
+<div dir="ltr">
+  <%= paginate @products %>
+</div>
+
 <table class="table table-striped">
   <thead>
     <tr>
@@ -37,6 +42,10 @@
     <% end %>
   </tbody>
 </table>
+
+<div dir="ltr">
+  <%= paginate @products %>
+</div>
 
 
 

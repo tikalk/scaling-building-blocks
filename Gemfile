@@ -13,6 +13,7 @@ gem 'rails_admin'
 gem 'carrierwave', git: "git://github.com/jnicklas/carrierwave.git"
 gem "rmagick"
 gem 'activemerchant'
+gem 'kaminari'
 
 # Gems used only for assets and not required
 # in production environments by default.

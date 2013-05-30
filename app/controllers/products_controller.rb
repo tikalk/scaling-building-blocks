@@ -11,7 +11,7 @@ class ProductsController < ApplicationController
   end
 
   def galery
-    @products = Product.all
+    @products = Product.where("id > ?", 0).reverse_order().page(params[:page]).per(8)
 
     respond_to do |format|
       format.html 
