@@ -5,6 +5,15 @@ GIT
     rolify (3.3.0.rc4)
 
 GIT
+  remote: git://github.com/jnicklas/carrierwave.git
+  revision: d3e872072a38f471dc45fafa0410e468576973ea
+  specs:
+    carrierwave (0.8.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
+
+GIT
   remote: git://github.com/thedarkone/rails-dev-boost.git
   revision: 3e25b06c5c536db4ce30647a9edb3ea94f739001
   specs:
@@ -28,6 +37,17 @@ GEM
       rack-cache (~> 1.2)
       rack-test (~> 0.6.1)
       sprockets (~> 2.2.1)
+    active_utils (1.0.5)
+      activesupport (>= 2.3.11)
+      i18n
+    activemerchant (1.32.1)
+      active_utils (>= 1.0.2)
+      activesupport (>= 2.3.14)
+      builder (>= 2.0.0)
+      i18n
+      json (>= 1.5.1)
+      money
+      nokogiri
     activemodel (3.2.13)
       activesupport (= 3.2.13)
       builder (~> 3.0.0)
@@ -145,6 +165,8 @@ GEM
       treetop (~> 1.4.8)
     method_source (0.8.1)
     mime-types (1.23)
+    money (5.1.1)
+      i18n (~> 0.6.0)
     multi_json (1.7.3)
     nested_form (0.3.2)
     nokogiri (1.5.9)
@@ -217,6 +239,7 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     remotipart (1.0.5)
+    rmagick (2.13.2)
     rspec (2.13.0)
       rspec-core (~> 2.13.0)
       rspec-expectations (~> 2.13.0)
@@ -265,10 +288,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activemerchant
   annotate (>= 2.5.0)
   bootstrap-sass (~> 2.3.1.0)
   cancan
   capybara
+  carrierwave!
   coffee-rails (~> 3.2.1)
   cucumber
   devise
@@ -288,6 +313,7 @@ DEPENDENCIES
   rails (= 3.2.13)
   rails-dev-boost!
   rails_admin
+  rmagick
   rolify!
   rspec-rails
   sass-rails (~> 3.2.3)
