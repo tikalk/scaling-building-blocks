@@ -21,11 +21,7 @@
       <tr>
         <td><%= link_to h(product.name), product %></td>
         <td><%= number_to_currency(product.price) %>
-        <td><%= image_tag product.image.url(:thumb) %>
-          <%= form_for product.cart_items.build do |f| %>
-            <%= f.hidden_field :product_id %>
-            <%= f.submit "Add to Cart" %>
-          <% end %>
+        <td><%= image_tag 'carousel-02-1469a00ede72cd4fd93ffe908b73b8b9.jpg', :style => 'width: 160px; height: auto' %>
         </td>
         <td> 
           <div class="action">
@@ -37,6 +33,10 @@
           <div class="action">
             <%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %>
           </div>
+          <%= form_for product.cart_items.build do |f| %>
+            <%= f.hidden_field :product_id %>
+            <%= f.submit "Add to Cart" %>
+          <% end %>
         </td>
       </tr>
     <% end %>

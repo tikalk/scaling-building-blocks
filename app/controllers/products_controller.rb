@@ -30,7 +30,7 @@ class ProductsController < ApplicationController
   end
 
   def galery
-    @products = Product.where("id > ?", 0).reverse_order().page(params[:page]).per(250)
+    @products = Product.where("id > ?", 0).reverse_order().page(params[:page]).per(30)
 
     respond_to do |format|
       format.html 
