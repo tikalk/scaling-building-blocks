@@ -6,9 +6,13 @@ Orders - hazmanot (Paypal?)
 About
 Contact us
 
-==Installation
+== Installation
 
   sudo apt-get install libmagickwand-dev
 
 == Devise
 User.create! email: 'val.hoffman@gmail.com', password: 'trap%973'
+
+== Benchmark
+  sudo apt-get install siege
+  cd benchmarking/ && siege -c50 -d1 -i -t30S -f site.txt
