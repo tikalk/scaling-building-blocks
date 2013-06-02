@@ -12,8 +12,14 @@
 #
 
 class Product < ActiveRecord::Base
-  has_many :order_products
+  has_many :order_products    # product_orders better name, but alphabetially here.
   has_many :orders, :through => :order_products
+
+  has_many :product_likes
+  has_many :likes, :through => :product_likes
+
+  has_many :product_reviews
+  has_many :reviews, :through => :product_reviews
 
   belongs_to :category
   has_many :cart_items

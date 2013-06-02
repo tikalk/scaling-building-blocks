@@ -21,6 +21,8 @@ class User < ActiveRecord::Base
   rolify
   has_many :orders
   has_many :carts
+  has_many :likes
+  has_many :reviews
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,

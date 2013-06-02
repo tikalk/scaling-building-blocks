@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130528171647) do
+ActiveRecord::Schema.define(:version => 20130602225306) do
 
   create_table "cart_items", :force => true do |t|
     t.integer  "product_id"
@@ -32,6 +32,12 @@ ActiveRecord::Schema.define(:version => 20130528171647) do
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "likes", :force => true do |t|
+    t.integer  "likeability"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "order_products", :force => true do |t|
@@ -56,9 +62,9 @@ ActiveRecord::Schema.define(:version => 20130528171647) do
     t.string   "name"
     t.text     "description"
     t.integer  "serves"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-    t.decimal  "price"
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
+    t.decimal  "price",       :precision => 10, :scale => 0
     t.string   "image"
   end
 
@@ -68,12 +74,18 @@ ActiveRecord::Schema.define(:version => 20130528171647) do
     t.integer  "item"
     t.string   "table"
     t.integer  "month",      :limit => 2
-    t.integer  "year",       :limit => 5
+    t.integer  "year",       :limit => 8
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
   end
 
   add_index "rails_admin_histories", ["item", "table", "month", "year"], :name => "index_rails_admin_histories"
+
+  create_table "reviews", :force => true do |t|
+    t.string   "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "roles", :force => true do |t|
     t.string   "name"
