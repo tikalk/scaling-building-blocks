@@ -35,15 +35,7 @@ end
 group :development do
   gem 'rails-dev-boost', :git => 'git://github.com/thedarkone/rails-dev-boost.git'
   gem 'annotate', ">=2.5.0"
-  
-  gem 'pry'
-  gem 'pry-rails'
-  gem 'pry-remote'
-  gem 'pry-stack_explorer'
-  gem 'pry-debugger'
-  gem 'pry-doc'
 end
-
 
 group :test do
   gem 'cucumber'
@@ -57,6 +49,15 @@ group :test do
   gem 'guard-bundler'
   gem 'guard-rspec'
   gem 'guard-spork' 
+end
+
+group :development, :test do
+  gem 'pry'
+  gem 'pry-rails'
+  gem 'pry-remote'
+  gem 'pry-stack_explorer'
+  gem 'pry-debugger'
+  gem 'pry-doc'
 end
 
 gem 'jquery-rails'

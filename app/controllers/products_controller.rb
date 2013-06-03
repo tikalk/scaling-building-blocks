@@ -71,7 +71,7 @@ class ProductsController < ApplicationController
     @product = Product.new(params[:product])
 
     if @product.save
-      if params[:product][:image].present?
+      if params[:product][:image].present? 
         render :crop
       else
         redirect_to @product, notice: "Successfully created the product."
