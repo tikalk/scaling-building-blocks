@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130602225306) do
+ActiveRecord::Schema.define(:version => 20130603082130) do
 
   create_table "cart_items", :force => true do |t|
     t.integer  "product_id"
@@ -57,6 +57,26 @@ ActiveRecord::Schema.define(:version => 20130602225306) do
     t.datetime "updated_at", :null => false
     t.integer  "user_id"
   end
+
+  create_table "product_likes", :force => true do |t|
+    t.integer  "product_id", :null => false
+    t.integer  "like_id",    :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "product_likes", ["like_id"], :name => "index_product_likes_on_like_id"
+  add_index "product_likes", ["product_id"], :name => "index_product_likes_on_product_id"
+
+  create_table "product_reviews", :force => true do |t|
+    t.integer  "product_id", :null => false
+    t.integer  "review_id",  :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "product_reviews", ["product_id"], :name => "index_product_reviews_on_product_id"
+  add_index "product_reviews", ["review_id"], :name => "index_product_reviews_on_review_id"
 
   create_table "products", :force => true do |t|
     t.string   "name"

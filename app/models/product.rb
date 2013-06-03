@@ -8,7 +8,8 @@
 #  serves      :integer
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  price       :decimal(, )
+#  price       :integer
+#  image       :string(255)
 #
 
 class Product < ActiveRecord::Base
