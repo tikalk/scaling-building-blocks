@@ -26,7 +26,7 @@
         </td>
         <td>
           Num.Likes: <%= product.likes.count %><br/>
-          Avg.Likeability: <%= (product.likes.sum(&:likeability) / product.likes.count) if product.likes.count.to_f != 0 %><br/>
+          Avg.Likeability: <%= (product.likes.sum(&:likeability) / product.likes.count.to_f) if product.likes.count.to_f != 0 %><br/>
           Num.Reviews: <%= product.reviews.count %><br/>
         </td>
         <td> 

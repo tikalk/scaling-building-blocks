@@ -337,6 +337,7 @@ DEPENDENCIES
   rails (= 3.2.13)
   rails-dev-boost!
   rails_admin
+  redis (~> 3.0.1)
   redis-rails
   rmagick
   rolify!

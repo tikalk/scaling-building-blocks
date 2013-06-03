@@ -6,7 +6,7 @@ gem 'rails', '3.2.13'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 gem 'puma'
 gem 'dalli'   # memcached client
-gem 'redis-rails'
+gem 'redis-rails'   # another cache store
 
 gem 'mysql2'
 gem 'devise'
@@ -17,6 +17,7 @@ gem 'carrierwave', git: "git://github.com/jnicklas/carrierwave.git"
 gem "rmagick"
 gem 'activemerchant'
 gem 'kaminari'
+gem "redis", "~> 3.0.1"
 
 # Gems used only for assets and not required
 # in production environments by default.
