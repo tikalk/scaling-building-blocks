@@ -13,6 +13,7 @@
       <th><%= model_class.human_attribute_name(:name) %></th>
       <th><%= model_class.human_attribute_name(:price) %></th>
       <th><%= model_class.human_attribute_name(:image) %></th>
+      <th>more...</th>
       <th>actions</th>
     </tr>
   </thead>
@@ -22,6 +23,11 @@
         <td><%= link_to h(product.name), product %></td>
         <td><%= number_to_currency(product.price) %>
         <td><%= image_tag 'carousel-02-1469a00ede72cd4fd93ffe908b73b8b9.jpg', :style => 'width: 160px; height: auto' %>
+        </td>
+        <td>
+          Num.Likes: <%= product.likes.count %><br/>
+          Avg.Likeability: <%= (product.likes.sum(&:likeability) / product.likes.count) if product.likes.count.to_f != 0 %><br/>
+          Num.Reviews: <%= product.reviews.count %><br/>
         </td>
         <td> 
           <div class="action">
