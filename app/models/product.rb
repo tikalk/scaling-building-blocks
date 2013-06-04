@@ -13,6 +13,8 @@
 #
 
 class Product < ActiveRecord::Base
+  include ProductLikes
+
   has_many :order_products    # product_orders better name, but alphabetially here.
   has_many :orders, :through => :order_products
 

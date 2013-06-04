@@ -18,7 +18,6 @@
 #
 
 class User < ActiveRecord::Base
-  include Pointers
   
   rolify
   has_many :orders

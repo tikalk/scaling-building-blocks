@@ -25,8 +25,8 @@
         <td><%= image_tag 'carousel-02-1469a00ede72cd4fd93ffe908b73b8b9.jpg', :style => 'width: 160px; height: auto' %>
         </td>
         <td>
-          Num.Likes: <%= product.likes.count %><br/>
-          Avg.Likeability: <%= (product.likes.sum(&:likeability) / product.likes.count.to_f) if product.likes.count.to_f != 0 %><br/>
+          Num.Likes: <%= product.number_of_likers %><br/>
+          Avg.Likeability: <%= product.average_likeability %><br/>
           Num.Reviews: <%= product.reviews.count %><br/>
         </td>
         <td> 
