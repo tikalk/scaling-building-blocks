@@ -270,7 +270,81 @@
 
 		<div ~m>Right after migration of likes to redis (changed only the output in products) improvement was about <strong>⅕  increase in speed</strong> (<strong>2.43</strong> trans/sec -> <strong>2.93</strong> trans/sec --> (and with reviews on redis) --> <strong>3.14</strong> trans/sec ).</div><br/>
 		<div ~m>Since we’re adding complexity to our code, it’s important to use a well-defined <strong>interface</strong> (such as in the module we created) for all operations. We need to implement a Facade Design Pattern which will communicate with Redis. That way, when and if we’ll want replace Redis with something else, we will only change this Facade without the  need to search and replace the code where all the references to Redis exist. Modules could help here.</div>
+	</div>
 
+	<div ~s>
+		~n
+		<h1 ~m>Web Proxy Servers</h1>
+		<h2 ~m>Apache is cool, but...</h2>
+		<h3 ~m>
+			<strong>Nginx</strong> is a high-performance HTTP server and reverse proxy. What's in the package: high performance, stability, rich feature set, simple configuration, and low resource consumption with predictable amounts of memory under load.
+		</h3><br/>
+		<div ~m>
+			Typical configuration might look like:
+		</div>
+
+		<code>
+			<pre ~m>
+upstream app {
+	server unix:/srv/app/current/tmp/sockets/unicorn.sock fail_timeout=0;
+}
+server {
+        listen   80;
+        server_name  www.app.com;
+        rewrite ^/(.*) http://app.com/$1 permanent;
+}
+		</pre>
+	</code>
+
+	</div>
+
+	<div ~s>
+		~n
+		<code>
+			<pre ~m>
+server {
+	listen 80;
+	client_max_body_size 2G;
+	server_name app.com;
+	root /srv/app/current/public;
+	access_log  off;
+	error_log off;
+ 
+	if ($request_method !~ ^(GET|HEAD|PUT|POST|DELETE|OPTIONS)$ ){
+	    return 405;
+	} 
+
+	location ~ ^/(assets)/  {  
+	    gzip_static on; ...
+	}  
+
+	location / {
+	    try_files $uri/index.html $uri.html $uri @app;
+	    error_page 404              /404.html;
+	    error_page 500 502 503 504  /500.html; ...
+	}
+
+	location @app {
+	    proxy_pass http://app;
+	}
+}
+		</pre>
+	</code>
+
+	</div>
+
+	<div ~s>
+		~n
+		<h2 ~m>Swi   dfsafdsaf </h2>
+
+		<code>
+			<pre ~m>
+				gem 'dalli'
+				config.cache_store = :dalli_store
+			</pre>
+		</code>
+
+		<div ~m>asdasdfasdf </div>
 	</div>
 </div>
 
