@@ -30,7 +30,7 @@
 		</ul>
 		<br/>
 		<h2 ~m>Prerequisites</h2>
-		<p ~m>sudo apt-get install siege memcached redis<p>
+		<p ~m class='code'>sudo apt-get install siege memcached redis<p>
 	</div>
 
 	<div id="home" ~s>
@@ -74,7 +74,6 @@
 		<div ~m>Other types of scaling include adding processing power, use external services etc.</div>
 	</div>
 
-
 	<div id="home" ~s>
 		~n
 		<h3 ~m>Let's create our application</h3>
@@ -113,27 +112,60 @@
 
 	<div ~s>
 		~n
+		<h2 ~m>Measure the response time</h2>
+
+		<h3 ~m>We'll use siege</h3><br/>
+		<div ~m><code>siege -c50 -d10 [-t30S] -i -f site.txt</code></div><br/>
+
+		<div ~m>(The -d NUM option sets a random interval between 0 and NUM that each "user" will sleep for between requests. While the -c NUM option sets the concurrent number of simulated users. -t: for how long to run tests or Ctrl-C)</div>
+
+		<div ~m>site.txt is has a collection of URLs, one per line:</div><br/>
+
+		<code>
+			<pre ~m>
+				http://localhost:3000/products/galery?page=1
+				http://localhost:3000/products/galery?page=50
+				 … 
+				http://localhost:3000/products/galery?page=400
+			</pre>
+		</code>
+		<br/>
+
+		<div ~m>The pages URLs will be requested in random order.</div>
+		
+		<div ~m style="background: #eee">
+			No cache:  Transaction rate:       3.72 trans/sec <span data-jmpress="drive-left after 4000ms step" style="color:#4f4"> Mmmm... not bad for an old laptop!</span><br/>
+		</div>
+	</div>
+
+
+	<div ~s>
+		~n
 		<h2 ~m>Add the cache</h2>
 
 		<h3 ~m>Add to development.rb:</h3>
-		<ul>
-			<li ~m>config.action_controller.perform_caching = true</li>
-			<li ~m>config.cache_store = :file_store, "#{Rails.root}/tmp/cache"</li>
-		</ul>
+		<code>
+			<pre ~m> 
+				config.action_controller.perform_caching = true
+				config.cache_store = :file_store, "#{Rails.root}/tmp/cache"
+			</pre>
+		</code>
 
 		<h3 ~m>And add to the products controller:</h3>
-		<ul>
-			<li ~m>caches_action :galery, :cache_path => :products_cache_path.to_proc</li>
-			<li ~m>def products_cache_path<br/>
-			current_user_id = current_user.nil?? 0 : current_user.id<br/>
-			"home_index/#{params[:page]}/#{current_user_id}"<br/>
-		end<br/></li>
-		</ul>
-		
-		<div ~m style="background: #eee">
-			Transaction rate:	       84.42 trans/sec   <span data-jmpress="drive-left after 4000ms step" style="color:#4f4">WOW!!</span><br/>
+		<code>
+			<pre ~m> 
+				caches_action :galery, :cache_path => :products_cache_path.to_proc
+				def products_cache_path
+					current_user_id = current_user.nil?? 0 : current_user.id
+					"home_index/#{params[:page]}/#{current_user_id}"
+				end
+			</pre>
+		</code>
+		<br/>
+		<div ~m>
+			Transaction rate:	       <strong>84.42</strong> trans/sec   <span data-jmpress="drive-left after 4000ms step" style="color:#4f4">WOW!!</span><br/>
 			And once again:<br/>
-			Transaction rate:	       91.20 trans/sec   (Which makes sense.) <span data-jmpress="drive-left after 4300ms step" style="color:#4f4">Weee!!</span><br/><br/>
+			Transaction rate:	       <strong>91.20</strong> trans/sec   (Which makes sense.) <span data-jmpress="drive-left after 4300ms step" style="color:#4f4">Weee!!</span><br/><br/>
 		</div>
 	</div>
 
@@ -160,14 +192,12 @@
 		<div ~m>
 			=>   5.650000   0.200000   5.850000 ( 91.374391)
 		</div><br/>
-		
 
 		<div ~m>One more time:</div>
 
 		<div ~m>
 			=>   5.540000   0.220000   5.760000 ( 96.141258)
 		</div><br/>
-
 
 		<div ~m> From 3 requests per second to 96, that's difference!<br/>
 			89.7 -> 91.37 -> 96.14 For only one table with less than 10 columns!
@@ -176,26 +206,55 @@
 
 	<div ~s>
 		~n
-		<h3 ~m>rails s Puma:</h3>
-		<div ~m>
-			Transaction rate:	       97.84 trans/sec  (Even better)<br/>
+		<h2 ~m>Switching to another cache_store.</h2>
 
-			[More detailed explanation of caches_action goes here, in addition to descriptions of other caching types]<br/>
-			http://guides.rubyonrails.org/caching_with_rails.html<br/>
+		<code>
+			<pre ~m>
+				gem 'dalli'
+				config.cache_store = :dalli_store
+			</pre>
+		</code>
+
+		<div ~m>Transaction rate:	       89.67 trans/sec </div>
+		<div ~m>No improvement :((</div>
+
+		<div ~m>It's not surprising though. The more data you have, the more performance boost you'll feel.
+		</div>
+
+		<div ~m>
+			More on the subject: <a href="http://blog.endpoint.com/2011/07/raw-caching-performance-in-rubyrails.html">read here</a><br/>
+			Dali with even more parameters: <a href="https://github.com/mperham/dalli">read here</a>
 		</div>
 	</div>
+
 	<div ~s>
 		~n
-		<p ~m>You might think it is boring...</p>
+		<div ~m><span class="code">rails s Puma</span><br/><br/>
+			89.7 -> 91.37 -> 96.14 For only one table with less than 10 columns!<br/>
+			Transaction rate:	       97.84 trans/sec  (Even better)<br/><br/>
+
+			[More detailed explanation of caches_action goes here, in addition to descriptions of other caching types]<br/>
+			http://guides.rubyonrails.org/caching_with_rails.html
+		</div>
 	</div>
-	<div ~s>
+
+	<div id="home" ~s>
 		~n
-		<p ~m>but that is the point. This is a simple example.</p>
+		<h2 ~m>Add indices to DB</h2><br/>
+		<div ~m>Indices have their own logic depending on DB. A very simple generic explanation: it’s a lookup table - instead of iteration from beginning. More detailed click <a href="http://dev.mysql.com/doc/refman/5.0/en/mysql-indexes.html">is here</a>.</div><br/>
+		<code>
+			<pre ~m>
+			CREATE TABLE test (
+			    id         INT NOT NULL,
+			    last_name  CHAR(30) NOT NULL,
+			    first_name CHAR(30) NOT NULL,
+			    PRIMARY KEY (id),
+			    INDEX name (last_name,first_name)
+			);
+			</pre>
+		</code>
+		<div ~m>The index can be used for lookups that specify values for combinations. For example: (last_name,  first_name). That index can also be used just a last_name because it is leftmost in the index.</div>
 	</div>
-	<div ~s>
-		~n
-		<p ~m><b>substep 0 + 1s</b></p>
-    </div>
 </div>
 
 <script type="text/javascript">

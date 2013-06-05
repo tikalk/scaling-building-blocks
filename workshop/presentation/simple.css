@@ -17,7 +17,7 @@ body {
 }
 
 h1, h2, h3 {
-	margin: 0;
+	margin: 10px 0 0;
 }
 h1 {
 	font: 28px openTitle;
@@ -34,6 +34,7 @@ pre {
 code {
 	font: 13px openSans;
 }
+code, .code, pre { background: #eee; }
 /** STEP STYLES **/
 .step {
 	width: 900px;
