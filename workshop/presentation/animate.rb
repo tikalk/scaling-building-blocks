@@ -5,6 +5,7 @@
 $milliseconds = 500
 $milliseconds_adder = 300
 $step = 0
+$cols_per_row = 5
 
 begin 
 	def process(line)
@@ -22,7 +23,7 @@ begin
 
 		if line =~ /~s/
 			$step += 1
-			line = line.sub('~s', 'class="step" data-x="' << ($step*1000).to_s << '" data-y="0"')
+			line = line.sub('~s', 'class="step" data-x="' << (($step % $cols_per_row) *1000).to_s << '" data-y="'+(($step / $cols_per_row) *700).to_s+'"')
 		end
 
 		if line =~ /~m/
