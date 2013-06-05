@@ -19,6 +19,7 @@
 
 <div id="simple">
 	<div id="home" class="step" data-x="1000" data-y="0">
+		<span style ="position:absolute; left:20px; bottom:0;"> =1= </span>
 		<h1 data-jmpress="zoom after 800ms step">What will be covered</h1>
 		<ul>
 			<li data-jmpress="zoom after 1100ms step">When we will need this?</li>
@@ -33,6 +34,7 @@
 	</div>
 
 	<div id="home" class="step" data-x="2000" data-y="0">
+		<span style ="position:absolute; left:20px; bottom:0;"> =2= </span>
 		<h2 data-jmpress="zoom after 800ms step">Main Topics</h2>
 		<ul>
 			<li data-jmpress="zoom after 1100ms step">Optimize the code</li>
@@ -61,10 +63,59 @@
 		</ul>
 	</div>
 
-	<div class="step" data-x="3000" data-y="0">
+	<div id="home" class="step" data-x="3000" data-y="0">
+		<span style ="position:absolute; left:20px; bottom:0;"> =3= </span>
+		<h2 data-jmpress="zoom after 800ms step">What is web application?</h2><br/>
+		<div data-jmpress="zoom after 1100ms step">By default SQLite is the development DB. <strong>It's not a production Database.</strong> </div><br/>
+		<div data-jmpress="zoom after 1400ms step">But it's working just out of the box.</div><br/>
+		<div data-jmpress="zoom after 1700ms step">This summarizes the following: Web applications are mainly just a... <span data-jmpress="drive-left after 3500ms step" style="color:#4f4">Database.</span></div><br/>
+		<div data-jmpress="zoom after 2000ms step">It's just a convenient concept. <br/>
+			So <strong>better algorithms for data manipulation give us horizontal scalability</strong>.</div><br/>
+		<div data-jmpress="zoom after 2300ms step">Other types of scaling include adding processing power, use external services etc.</div>
+	</div>
+
+
+	<div id="home" class="step" data-x="4000" data-y="0">
+		<span style ="position:absolute; left:20px; bottom:0;"> =4= </span>
+		<h3 data-jmpress="zoom after 800ms step">Let's create our application</h3>
+		<div data-jmpress="zoom after 1100ms step">We will use a prepared app. Instead of carrying a large database, we'll just generate a few records, make relations and clone them several thousand times like so:</div>
+		
+		<code>
+			<pre data-jmpress="zoom after 1400ms step">
+			plast = Product.last
+			for i in 0..4000
+			    dupobj = plast.dup
+			    dupobj.image = plast.image
+			    dupobj.save!
+			end
+			</pre>
+		</code>
+
+		<code data-jmpress="zoom after 1700ms step">
+			<pre data-jmpress="zoom after 2000ms step">
+			# Populate the likes and reviews
+			# 100 times randomly add likes and reviews to products
+			like_ids_range = Like.first.id..Like.last.id
+			review_ids_range = Review.first.id..Review.last.id
+			product_ids_range = Product.first.id..Product.last.id
+			for i in 1..5000
+			  p = Product.find(Random.new.rand(product_ids_range))
+			  p.likes << Like.find(Random.new.rand(like_ids_range))
+			  p.reviews << Review.find(Random.rand(review_ids_range))
+			  p.likes.first.likeability = Random.new.rand(1..5)
+			  p.save!
+			end
+			</pre>
+		</code>
+
+		<div data-jmpress="zoom after 2300ms step">The scripts are located under <code>/migration/presentation</code></div>
+	</div>
+
+	<div class="step" data-x="5000" data-y="0">
+		<span style ="position:absolute; left:20px; bottom:0;"> =5= </span>
 		<h2 data-jmpress="zoom after 800ms step">Add the cache</h2>
 
-		<h3  data-jmpress="zoom after 1100ms step">Add to development.rb:</h3>
+		<h3 data-jmpress="zoom after 1100ms step">Add to development.rb:</h3>
 		<ul>
 			<li data-jmpress="zoom after 1400ms step">config.action_controller.perform_caching = true</li>
 			<li data-jmpress="zoom after 1700ms step">config.cache_store = :file_store, "#{Rails.root}/tmp/cache"</li>
@@ -85,7 +136,46 @@
 			Transaction rate:	       91.20 trans/sec   (Which makes sense.) <span data-jmpress="drive-left after 4300ms step" style="color:#4f4">Weee!!</span><br/><br/>
 		</div>
 	</div>
-	<div class="step" data-x="4000" data-y="0">
+
+	<div id="home" class="step" data-x="6000" data-y="0">
+		<span style ="position:absolute; left:20px; bottom:0;"> =6= </span>
+		<h3 data-jmpress="zoom after 800ms step">Measure, compare, drive conclusions!</h3>
+		<div data-jmpress="zoom after 1100ms step">We'll use siege and Ruby's benchmark to measure the results. Like this:</div>
+		
+		<code>
+			<pre data-jmpress="zoom after 1400ms step">
+			require 'benchmark'
+			Benchmark.measure { 1000.times { plast.dup.save! } }
+			</pre>
+		</code>
+
+		<div data-jmpress="zoom after 1700ms step">We're measuring the <strong>relative time</strong>. On my Lenovo ThinkPad T500 with several other processes running the results were:</div>
+
+		<div data-jmpress="zoom after 2000ms step">
+			=>   5.590000   0.170000   5.760000 ( 89.742811)  =SECONDS=
+		</div><br/>
+
+		<div data-jmpress="zoom after 2300ms step">Once again, and the results are:</div>
+
+		<div data-jmpress="zoom after 2600ms step">
+			=>   5.650000   0.200000   5.850000 ( 91.374391)
+		</div><br/>
+		
+
+		<div data-jmpress="zoom after 2900ms step">One more time:</div>
+
+		<div data-jmpress="zoom after 3200ms step">
+			=>   5.540000   0.220000   5.760000 ( 96.141258)
+		</div><br/>
+
+
+		<div data-jmpress="zoom after 3500ms step"> From 3 requests per second to 96, that's difference!<br/>
+			89.7 -> 91.37 -> 96.14 For only one table with less than 10 columns!
+		</div>
+	</div>
+
+	<div class="step" data-x="7000" data-y="0">
+		<span style ="position:absolute; left:20px; bottom:0;"> =7= </span>
 		<h3 data-jmpress="zoom after 800ms step">rails s Puma:</h3>
 		<div data-jmpress="zoom after 1100ms step">
 			Transaction rate:	       97.84 trans/sec  (Even better)<br/>
@@ -94,13 +184,16 @@
 			http://guides.rubyonrails.org/caching_with_rails.html<br/>
 		</div>
 	</div>
-	<div class="step" data-x="5000" data-y="0">
+	<div class="step" data-x="8000" data-y="0">
+		<span style ="position:absolute; left:20px; bottom:0;"> =8= </span>
 		<p data-jmpress="zoom after 800ms step">You might think it is boring...</p>
 	</div>
-	<div class="step" data-x="6000" data-y="0">
+	<div class="step" data-x="9000" data-y="0">
+		<span style ="position:absolute; left:20px; bottom:0;"> =9= </span>
 		<p data-jmpress="zoom after 800ms step">but that is the point. This is a simple example.</p>
 	</div>
-	<div class="step" data-x="7000" data-y="0">
+	<div class="step" data-x="10000" data-y="0">
+		<span style ="position:absolute; left:20px; bottom:0;"> =10= </span>
 		<p data-jmpress="zoom after 800ms step"><b>substep 0 + 1s</b></p>
     </div>
 </div>

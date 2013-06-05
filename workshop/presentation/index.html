@@ -19,6 +19,7 @@
 
 <div id="simple">
 	<div id="home" ~s>
+		~n
 		<h1 ~m>What will be covered</h1>
 		<ul>
 			<li ~m>When we will need this?</li>
@@ -33,6 +34,7 @@
 	</div>
 
 	<div id="home" ~s>
+		~n
 		<h2 ~m>Main Topics</h2>
 		<ul>
 			<li ~m>Optimize the code</li>
@@ -61,10 +63,59 @@
 		</ul>
 	</div>
 
+	<div id="home" ~s>
+		~n
+		<h2 ~m>What is web application?</h2><br/>
+		<div ~m>By default SQLite is the development DB. <strong>It's not a production Database.</strong> </div><br/>
+		<div ~m>But it's working just out of the box.</div><br/>
+		<div ~m>This summarizes the following: Web applications are mainly just a... <span data-jmpress="drive-left after 3500ms step" style="color:#4f4">Database.</span></div><br/>
+		<div ~m>It's just a convenient concept. <br/>
+			So <strong>better algorithms for data manipulation give us horizontal scalability</strong>.</div><br/>
+		<div ~m>Other types of scaling include adding processing power, use external services etc.</div>
+	</div>
+
+
+	<div id="home" ~s>
+		~n
+		<h3 ~m>Let's create our application</h3>
+		<div ~m>We will use a prepared app. Instead of carrying a large database, we'll just generate a few records, make relations and clone them several thousand times like so:</div>
+		
+		<code>
+			<pre ~m>
+			plast = Product.last
+			for i in 0..4000
+			    dupobj = plast.dup
+			    dupobj.image = plast.image
+			    dupobj.save!
+			end
+			</pre>
+		</code>
+
+		<code ~m>
+			<pre ~m>
+			# Populate the likes and reviews
+			# 100 times randomly add likes and reviews to products
+			like_ids_range = Like.first.id..Like.last.id
+			review_ids_range = Review.first.id..Review.last.id
+			product_ids_range = Product.first.id..Product.last.id
+			for i in 1..5000
+			  p = Product.find(Random.new.rand(product_ids_range))
+			  p.likes << Like.find(Random.new.rand(like_ids_range))
+			  p.reviews << Review.find(Random.rand(review_ids_range))
+			  p.likes.first.likeability = Random.new.rand(1..5)
+			  p.save!
+			end
+			</pre>
+		</code>
+
+		<div ~m>The scripts are located under <code>/migration/presentation</code></div>
+	</div>
+
 	<div ~s>
+		~n
 		<h2 ~m>Add the cache</h2>
 
-		<h3  ~m>Add to development.rb:</h3>
+		<h3 ~m>Add to development.rb:</h3>
 		<ul>
 			<li ~m>config.action_controller.perform_caching = true</li>
 			<li ~m>config.cache_store = :file_store, "#{Rails.root}/tmp/cache"</li>
@@ -85,7 +136,46 @@
 			Transaction rate:	       91.20 trans/sec   (Which makes sense.) <span data-jmpress="drive-left after 4300ms step" style="color:#4f4">Weee!!</span><br/><br/>
 		</div>
 	</div>
+
+	<div id="home" ~s>
+		~n
+		<h3 ~m>Measure, compare, drive conclusions!</h3>
+		<div ~m>We'll use siege and Ruby's benchmark to measure the results. Like this:</div>
+		
+		<code>
+			<pre ~m>
+			require 'benchmark'
+			Benchmark.measure { 1000.times { plast.dup.save! } }
+			</pre>
+		</code>
+
+		<div ~m>We're measuring the <strong>relative time</strong>. On my Lenovo ThinkPad T500 with several other processes running the results were:</div>
+
+		<div ~m>
+			=>   5.590000   0.170000   5.760000 ( 89.742811)  =SECONDS=
+		</div><br/>
+
+		<div ~m>Once again, and the results are:</div>
+
+		<div ~m>
+			=>   5.650000   0.200000   5.850000 ( 91.374391)
+		</div><br/>
+		
+
+		<div ~m>One more time:</div>
+
+		<div ~m>
+			=>   5.540000   0.220000   5.760000 ( 96.141258)
+		</div><br/>
+
+
+		<div ~m> From 3 requests per second to 96, that's difference!<br/>
+			89.7 -> 91.37 -> 96.14 For only one table with less than 10 columns!
+		</div>
+	</div>
+
 	<div ~s>
+		~n
 		<h3 ~m>rails s Puma:</h3>
 		<div ~m>
 			Transaction rate:	       97.84 trans/sec  (Even better)<br/>
@@ -95,12 +185,15 @@
 		</div>
 	</div>
 	<div ~s>
+		~n
 		<p ~m>You might think it is boring...</p>
 	</div>
 	<div ~s>
+		~n
 		<p ~m>but that is the point. This is a simple example.</p>
 	</div>
 	<div ~s>
+		~n
 		<p ~m><b>substep 0 + 1s</b></p>
     </div>
 </div>

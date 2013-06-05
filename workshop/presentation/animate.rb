@@ -16,6 +16,10 @@ begin
 			$milliseconds += $milliseconds_adder
 		end
 
+		if line =~ /~n/
+			line = line.sub('~n', '<span style ="position:absolute; left:20px; bottom:0;"> =' << $step.to_s << '= </span>')
+		end
+
 		if line =~ /~s/
 			$step += 1
 			line = line.sub('~s', 'class="step" data-x="' << ($step*1000).to_s << '" data-y="0"')

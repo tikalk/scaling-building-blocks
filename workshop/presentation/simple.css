@@ -1,11 +1,39 @@
 /** GENERAL **/
+@font-face {
+	font-family: openSans;
+	src: url('fonts/OpenSans-Regular.ttf')
+}
+
+@font-face {
+	font-family: openTitle;
+	src: url('fonts/OpenSans-Regular.ttf')
+}
+
 body {
-	font-family: Verdana, sans-serif;
+	font: 16px openSans;
 	min-height: 740px;
 	background-color: #ddd;
 	-webkit-font-smoothing: antialiased;
 }
 
+h1, h2, h3 {
+	margin: 0;
+}
+h1 {
+	font: 28px openTitle;
+}
+h2 {
+	font: 24px openTitle;
+}
+h3 {
+	font: 20px openTitle;
+}
+pre {
+	margin: 8px 0 0;
+}
+code {
+	font: 13px openSans;
+}
 /** STEP STYLES **/
 .step {
 	width: 900px;
