@@ -18,60 +18,90 @@
 <body>
 
 <div id="simple">
-	<div id="home" class="step">
-		<h1 ~>What will be covered</h1>
+	<div id="home" ~s>
+		<h1 ~m>What will be covered</h1>
 		<ul>
-			<li ~>When we will need this?</li>
-			<li ~>Concurrent massive landing</li>
-			<li ~>The system is under stress</li>
-			<li ~>Response time is growing</li>
-			<li ~>If you want peaceful life, prepare yourself for the battle!</li>
+			<li ~m>When we will need this?</li>
+			<li ~m>Concurrent massive landing</li>
+			<li ~m>The system is under stress</li>
+			<li ~m>Response time is growing</li>
+			<li ~m>If you want peaceful life, prepare yourself for the battle!</li>
 		</ul>
 		<br/>
-		<h2 ~>Prerequisites</h2>
-		<p ~>sudo apt-get install siege memcached redis<p>
+		<h2 ~m>Prerequisites</h2>
+		<p ~m>sudo apt-get install siege memcached redis<p>
 	</div>
-	<div class="step" data-x="1000">
-		<h2 ~>Add the cache</h2>
 
-		<h3  ~>Add to development.rb:</h3>
+	<div id="home" ~s>
+		<h2 ~m>Main Topics</h2>
 		<ul>
-			<li ~>config.action_controller.perform_caching = true</li>
-			<li ~>config.cache_store = :file_store, "#{Rails.root}/tmp/cache"</li>
+			<li ~m>Optimize the code</li>
+				<ul>
+					<li ~m>Profile, find bottlenecks with existing tools</li>
+					<li ~m>Delayed Jobs</li>
+					<li ~m>Replace software with services</li>
+						<ul>
+							<li ~m>Solr for search</li>
+							<li ~m>Sinatra for computations etc.</li>
+						</ul>
+				</ul>
+			<li ~m>Database tweaks</li>
+			<ul>
+				<li ~m>In-memory DB - Redis</li>
+				<li ~m>Fine-tune existing MySQL database:</li>
+					<ul>
+					<li ~m>Indexes</li>
+					<li ~m>Configuration</li>
+					<li ~m>De-normalization</li>
+					</ul>
+			</ul>
+			<li ~m>Types of caching</li>
+			<li ~m>JRuby</li>
+			<li ~m>Adding Hardware</li>
+		</ul>
+	</div>
+
+	<div ~s>
+		<h2 ~m>Add the cache</h2>
+
+		<h3  ~m>Add to development.rb:</h3>
+		<ul>
+			<li ~m>config.action_controller.perform_caching = true</li>
+			<li ~m>config.cache_store = :file_store, "#{Rails.root}/tmp/cache"</li>
 		</ul>
 
-		<h3 ~>And add to the products controller:</h3>
+		<h3 ~m>And add to the products controller:</h3>
 		<ul>
-			<li ~>caches_action :galery, :cache_path => :products_cache_path.to_proc</li>
-			<li ~>def products_cache_path<br/>
+			<li ~m>caches_action :galery, :cache_path => :products_cache_path.to_proc</li>
+			<li ~m>def products_cache_path<br/>
 			current_user_id = current_user.nil?? 0 : current_user.id<br/>
 			"home_index/#{params[:page]}/#{current_user_id}"<br/>
 		end<br/></li>
 		</ul>
 		
-		<div ~ style="background: #eee">
+		<div ~m style="background: #eee">
 			Transaction rate:	       84.42 trans/sec   <span data-jmpress="drive-left after 4000ms step" style="color:#4f4">WOW!!</span><br/>
 			And once again:<br/>
 			Transaction rate:	       91.20 trans/sec   (Which makes sense.) <span data-jmpress="drive-left after 4300ms step" style="color:#4f4">Weee!!</span><br/><br/>
 		</div>
 	</div>
-	<div class="step" data-x="2000">
-		<h3 ~>rails s Puma:</h3>
-		<div ~>
+	<div ~s>
+		<h3 ~m>rails s Puma:</h3>
+		<div ~m>
 			Transaction rate:	       97.84 trans/sec  (Even better)<br/>
 
 			[More detailed explanation of caches_action goes here, in addition to descriptions of other caching types]<br/>
 			http://guides.rubyonrails.org/caching_with_rails.html<br/>
 		</div>
 	</div>
-	<div class="step" data-x="3000">
-		<p ~>You might think it is boring...</p>
+	<div ~s>
+		<p ~m>You might think it is boring...</p>
 	</div>
-	<div class="step" data-x="4000">
-		<p ~>but that is the point. This is a simple example.</p>
+	<div ~s>
+		<p ~m>but that is the point. This is a simple example.</p>
 	</div>
-	<div id="yoyo" class="step"  data-x="0" data-y="700">
-		<p ~><b>substep 0 + 1s</b></p>
+	<div ~s>
+		<p ~m><b>substep 0 + 1s</b></p>
     </div>
 </div>
 

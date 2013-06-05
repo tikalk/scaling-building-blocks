@@ -4,27 +4,33 @@
 
 $milliseconds = 500
 $milliseconds_adder = 300
+$step = 0
 
 begin 
 	def process(line)
-		if line =~ /class="step"/
-			$milliseconds = 800
+		if line =~ /~s/
+			$milliseconds = 500
 		end
 
-		if line =~ /~/
+		if line =~ /~m/
 			$milliseconds += $milliseconds_adder
 		end
 
-		unless line =~ /data-jmpress=/
-			line.sub('~', 'data-jmpress="zoom after ' << $milliseconds.to_s << 'ms step"')
-		else
-			line
+		if line =~ /~s/
+			$step += 1
+			line = line.sub('~s', 'class="step" data-x="' << ($step*1000).to_s << '" data-y="0"')
 		end
+
+		if line =~ /~m/
+			line = line.sub('~m', 'data-jmpress="zoom after ' << $milliseconds.to_s << 'ms step"')
+		end
+
+		line
 	end
 
 	# Open files 
 	f1 = File.open(ARGV[0], 'r')
-	f2 = File.open(File.dirname(ARGV[0])  + '/2' + File.basename(ARGV[0]), 'w') 
+	f2 = File.open(File.dirname(ARGV[0])  + '/out-' + File.basename(ARGV[0]), 'w') 
 
 	# read and write
 	while line = f1.gets  
