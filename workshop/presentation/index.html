@@ -263,8 +263,14 @@
 		<h3 ~m>
 			Redis is an open source, BSD licensed, advanced key-value store. It is often referred to as a data structure server since keys can contain strings, hashes, lists, sets and sorted sets.
 		</h3><br/>
-		<div ~m>In other words, Redis is an ultra-fast key-value in-memory database with lots of options used by the 'big fishes' like Twitter, Instagram, Tumblr, Flickr, Stackoverflow etc. <br/>
-		Can be even more fine tuned for better performance, read about it on Instagram's developers blog.</div>
+		<div ~m>
+			In other words, Redis is an ultra-fast key-value in-memory database with lots of options used by the 'big fishes' like Twitter, Instagram, Tumblr, Flickr, Stackoverflow etc. <br/>
+			Can be even more fine tuned for better performance, read about it on Instagram's developers blog.
+		</div>
+
+		<div ~m>Right after migration of likes to redis (changed only the output in products) improvement was about <strong>⅕  increase in speed</strong> (<strong>2.43</strong> trans/sec -> <strong>2.93</strong> trans/sec --> (and with reviews on redis) --> <strong>3.14</strong> trans/sec ).</div><br/>
+		<div ~m>Since we’re adding complexity to our code, it’s important to use a well-defined <strong>interface</strong> (such as in the module we created) for all operations. We need to implement a Facade Design Pattern which will communicate with Redis. That way, when and if we’ll want replace Redis with something else, we will only change this Facade without the  need to search and replace the code where all the references to Redis exist. Modules could help here.</div>
+
 	</div>
 </div>
 

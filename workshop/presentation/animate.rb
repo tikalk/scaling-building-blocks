@@ -23,7 +23,8 @@ begin
 
 		if line =~ /~s/
 			$step += 1
-			line = line.sub('~s', 'class="step" data-x="' << (($step % $cols_per_row) *1000).to_s << '" data-y="'+(($step / $cols_per_row) *700).to_s+'"')
+			# i'm pretending that I know what I'm doing with these data-x/y etc. But it gives nice result! :)
+			line = line.sub('~s', 'class="step" data-x="' << (($step % $cols_per_row) *1000).to_s << '" data-y="'+(($step / $cols_per_row) *700).to_s+'"' << ' data-scale="0.'+ (($step%2==0)? '2' : '4') +'" data-rotate-'+ (($step%2==0)? 'x' : 'y') +'="30"')
 		end
 
 		if line =~ /~m/
