@@ -19,45 +19,45 @@
 
 <div id="simple">
 	<div id="home" class="step">
-		<h1 ~>What will be covered</h1>
+		<h1 data-jmpress="zoom after 1100ms step">What will be covered</h1>
 		<ul>
-			<li ~>When we will need this?</li>
-			<li ~>Concurrent massive landing</li>
-			<li ~>The system is under stress</li>
-			<li ~>Response time is growing</li>
-			<li ~>If you want peaceful life, prepare yourself for the battle!</li>
+			<li data-jmpress="zoom after 1400ms step">When we will need this?</li>
+			<li data-jmpress="zoom after 1700ms step">Concurrent massive landing</li>
+			<li data-jmpress="zoom after 2000ms step">The system is under stress</li>
+			<li data-jmpress="zoom after 2300ms step">Response time is growing</li>
+			<li data-jmpress="zoom after 2600ms step">If you want peaceful life, prepare yourself for the battle!</li>
 		</ul>
 		<br/>
-		<h2 ~>Prerequisites</h2>
-		<p ~>sudo apt-get install siege memcached redis<p>
+		<h2 data-jmpress="zoom after 2900ms step">Prerequisites</h2>
+		<p data-jmpress="zoom after 3200ms step">sudo apt-get install siege memcached redis<p>
 	</div>
 	<div class="step" data-x="1000">
-		<h2 ~>Add the cache</h2>
+		<h2 data-jmpress="zoom after 1100ms step">Add the cache</h2>
 
-		<h3  ~>Add to development.rb:</h3>
+		<h3  data-jmpress="zoom after 1400ms step">Add to development.rb:</h3>
 		<ul>
-			<li ~>config.action_controller.perform_caching = true</li>
-			<li ~>config.cache_store = :file_store, "#{Rails.root}/tmp/cache"</li>
+			<li data-jmpress="zoom after 1700ms step">config.action_controller.perform_caching = true</li>
+			<li data-jmpress="zoom after 2000ms step">config.cache_store = :file_store, "#{Rails.root}/tmp/cache"</li>
 		</ul>
 
-		<h3 ~>And add to the products controller:</h3>
+		<h3 data-jmpress="zoom after 2300ms step">And add to the products controller:</h3>
 		<ul>
-			<li ~>caches_action :galery, :cache_path => :products_cache_path.to_proc</li>
-			<li ~>def products_cache_path<br/>
+			<li data-jmpress="zoom after 2600ms step">caches_action :galery, :cache_path => :products_cache_path.to_proc</li>
+			<li data-jmpress="zoom after 2900ms step">def products_cache_path<br/>
 			current_user_id = current_user.nil?? 0 : current_user.id<br/>
 			"home_index/#{params[:page]}/#{current_user_id}"<br/>
 		end<br/></li>
 		</ul>
 		
-		<div ~ style="background: #eee">
+		<div data-jmpress="zoom after 3200ms step" style="background: #eee">
 			Transaction rate:	       84.42 trans/sec   <span data-jmpress="drive-left after 4000ms step" style="color:#4f4">WOW!!</span><br/>
 			And once again:<br/>
 			Transaction rate:	       91.20 trans/sec   (Which makes sense.) <span data-jmpress="drive-left after 4300ms step" style="color:#4f4">Weee!!</span><br/><br/>
 		</div>
 	</div>
 	<div class="step" data-x="2000">
-		<h3 ~>rails s Puma:</h3>
-		<div ~>
+		<h3 data-jmpress="zoom after 1100ms step">rails s Puma:</h3>
+		<div data-jmpress="zoom after 1400ms step">
 			Transaction rate:	       97.84 trans/sec  (Even better)<br/>
 
 			[More detailed explanation of caches_action goes here, in addition to descriptions of other caching types]<br/>
@@ -65,13 +65,14 @@
 		</div>
 	</div>
 	<div class="step" data-x="3000">
-		<p ~>You might think it is boring...</p>
+		<p data-jmpress="zoom after 1100ms step">You might think it is boring...</p>
 	</div>
 	<div class="step" data-x="4000">
-		<p ~>but that is the point. This is a simple example.</p>
+		<p data-jmpress="zoom after 1100ms step">but that is the point. This is a simple example.</p>
 	</div>
 	<div id="yoyo" class="step"  data-x="0" data-y="700">
-		<p ~><b>substep 0 + 1s</b></p>
+		<p data-jmpress="zoom after 1100ms step"><b>substep 0 + 1s</b></p>
+		<p data-jmpress="zoom after 1400ms step">fade after 1s step: should fade in after 1s</p>
     </div>
 </div>
 
