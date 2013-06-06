@@ -16,3 +16,6 @@ User.create! email: 'val.hoffman@gmail.com', password: 'trap%973'
 == Benchmark
   sudo apt-get install siege
   cd benchmarking/ && siege -c50 -d1 -i -t30S -f site.txt
+
+== To run the migrations change the migration filename from the root
+   bundle exec rails runner "eval(File.read 'workshop/migrations/001_duplicate_products.rb')"
