@@ -1,0 +1,25 @@
+img {
+	position: absolute;
+	height: auto;
+	right: 50px;
+	top: 50px;
+}
+.step1 img {
+	width: 120px;
+}
+.slide1.image1 {
+	right: 180px;
+	top: 50px;
+}
+.slide1.image2 {
+	right: 50px;
+	top: 50px;
+}
+.slide1.image3 {
+	right: 50px;
+	top: 200px;
+}
+.slide1.image4 {
+	right: 180px;
+	top: 200px;
+}

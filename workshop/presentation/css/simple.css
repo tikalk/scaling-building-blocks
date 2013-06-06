@@ -1,12 +1,12 @@
 /** GENERAL **/
 @font-face {
 	font-family: openSans;
-	src: url('fonts/OpenSans-Regular.ttf')
+	src: url('../fonts/OpenSans-Regular.ttf')
 }
 
 @font-face {
 	font-family: openTitle;
-	src: url('fonts/OpenSans-Regular.ttf')
+	src: url('../fonts/OpenSans-Regular.ttf')
 }
 
 body {
