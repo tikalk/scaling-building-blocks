@@ -1,4 +1,6 @@
 Pinukimmm::Application.routes.draw do
+  get "benchmark/fetch_products_randomly"
+
   devise_for :users  # must be before RailsAdmin::engine
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
