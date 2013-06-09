@@ -1,17 +1,7 @@
-class CartsController < ApplicationController
-  def show
-    @cart = current_cart
-    # @cart_items = current_cart.cart_items.inject({}) do |hash, obj| 
-    #   if !hash.has_key?(obj.product_id)  
-    #   	hash[obj.product_id] = obj 
-    #   else 
-    #   	hash[obj.product_id].quantity = hash[obj.product_id].quantity + obj.quantity;  
-    #   end
-    #   hash
-    # end
-  end
+class HardWorker
+  include Sidekiq::Worker
 
-  def checkout
+  def checkout_worker
     # Use the TrustCommerce test servers
     ActiveMerchant::Billing::Base.mode = :test
 
