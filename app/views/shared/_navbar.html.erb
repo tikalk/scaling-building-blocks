@@ -5,10 +5,10 @@
       <div class='logged_in user'>
       <% if !@logged_in_user.blank? %>
         <%= @logged_in_user.email %><br/>
-        <%= link_to 'Logout', destroy_user_session_path, :method => :delete  %>
+        <%= link_to 'יציאה', destroy_user_session_path, :method => :delete  %> | 
         <%= link_to 'עגלת הקניות', current_cart_path %>
       <% else %>  
-        Please <%= link_to 'Log in', user_session, :method => :delete  %>.
+        Please <%= link_to 'כניסה', user_session, :method => :delete  %>.
       <% end %>
       </div>
   
