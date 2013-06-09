@@ -17,6 +17,7 @@ Pinukimmm::Application.routes.draw do
 
   root :to => 'products#index'
   match 'current_cart' => 'carts#show'
+  match 'current_cart_clear_token' => 'carts#clear_token'
   match 'current_cart_checkout' => 'carts#checkout'
 
 

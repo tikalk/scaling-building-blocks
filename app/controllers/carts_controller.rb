@@ -13,6 +13,13 @@ class CartsController < ApplicationController
 
   def checkout
     @cart = current_cart
-    CheckoutWorker.perform_async(@cart.id)
+    CheckoutWorker.perform_async(@cart.id) if @cart.token.nil?
+  end
+
+  def clear_token
+    @cart = current_cart
+    @cart.token = nil
+    @cart.save!
+    redirect_to root_path
   end
 end

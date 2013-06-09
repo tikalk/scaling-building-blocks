@@ -7,4 +7,7 @@
   <div class='body'>
     <%= @cart.token %>
   </div>
+  <div class='body'>
+  	<%= link_to 'Clear token', current_cart_clear_token_path, method: :post %>
+  </div>
 </div>
