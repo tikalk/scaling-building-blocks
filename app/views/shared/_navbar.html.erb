@@ -2,12 +2,14 @@
 
   <div class="navbar-inner" dir="rtl">
     <div id="notifications">
+      <div class='logged_in user'>
       <% if !@logged_in_user.blank? %>
-          <div class='logged_in user'>
-          <%= @logged_in_user.email %><br/>
-          <%= link_to 'Logout', destroy_user_session_path, :method => :delete  %>
-        </div>
+        <%= @logged_in_user.email %><br/>
+        <%= link_to 'Logout', destroy_user_session_path, :method => :delete  %>
+      <% else %>  
+        Please <%= link_to 'Log in', user_session, :method => :delete  %>.
       <% end %>
+      </div>
   
       <p class="notice <%= 'hidden' if notice.blank? %>"><%= notice %></p>
       <p class="alert <%= 'hidden' if alert.blank? %>"><%= alert %></p>

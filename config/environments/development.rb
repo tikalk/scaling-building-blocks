@@ -4,7 +4,7 @@ Pinukimmm::Application.configure do
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
-  config.cache_classes = true
+  config.cache_classes = false
 
   # Log error messages when you accidentally call methods on nil.
   config.whiny_nils = true
@@ -12,7 +12,7 @@ Pinukimmm::Application.configure do
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
 
-  config.action_controller.perform_caching = true
+  config.action_controller.perform_caching = false
   config.cache_store = :dalli_store, { :namespace => 'pinukimmm', :expires_in => 1.day, :compress => true }
   #config.cache_store = :file_store, "#{Rails.root}/tmp/cache"
   #config.cache_store = :redis_store, "redis://localhost:6379/0/cache", { expires_in: 90.minutes }
