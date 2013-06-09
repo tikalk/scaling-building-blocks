@@ -14,7 +14,7 @@ class Cart < ActiveRecord::Base
   has_many :cart_items
   has_many :products, :through => :cart_items
 
-  attr_accessible :user_id
+  attr_accessible :user_id, :token
   
   def total_price
     cart_items.to_a.sum(&:full_price)

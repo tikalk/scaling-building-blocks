@@ -1,7 +1,7 @@
-class HardWorker
+class CheckoutWorker
   include Sidekiq::Worker
 
-  def checkout_worker
+  def perform(cart_id)
     # Use the TrustCommerce test servers
     ActiveMerchant::Billing::Base.mode = :test
 
@@ -26,11 +26,19 @@ class HardWorker
       # Capture $10 from the credit card
       response = gateway.purchase(amount, credit_card)
 
+      cart = Cart.find(cart_id)
+
       if response.success?
         @response_message = "Successfully charged $#{sprintf("%.2f", amount / 100)} to the credit card #{credit_card.display_number}"
+        # let's dump the message to the token
+        cart.token = @response_message
+        pp 'success'
       else
-        @response_message = response.message
+        cart.token = response.message
+        pp 'failure'
       end
+
+      cart.save!
     end
 
     #### Update account balance and perform other calculations 
