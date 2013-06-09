@@ -7,7 +7,7 @@ gem 'rails', '3.2.13'
 gem 'puma'
 gem 'dalli'   # memcached client
 gem 'redis-rails'   # another cache store
-gem 'sunspot_rails'
+gem 'sunspot_rails', github: 'sunspot/sunspot', branch: 'master'
 
 gem 'mysql2'
 gem 'devise'
@@ -37,7 +37,8 @@ group :assets do
 end
 
 group :development do
-  gem 'sunspot_solr'  # optional pre-packaged Solr distribution for use in development
+  # optional pre-packaged Solr distribution for use in development
+  gem 'sunspot_solr', github: 'sunspot/sunspot', branch: 'master'
   gem 'rails-dev-boost', :git => 'git://github.com/thedarkone/rails-dev-boost.git'
   gem 'annotate', ">=2.5.0"
 end
@@ -63,6 +64,7 @@ group :development, :test do
   gem 'pry-stack_explorer'
   gem 'pry-debugger'
   gem 'pry-doc'
+  gem 'progress_bar'
 end
 
 gem 'jquery-rails'

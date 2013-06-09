@@ -24,5 +24,14 @@ User.create! email: 'val.hoffman@gmail.com', password: 'trap%973'
    bundle exec sidekiq -L log/sidekiq.log &
    tail -f log/sidekiq.log
 
+== Install Solr
+   using these instructions: https://groups.google.com/forum/?fromgroups=#!topic/ruby-sunspot/c6OVesLyaSI
+
 == To start solr
    bundle exec rake sunspot:solr:start
+
+== To reindex
+   rake sunspot:solr:reindex   (without bundle exec)
+
+== Sample search   
+   Product.search { fulltext "מלפפון" }.results
