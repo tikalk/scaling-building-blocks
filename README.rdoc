@@ -23,3 +23,6 @@ User.create! email: 'val.hoffman@gmail.com', password: 'trap%973'
 == To start sidekiq with loggin
    bundle exec sidekiq -L log/sidekiq.log &
    tail -f log/sidekiq.log
+
+== To start solr
+   bundle exec rake sunspot:solr:start

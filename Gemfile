@@ -7,6 +7,7 @@ gem 'rails', '3.2.13'
 gem 'puma'
 gem 'dalli'   # memcached client
 gem 'redis-rails'   # another cache store
+gem 'sunspot_rails'
 
 gem 'mysql2'
 gem 'devise'
@@ -36,6 +37,7 @@ group :assets do
 end
 
 group :development do
+  gem 'sunspot_solr'  # optional pre-packaged Solr distribution for use in development
   gem 'rails-dev-boost', :git => 'git://github.com/thedarkone/rails-dev-boost.git'
   gem 'annotate', ">=2.5.0"
 end
