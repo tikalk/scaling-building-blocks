@@ -38,6 +38,11 @@ class ProductsController < ApplicationController
     end
   end
 
+  def search
+    q = params[:product][:name]
+    @products = Product.where("name LIKE ?", "%#{q}%").reverse_order().page(params[:page]).per(30)
+  end
+
   # GET /products/1
   # GET /products/1.json
   def show
