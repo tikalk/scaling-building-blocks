@@ -30,7 +30,7 @@
     <% for product in @products %>
       <tr>
         <td><%= link_to h(product.name), product %></td>
-        <td><%= number_to_currency(product.price) %>
+        <td><%= number_to_currency(product.price) %></td>
         <td><%= image_tag 'carousel-02-1469a00ede72cd4fd93ffe908b73b8b9.jpg', :style => 'width: 160px; height: auto' %>
         </td>
         <td>
