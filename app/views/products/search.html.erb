@@ -26,14 +26,15 @@
   <tbody>
     <% for product in @products %>
       <tr>
-        <td><%= link_to h(product.name), product %></td>
-        <td><%= number_to_currency(product.price) %>
+        <td><%= link_to h(product.stored(:name)), product.stored(:product_path) %></td>
+        <td><%= number_to_currency(product.stored(:price)) %></td>
+
         <td><%= image_tag 'carousel-02-1469a00ede72cd4fd93ffe908b73b8b9.jpg', :style => 'width: 160px; height: auto' %>
         </td>
         <td>
-          Num.Likes: <%= product.number_of_likers %><br/>
-          Avg.Likeability: <%= product.average_likeability %><br/>
-          Num.Reviews: <%= product.number_of_reviews %><br/>
+          Num.Likes: <%= product.stored(:number_of_likers) %><br/>
+          Avg.Likeability: <%= product.stored(:average_likeability) %><br/>
+          Num.Reviews: <%= product.stored(:number_of_reviews) %><br/>
         </td>
         <td> 
           <div class="action">
@@ -43,7 +44,7 @@
             <%= link_to 'Edit', edit_product_path(product) %>
           </div>
           <div class="action">
-            <%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %>
+            <%= link_to 'Destroy', product.stored(:product_path), method: :delete, data: { confirm: 'Are you sure?' } %>
           </div>
           <% if !@logged_in_user.blank? %>
             <%= form_for product.cart_items.build do |f| %>

@@ -16,6 +16,8 @@ class Product < ActiveRecord::Base
   include ProductLikes
   include ProductReviews
 
+  include Rails.application.routes.url_helpers    # path helpers
+
   has_many :order_products    # product_orders better name, but alphabetially here.
   has_many :orders, :through => :order_products
 
@@ -36,8 +38,15 @@ class Product < ActiveRecord::Base
   after_update :crop_image
 
   searchable do
-    text :name
-    integer :price
+    text :name, :stored => true
+    integer :price, :stored => true
+    integer :number_of_likers, :stored => true 
+    float :average_likeability, :stored => true
+    integer :number_of_reviews, :stored => true
+    string :product_path, :stored => true do 
+      Rails.application.routes.url_helpers.product_path(self)
+    end
+
   end
 
   
