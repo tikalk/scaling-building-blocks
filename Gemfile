@@ -8,6 +8,7 @@ gem 'puma'
 gem 'dalli'   # memcached client
 gem 'redis-rails'   # another cache store
 gem 'sunspot_rails', github: 'sunspot/sunspot', branch: 'master'
+gem "sunspot_with_kaminari", '~> 0.2.0'
 
 gem 'mysql2'
 gem 'devise'

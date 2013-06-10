@@ -40,7 +40,8 @@ class ProductsController < ApplicationController
 
   def search
     q = params[:product][:name]
-    @products = Product.where("name LIKE ?", "%#{q}%").reverse_order().page(params[:page]).per(30)
+    #@products = Product.where("name LIKE ?", "%#{q}%").reverse_order().page(params[:page]).per(30)
+    @products = Product.search { fulltext q; paginate :page => 1, :per_page => 30 }.results
   end
 
   # GET /products/1
