@@ -38,6 +38,7 @@ class Product < ActiveRecord::Base
   after_update :crop_image
 
   searchable do
+    integer :id, :stored => true
     text :name, :stored => true
     integer :price, :stored => true
     integer :number_of_likers, :stored => true 
