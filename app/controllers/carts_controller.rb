@@ -1,6 +1,11 @@
 class CartsController < ApplicationController
   def show
     @cart = current_cart
+
+    # remove nil products if there's any
+    deleted = @cart.cart_items.delete_if { |item| item.product.nil? }
+    @cart.save! if !deleted.empty?
+
     # @cart_items = current_cart.cart_items.inject({}) do |hash, obj| 
     #   if !hash.has_key?(obj.product_id)  
     #   	hash[obj.product_id] = obj 
