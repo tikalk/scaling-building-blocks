@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'benchmark'
 
 class BenchmarkController < ApplicationController
@@ -13,28 +15,22 @@ class BenchmarkController < ApplicationController
   #
   def fetch_products_randomly(num_requests = 10)
   	items_perpage = 30
-  	pages_num = Rails.cache.fetch("pages-num" , :expires_in => 10.minutes) do
-  		Product.count / items_perpage
-  	end
+  	pages_num = Product.count / items_perpage
   	
   	Benchmark.measure do 
-  		for i in 1..num_requests
-	  		random_page_num = i #Random.rand(1..pages_num)
+      for i in 1..num_requests
+        word = %w(מ מל מלפ מלפפ מלפפו מלפפון).sample
+	  		random_page_num = Random.rand(1..pages_num)
+		  	@products = Product.search { fulltext word; paginate :page => random_page_num, :per_page => 30 }.hits
 
-	  		# Rails.cache.fetch won't work here
-	  		@products = Rails.cache.read("products-cache-#{random_page_num}")
-		  	if @products.nil?
-		  		@products = Product.where("id > ?", 0).reverse_order().page(random_page_num).per(items_perpage)	
-		  		Rails.cache.write("products-cache-#{random_page_num}", @products.all, :expires_in => 1.hour)
-		  	end
-		  	
 		  	# That's basicallhy what's rendered in view, so let the ticks count
 		  	@products.each do |product|
-			  	nl = product.number_of_likers
-			    al = "%.1f" % product.average_likeability
-			    nr = product.number_of_reviews
-			end
-		end
-	end
+			  	nl = product.stored(:number_of_likers)
+			    al = "%.1f" % product.stored(:average_likeability)
+			    nr = product.stored(:number_of_reviews)
+          #pp "nl, al, nr:  #{nl}, #{al}, #{nr} "
+  			end
+      end
+  	end
   end
 end
