@@ -13,21 +13,14 @@ class BenchmarkController < ApplicationController
   #
   def fetch_products_randomly(num_requests = 10)
   	items_perpage = 30
-  	pages_num = Rails.cache.fetch("pages-num" , :expires_in => 10.minutes) do
-  		Product.count / items_perpage
-  	end
+  	pages_num = Product.count / items_perpage
   	
   	Benchmark.measure do 
   		for i in 1..num_requests
 	  		random_page_num = Random.rand(1..pages_num)
 
-	  		# Rails.cache.fetch won't work here
-	  		@products = Rails.cache.read("products-cache-#{random_page_num}")
-	  		#binding.pry
-		  	if @products.nil?
-		  		@products = Product.where("id > ?", 0).reverse_order().page(random_page_num).per(items_perpage)	
-		  		Rails.cache.write("products-cache-#{random_page_num}", @products.all, :expires_in => 1.hour)
-		  	end
+		  	@products = Product.where("id > ?", 0).reverse_order().page(random_page_num).per(items_perpage)	
+		  	Rails.cache.write("products-cache-#{random_page_num}", @products.all, :expires_in => 1.hour)
 		  	
 		  	# That's basicallhy what's rendered in view, so let the ticks count
 		  	@products.each do |product|
