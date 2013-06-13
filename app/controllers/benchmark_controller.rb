@@ -20,7 +20,6 @@ class BenchmarkController < ApplicationController
 	  		random_page_num = Random.rand(1..pages_num)
 
 		  	@products = Product.where("id > ?", 0).reverse_order().page(random_page_num).per(items_perpage)	
-		  	Rails.cache.write("products-cache-#{random_page_num}", @products.all, :expires_in => 1.hour)
 		  	
 		  	# That's basicallhy what's rendered in view, so let the ticks count
 		  	@products.each do |product|
