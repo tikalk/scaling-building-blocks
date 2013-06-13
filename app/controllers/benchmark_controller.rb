@@ -19,7 +19,7 @@ class BenchmarkController < ApplicationController
   	
   	Benchmark.measure do 
   		for i in 1..num_requests
-	  		random_page_num = i #Random.rand(1..pages_num)
+	  		random_page_num = Random.rand(1..pages_num)
 
 	  		# Rails.cache.fetch won't work here
 	  		@products = Rails.cache.read("products-cache-#{random_page_num}")
@@ -34,8 +34,8 @@ class BenchmarkController < ApplicationController
 			  	nl = product.number_of_likers
 			    al = "%.1f" % product.average_likeability
 			    nr = product.number_of_reviews
-			end
-		end
-	end
+  			end
+  		end
+  	end
   end
 end
