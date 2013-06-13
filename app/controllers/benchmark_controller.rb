@@ -21,7 +21,7 @@ class BenchmarkController < ApplicationController
       for i in 1..num_requests
         word = %w(מ מל מלפ מלפפ מלפפו מלפפון).sample
 	  		random_page_num = Random.rand(1..pages_num)
-		  	@products = Product.where("name LIKE ?", "%#{word}%").reverse_order().page(random_page_num).per(30)
+		  	@products = Product.search { fulltext word; paginate :page => random_page_num, :per_page => 30 }.results
 
 		  	# That's basicallhy what's rendered in view, so let the ticks count
 		  	@products.each do |product|
