@@ -5,6 +5,7 @@
 $milliseconds = 500
 $milliseconds_adder = 300
 $step = 0
+$substep = 0
 $cols_per_row = 5
 
 begin 
@@ -23,12 +24,20 @@ begin
 
 		if line =~ /~s/
 			$step += 1
+			$substep = 0
 			# i'm pretending that I know what I'm doing with these data-x/y etc. But it gives nice result! :)
 			line = line.sub('~s', 'class="step step' << ($step.to_s) <<'" data-x="' << (($step % $cols_per_row) *1000).to_s << '" data-y="'+(($step / $cols_per_row) *700).to_s+'"' << ' data-scale="0.'+ (($step%2==0)? '2' : '4') +'" data-rotate-'+ (($step%2==0)? 'x' : 'y') +'="30"')
 		end
 
 		if line =~ /~m/
-			line = line.sub('~m', 'data-jmpress="zoom after ' << $milliseconds.to_s << 'ms step"')
+			line = line.sub('~m', 'id="step-' << ($substep.to_s) << '" ~m')
+
+			if $substep != 0
+				line = line.sub('~m', 'data-jmpress="zoom after step-' << (($substep -1).to_s) << '"')
+			else 
+				line = line.sub('~m', 'data-jmpress="zoom after step"')
+			end
+			$substep += 1
 		end
 
 		line

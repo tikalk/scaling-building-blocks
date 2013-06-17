@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Scalability Workshop</title>
+
+	<meta name="description" content="Prepare your website for the big show.">
+	<meta name="author" content="val.hoffman@gmail.com, val@tikalk.com" />
+	<meta name="viewport" content="width=device-width, maximum-scale=1.0, initial-scale=1.0, user-scalable=yes" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<link href="css/simple.css" rel="stylesheet" type="text/css" />
+	<link href="css/basic-animations.css" rel="stylesheet" type="text/css" />
+	<link href="css/images.css" rel="stylesheet" type="text/css" />
+
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script type="text/javascript" src="jmpress.js"></script>
+</head>
+<body>
+
+<div id="simple">
+	<div id="home" class="step step1" data-x="1000" data-y="0" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =1= </span>
+		<img class="slide1 image1" src="images/slide1/ruby_logo.png"/>
+		<img class="slide1 image4" src="images/slide1/nginx.png"/>
+		<h1 data-jmpress="zoom after 800ms step">What will be covered</h1>
+		<ul>
+			<li data-jmpress="zoom after 1100ms step">When we will need this?</li>
+			<li data-jmpress="zoom after 1400ms step">Concurrent massive landing</li>
+			<li data-jmpress="zoom after 1700ms step">The system is under stress</li>
+			<li data-jmpress="zoom after 2000ms step">Response time is growing</li>
+			<li data-jmpress="zoom after 2300ms step">If you want peaceful life, prepare yourself for the battle!</li>
+		</ul>
+		<br/>
+		<h2 data-jmpress="zoom after 2600ms step">Prerequisites</h2>
+		<p data-jmpress="zoom after 2900ms step" class='code'>sudo apt-get install siege memcached redis<p>
+	</div>
+
+	<div id="home" class="step step2" data-x="2000" data-y="0" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =2= </span>
+		<h2 data-jmpress="zoom after 800ms step">Main Topics</h2>
+		<ul>
+			<li data-jmpress="zoom after 1100ms step">Optimize the code</li>
+				<ul>
+					<li data-jmpress="zoom after 1400ms step">Profile, find bottlenecks with existing tools</li>
+					<li data-jmpress="zoom after 1700ms step">Delayed Jobs</li>
+					<li data-jmpress="zoom after 2000ms step">Replace software with services</li>
+						<ul>
+							<li data-jmpress="zoom after 2300ms step">Solr for search</li>
+							<li data-jmpress="zoom after 2600ms step">Sinatra for computations etc.</li>
+						</ul>
+				</ul>
+			<li data-jmpress="zoom after 2900ms step">Database tweaks</li>
+			<ul>
+				<li data-jmpress="zoom after 3200ms step">In-memory DB - Redis</li>
+				<li data-jmpress="zoom after 3500ms step">Fine-tune existing MySQL database:</li>
+					<ul>
+					<li data-jmpress="zoom after 3800ms step">Indexes</li>
+					<li data-jmpress="zoom after 4100ms step">Configuration</li>
+					<li data-jmpress="zoom after 4400ms step">De-normalization</li>
+					</ul>
+			</ul>
+			<li data-jmpress="zoom after 4700ms step">Types of caching</li>
+			<li data-jmpress="zoom after 5000ms step">JRuby</li>
+			<li data-jmpress="zoom after 5300ms step">Adding Hardware</li>
+		</ul>
+	</div>
+
+	<div id="home" class="step step3" data-x="3000" data-y="0" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =3= </span>
+		<h2 data-jmpress="zoom after 800ms step">What is web application?</h2><br/>
+		<div data-jmpress="zoom after 1100ms step">By default SQLite is the development DB. <strong>It's not a production Database.</strong> </div><br/>
+		<div data-jmpress="zoom after 1400ms step">But it's working just out of the box.</div><br/>
+		<div data-jmpress="zoom after 1700ms step">This summarizes the following: Web applications are mainly just a... <span data-jmpress="drive-left after 3500ms step" style="color:#4f4">Database.</span></div><br/>
+		<div data-jmpress="zoom after 2000ms step">It's just a convenient concept. <br/>
+			So <strong>better algorithms for data manipulation give us horizontal scalability</strong>.</div><br/>
+		<div data-jmpress="zoom after 2300ms step">Other types of scaling include adding processing power, use external services etc.</div>
+	</div>
+
+	<div id="home" class="step step4" data-x="4000" data-y="0" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =4= </span>
+		<h3 data-jmpress="zoom after 800ms step">Let's create our application</h3>
+		<div data-jmpress="zoom after 1100ms step">We will use a prepared app. Instead of carrying a large database, we'll just generate a few records, make relations and clone them several thousand times like so:</div>
+		
+		<code>
+			<pre data-jmpress="zoom after 1400ms step">
+			plast = Product.last
+			for i in 0..4000
+			    dupobj = plast.dup
+			    dupobj.image = plast.image
+			    dupobj.save!
+			end
+			</pre>
+		</code>
+
+		<code data-jmpress="zoom after 1700ms step">
+			<pre data-jmpress="zoom after 2000ms step">
+			# Populate the likes and reviews
+			# 100 times randomly add likes and reviews to products
+			like_ids_range = Like.first.id..Like.last.id
+			review_ids_range = Review.first.id..Review.last.id
+			product_ids_range = Product.first.id..Product.last.id
+			for i in 1..5000
+			  p = Product.find(Random.new.rand(product_ids_range))
+			  p.likes << Like.find(Random.new.rand(like_ids_range))
+			  p.reviews << Review.find(Random.rand(review_ids_range))
+			  p.likes.first.likeability = Random.new.rand(1..5)
+			  p.save!
+			end
+			</pre>
+		</code>
+
+		<div data-jmpress="zoom after 2300ms step">The scripts are located under <code>/migration/presentation</code></div>
+	</div>
+
+	<div class="step step5" data-x="0" data-y="700" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =5= </span>
+		<h2 data-jmpress="zoom after 800ms step">Measure the response time</h2>
+
+		<h3 data-jmpress="zoom after 1100ms step">We'll use siege</h3><br/>
+		<div data-jmpress="zoom after 1400ms step"><code>siege -c50 -d10 [-t30S] -i -f site.txt</code></div><br/>
+
+		<div data-jmpress="zoom after 1700ms step">(The -d NUM option sets a random interval between 0 and NUM that each "user" will sleep for between requests. While the -c NUM option sets the concurrent number of simulated users. -t: for how long to run tests or Ctrl-C)</div>
+
+		<div data-jmpress="zoom after 2000ms step">site.txt is has a collection of URLs, one per line:</div><br/>
+
+		<code>
+			<pre data-jmpress="zoom after 2300ms step">
+				http://localhost:3000/products/galery?page=1
+				http://localhost:3000/products/galery?page=50
+				 … 
+				http://localhost:3000/products/galery?page=400
+			</pre>
+		</code>
+		<br/>
+
+		<div data-jmpress="zoom after 2600ms step">The pages URLs will be requested in random order.</div>
+		
+		<div data-jmpress="zoom after 2900ms step" style="background: #eee">
+			No cache:  Transaction rate:       3.72 trans/sec <span data-jmpress="drive-left after 4000ms step" style="color:#4f4"> Mmmm... not bad for an old laptop!</span><br/>
+		</div>
+	</div>
+
+
+	<div class="step step6" data-x="1000" data-y="700" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =6= </span>
+		<h2 data-jmpress="zoom after 800ms step">Add the cache</h2>
+
+		<h3 data-jmpress="zoom after 1100ms step">Add to development.rb:</h3>
+		<code>
+			<pre data-jmpress="zoom after 1400ms step"> 
+				config.action_controller.perform_caching = true
+				config.cache_store = :file_store, "#{Rails.root}/tmp/cache"
+			</pre>
+		</code>
+
+		<h3 data-jmpress="zoom after 1700ms step">And add to the products controller:</h3>
+		<code>
+			<pre data-jmpress="zoom after 2000ms step"> 
+				caches_action :galery, :cache_path => :products_cache_path.to_proc
+				def products_cache_path
+					current_user_id = current_user.nil?? 0 : current_user.id
+					"home_index/#{params[:page]}/#{current_user_id}"
+				end
+			</pre>
+		</code>
+		<br/>
+		<div data-jmpress="zoom after 2300ms step">
+			Transaction rate:	       <strong>84.42</strong> trans/sec   <span data-jmpress="drive-left after 4000ms step" style="color:#4f4">WOW!!</span><br/>
+			And once again:<br/>
+			Transaction rate:	       <strong>91.20</strong> trans/sec   (Which makes sense.) <span data-jmpress="drive-left after 4300ms step" style="color:#4f4">Weee!!</span><br/><br/>
+		</div>
+	</div>
+
+	<div id="home" class="step step7" data-x="2000" data-y="700" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =7= </span>
+		<h3 data-jmpress="zoom after 800ms step">Measure, compare, drive conclusions!</h3>
+		<div data-jmpress="zoom after 1100ms step">We'll use siege and Ruby's benchmark to measure the results. Like this:</div>
+		
+		<code>
+			<pre data-jmpress="zoom after 1400ms step">
+			require 'benchmark'
+			Benchmark.measure { 1000.times { plast.dup.save! } }
+			</pre>
+		</code>
+
+		<div data-jmpress="zoom after 1700ms step">We're measuring the <strong>relative time</strong>. On my Lenovo ThinkPad T500 with several other processes running the results were:</div>
+
+		<div data-jmpress="zoom after 2000ms step">
+			=>   5.590000   0.170000   5.760000 ( 89.742811)  =SECONDS=
+		</div><br/>
+
+		<div data-jmpress="zoom after 2300ms step">Once again, and the results are:</div>
+
+		<div data-jmpress="zoom after 2600ms step">
+			=>   5.650000   0.200000   5.850000 ( 91.374391)
+		</div><br/>
+
+		<div data-jmpress="zoom after 2900ms step">One more time:</div>
+
+		<div data-jmpress="zoom after 3200ms step">
+			=>   5.540000   0.220000   5.760000 ( 96.141258)
+		</div><br/>
+
+		<div data-jmpress="zoom after 3500ms step"> From 3 requests per second to 96, that's difference!<br/>
+			89.7 -> 91.37 -> 96.14 For only one table with less than 10 columns!
+		</div>
+	</div>
+
+	<div class="step step8" data-x="3000" data-y="700" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =8= </span>
+		<h2 data-jmpress="zoom after 800ms step">Switching to another cache_store.</h2>
+
+		<code>
+			<pre data-jmpress="zoom after 1100ms step">
+				gem 'dalli'
+				config.cache_store = :dalli_store
+			</pre>
+		</code>
+
+		<div data-jmpress="zoom after 1400ms step">Transaction rate:	       89.67 trans/sec </div>
+		<div data-jmpress="zoom after 1700ms step">No improvement :((</div>
+
+		<div data-jmpress="zoom after 2000ms step">It's not surprising though. The more data you have, the more performance boost you'll feel.
+		</div>
+
+		<div data-jmpress="zoom after 2300ms step">
+			More on the subject: <a href="http://blog.endpoint.com/2011/07/raw-caching-performance-in-rubyrails.html">read here</a><br/>
+			Dali with even more parameters: <a href="https://github.com/mperham/dalli">read here</a>
+		</div>
+	</div>
+
+	<div class="step step9" data-x="4000" data-y="700" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =9= </span>
+		<div data-jmpress="zoom after 800ms step"><span class="code">rails s Puma</span><br/><br/>
+			89.7 -> 91.37 -> 96.14 For only one table with less than 10 columns!<br/>
+			Transaction rate:	       97.84 trans/sec  (Even better)<br/><br/>
+
+			[More detailed explanation of caches_action goes here, in addition to descriptions of other caching types]<br/>
+			http://guides.rubyonrails.org/caching_with_rails.html
+		</div>
+	</div>
+
+	<div id="home" class="step step10" data-x="0" data-y="1400" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =10= </span>
+		<h2 data-jmpress="zoom after 800ms step">Add indices to DB</h2><br/>
+		<div data-jmpress="zoom after 1100ms step">Indices have their own logic depending on DB. A very simple generic explanation: it’s a lookup table - instead of iteration from beginning. More detailed click <a href="http://dev.mysql.com/doc/refman/5.0/en/mysql-indexes.html">is here</a>.</div><br/>
+		<code>
+			<pre data-jmpress="zoom after 1400ms step">
+			CREATE TABLE test (
+			    id         INT NOT NULL,
+			    last_name  CHAR(30) NOT NULL,
+			    first_name CHAR(30) NOT NULL,
+			    PRIMARY KEY (id),
+			    INDEX name (last_name,first_name)
+			);
+			</pre>
+		</code>
+		<div data-jmpress="zoom after 1700ms step">The index can be used for lookups that specify values for combinations. For example: (last_name,  first_name). That index can also be used just a last_name because it is leftmost in the index.</div>
+	</div>
+
+	<div class="step step11" data-x="1000" data-y="1400" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =11= </span>
+		<h1 data-jmpress="zoom after 800ms step">Utilizing Redis</h1>
+		<h2 data-jmpress="zoom after 1100ms step">What's all the hype about?</h2>
+		<h3 data-jmpress="zoom after 1400ms step">
+			Redis is an open source, BSD licensed, advanced key-value store. It is often referred to as a data structure server since keys can contain strings, hashes, lists, sets and sorted sets.
+		</h3><br/>
+		<div data-jmpress="zoom after 1700ms step">
+			In other words, Redis is an ultra-fast key-value in-memory database with lots of options used by the 'big fishes' like Twitter, Instagram, Tumblr, Flickr, Stackoverflow etc. <br/>
+			Can be even more fine tuned for better performance, read about it on Instagram's developers blog.
+		</div>
+
+		<div data-jmpress="zoom after 2000ms step">Right after migration of likes to redis (changed only the output in products) improvement was about <strong>⅕  increase in speed</strong> (<strong>2.43</strong> trans/sec -> <strong>2.93</strong> trans/sec --> (and with reviews on redis) --> <strong>3.14</strong> trans/sec ).</div><br/>
+		<div data-jmpress="zoom after 2300ms step">Since we’re adding complexity to our code, it’s important to use a well-defined <strong>interface</strong> (such as in the module we created) for all operations. We need to implement a Facade Design Pattern which will communicate with Redis. That way, when and if we’ll want replace Redis with something else, we will only change this Facade without the  need to search and replace the code where all the references to Redis exist. Modules could help here.</div>
+	</div>
+
+	<div class="step step12" data-x="2000" data-y="1400" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =12= </span>
+		<h1 data-jmpress="zoom after 800ms step">Web Proxy Servers</h1>
+		<h2 data-jmpress="zoom after 1100ms step">Apache is cool, but...</h2>
+		<h3 data-jmpress="zoom after 1400ms step">
+			<strong>Nginx</strong> is a high-performance HTTP server and reverse proxy. What's in the package: high performance, stability, rich feature set, simple configuration, and low resource consumption with predictable amounts of memory under load.
+		</h3><br/>
+		<div data-jmpress="zoom after 1700ms step">
+			Typical configuration might look like:
+		</div>
+
+		<code>
+			<pre data-jmpress="zoom after 2000ms step">
+upstream app {
+	server unix:/srv/app/current/tmp/sockets/unicorn.sock fail_timeout=0;
+}
+server {
+        listen   80;
+        server_name  www.app.com;
+        rewrite ^/(.*) http://app.com/$1 permanent;
+}
+		</pre>
+	</code>
+
+	</div>
+
+	<div class="step step13" data-x="3000" data-y="1400" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =13= </span>
+		<code>
+			<pre data-jmpress="zoom after 800ms step">
+server {
+	listen 80;
+	client_max_body_size 2G;
+	server_name app.com;
+	root /srv/app/current/public;
+	access_log  off;
+	error_log off;
+ 
+	if ($request_method !~ ^(GET|HEAD|PUT|POST|DELETE|OPTIONS)$ ){
+	    return 405;
+	} 
+
+	location ~ ^/(assets)/  {  
+	    gzip_static on; ...
+	}  
+
+	location / {
+	    try_files $uri/index.html $uri.html $uri @app;
+	    error_page 404              /404.html;
+	    error_page 500 502 503 504  /500.html; ...
+	}
+
+	location @app {
+	    proxy_pass http://app;
+	}
+}
+		</pre>
+	</code>
+
+	</div>
+
+	<div class="step step14" data-x="4000" data-y="1400" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =14= </span>
+		<h2 data-jmpress="zoom after 800ms step">Swi   dfsafdsaf </h2>
+
+		<code>
+			<pre data-jmpress="zoom after 1100ms step">
+				gem 'dalli'
+				config.cache_store = :dalli_store
+			</pre>
+		</code>
+
+		<div data-jmpress="zoom after 1400ms step">asdasdfasdf </div>
+	</div>
+</div>
+
+<script type="text/javascript">
+$(function() {
+	$('#simple').jmpress();
+});
+</script>
+
+</body>
+</html>
