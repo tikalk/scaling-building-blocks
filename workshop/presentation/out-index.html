@@ -20,29 +20,10 @@
 
 <div id="simple">
 
-	<div id="home" class="step step1" data-x="1000" data-y="0" data-scale="0.4" data-rotate-y="30">
+	<div class="step step1" data-x="1000" data-y="0" data-scale="0.4" data-rotate-y="30">
 		<span style ="position:absolute; left:20px; bottom:0;"> =1= </span>
 		<img class="slide1 image1" src="images/slide1/ruby_logo.png"/>
 		<img class="slide1 image4" src="images/slide1/nginx.png"/>
-		<h1>Who am I</h1>
-		<ul>
-			<li id="step-0" data-jmpress="zoom after step">Just another old geek (35 y/o) 
-				<span id="step-1" data-jmpress="zoom after step-0"> ... and still counting ...</span>
-			</li>
-			<li id="step-2" data-jmpress="zoom after step-1">A Googler! Jump to the water with other!</li>
-			<li id="step-3" data-jmpress="zoom after step-2">Hacking and playing with Web since school</li>
-			<li id="step-4" data-jmpress="zoom after step-3">Worked with startups, big companies, built websites for them</li>
-			<li id="step-5" data-jmpress="zoom after step-4">Mainly with PHP/Drupal and Ruby/RoR</li>
-			<li id="step-6" data-jmpress="zoom after step-5">And some ASP.Net (who cares?)</li>
-			<li id="step-7" data-jmpress="zoom after step-6">Home machine is Ubuntu</li>
-			<li id="step-8" data-jmpress="zoom after step-7">Graphical tools - GIMB (Gimp, Inkscape, MyPaint and Blender)</li>
-			<li id="step-9" data-jmpress="zoom after step-8">Working for Tikal</li>
-			<li id="step-10" data-jmpress="zoom after step-9">Love Open Source, But let's talk a bit about you.</li>
-		</ul>
-	</div>
-
-	<div class="step step2" data-x="2000" data-y="0" data-scale="0.2" data-rotate-x="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =2= </span>
 		<h1>What will be covered</h1>
 		<ul>
 			<li id="step-0" data-jmpress="zoom after step">What is scalability and When it should be considered.</li>
@@ -63,8 +44,8 @@
 		<p id="step-9" data-jmpress="zoom after step-8" class='code'>sudo apt-get install siege memcached redis<p>
 	</div>
 
-	<div class="step step3" data-x="3000" data-y="0" data-scale="0.4" data-rotate-y="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =3= </span>
+	<div class="step step2" data-x="2000" data-y="0" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =2= </span>
 		<h2>Main Topics</h2>
 		<ul>
 			<li id="step-0" data-jmpress="zoom after step">Caching categorized</li>
@@ -92,8 +73,8 @@
 		</ul>
 	</div>
 
-	<div class="step step4" data-x="4000" data-y="0" data-scale="0.2" data-rotate-x="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =4= </span>
+	<div class="step step3" data-x="3000" data-y="0" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =3= </span>
 		<h2>What is web application?</h2><br/>
 		<div id="step-0" data-jmpress="zoom after step">Web applications are mainly just a... 
 			<span id="step-1" data-jmpress="zoom after step-0" style="color:#4f4">Database</span> 
@@ -106,8 +87,8 @@
 		<div id="step-7" data-jmpress="zoom after step-6">Can we call it scaling? Using external services like Google when including jqueury.js?</div>
 	</div>
 
-	<div class="step step5" data-x="0" data-y="700" data-scale="0.4" data-rotate-y="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =5= </span>
+	<div class="step step4" data-x="4000" data-y="0" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =4= </span>
 		<h1>Quick walk through our app</h1>
 		<div id="step-0" data-jmpress="zoom after step">Instead of carrying a large database, we'll just generate a few records, make relations and clone them several thousand times like so:</div>
 		
@@ -142,8 +123,8 @@
 		<div id="step-4" data-jmpress="zoom after step-3">The scripts are located under <code>/migration/presentation</code></div>
 	</div>
 
-	<div class="step step6" data-x="1000" data-y="700" data-scale="0.2" data-rotate-x="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =6= </span>
+	<div class="step step5" data-x="0" data-y="700" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =5= </span>
 		<h1>Caching</h1>
 		<h2 id="step-0" data-jmpress="zoom after step">What is the problem with current app?</h2><br/>
 		<div id="step-1" data-jmpress="zoom after step-0">Let's dig through the server logs.</div>
@@ -162,8 +143,8 @@
 
 	</div>
 
-	<div class="step step7" data-x="2000" data-y="700" data-scale="0.4" data-rotate-y="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =7= </span>
+	<div class="step step6" data-x="1000" data-y="700" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =6= </span>
 		<h2>Available Cache Stores and their difference?</h2>
 		<ul>
 			<li id="step-0" data-jmpress="zoom after step">Base class: ActiveSupport::Cache::Store</li>
@@ -178,8 +159,8 @@
 	</div>
 
 
-	<div class="step step8" data-x="3000" data-y="700" data-scale="0.2" data-rotate-x="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =8= </span>
+	<div class="step step7" data-x="2000" data-y="700" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =7= </span>
 		<h2>From pure SQL to NoSQL</h2>
 		<div id="step-0" data-jmpress="zoom after step">What is Database Indexing and how it works [+ info below]. </div>
 		<ul>
@@ -197,8 +178,8 @@
 		</ul>
 	</div>
 
-	<div class="step step9" data-x="4000" data-y="700" data-scale="0.4" data-rotate-y="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =9= </span>
+	<div class="step step8" data-x="3000" data-y="700" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =8= </span>
 		<h2 id="step-0" data-jmpress="zoom after step">Installing and configuring Redis on *nix and Redis and Redis-Objects gems.</h2>
 		<br/>
 		<div id="step-1" data-jmpress="zoom after step-0">Redis commands walkthrough with $ redis-cli or $ rails c (ask)</div>
@@ -216,8 +197,8 @@
 	</div>
 
 
-	<div class="step step10" data-x="0" data-y="1400" data-scale="0.2" data-rotate-x="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =10= </span>
+	<div class="step step9" data-x="4000" data-y="700" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =9= </span>
 		<h1>Delayed Jobs</h1><br/>
 
 		<div id="step-0" data-jmpress="zoom after step">What? Why do we need them. </div>
@@ -232,8 +213,8 @@
 	</div>
 
 
-	<div class="step step11" data-x="1000" data-y="1400" data-scale="0.4" data-rotate-y="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =11= </span>
+	<div class="step step10" data-x="0" data-y="1400" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =10= </span>
 		<h1>Solr-based Search</h1>
 		<h2 id="step-0" data-jmpress="zoom after step">What is Solr.</h2><br/>
 			
@@ -251,8 +232,8 @@
 	</div>
 
 
-	<div class="step step12" data-x="2000" data-y="1400" data-scale="0.2" data-rotate-x="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =12= </span>
+	<div class="step step11" data-x="1000" data-y="1400" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =11= </span>
 		<h1>Candies</h1>			
 		<div id="step-0" data-jmpress="zoom after step">Client-side caching, pros and cons</div>
 		<div id="step-1" data-jmpress="zoom after step-0">Nginx + Unicorn / Thin (What? Why not Apache)</div>
@@ -266,8 +247,8 @@
 
 	<!-- benchmarks -->
 
-	<div class="step step13" data-x="3000" data-y="1400" data-scale="0.4" data-rotate-y="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =13= </span>
+	<div class="step step12" data-x="2000" data-y="1400" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =12= </span>
 		<h2>Measure the response time</h2>
 
 		<h3 id="step-0" data-jmpress="zoom after step">We'll use siege</h3><br/>
@@ -295,8 +276,8 @@
 	</div>
 
 
-	<div class="step step14" data-x="4000" data-y="1400" data-scale="0.2" data-rotate-x="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =14= </span>
+	<div class="step step13" data-x="3000" data-y="1400" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =13= </span>
 		<h2>Add the cache</h2>
 
 		<h3 id="step-0" data-jmpress="zoom after step">Add to development.rb:</h3>
@@ -325,8 +306,8 @@
 		</div>
 	</div>
 
-	<div class="step step15" data-x="0" data-y="2100" data-scale="0.4" data-rotate-y="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =15= </span>
+	<div class="step step14" data-x="4000" data-y="1400" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =14= </span>
 		<h3 id="step-0" data-jmpress="zoom after step">Measure, compare, drive conclusions!</h3>
 		<div id="step-1" data-jmpress="zoom after step-0">We'll use siege and Ruby's benchmark to measure the results. Like this:</div>
 		
@@ -360,8 +341,8 @@
 		</div>
 	</div>
 
-	<div class="step step16" data-x="1000" data-y="2100" data-scale="0.2" data-rotate-x="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =16= </span>
+	<div class="step step15" data-x="0" data-y="2100" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =15= </span>
 		<h2>Switching to another cache_store.</h2>
 
 		<code>
@@ -383,8 +364,8 @@
 		</div>
 	</div>
 
-	<div class="step step17" data-x="2000" data-y="2100" data-scale="0.4" data-rotate-y="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =17= </span>
+	<div class="step step16" data-x="1000" data-y="2100" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =16= </span>
 		<div id="step-0" data-jmpress="zoom after step"><span class="code">rails s Puma</span><br/><br/>
 			89.7 -> 91.37 -> 96.14 For only one table with less than 10 columns!<br/>
 			Transaction rate:	       97.84 trans/sec  (Even better)<br/><br/>
@@ -394,8 +375,8 @@
 		</div>
 	</div>
 
-	<div class="step step18" data-x="3000" data-y="2100" data-scale="0.2" data-rotate-x="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =18= </span>
+	<div class="step step17" data-x="2000" data-y="2100" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =17= </span>
 		<h2>Add indices to DB</h2><br/>
 		<div id="step-0" data-jmpress="zoom after step">Indices have their own logic depending on DB. A very simple generic explanation: it’s a lookup table - instead of iteration from beginning. More detailed click <a href="http://dev.mysql.com/doc/refman/5.0/en/mysql-indexes.html">is here</a>.</div><br/>
 		<code>
@@ -412,8 +393,8 @@
 		<div id="step-2" data-jmpress="zoom after step-1">The index can be used for lookups that specify values for combinations. For example: (last_name,  first_name). That index can also be used just a last_name because it is leftmost in the index.</div>
 	</div>
 
-	<div class="step step19" data-x="4000" data-y="2100" data-scale="0.4" data-rotate-y="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =19= </span>
+	<div class="step step18" data-x="3000" data-y="2100" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =18= </span>
 		<h1>Utilizing Redis</h1>
 		<h2>What's all the hype about?</h2>
 		<h3 id="step-0" data-jmpress="zoom after step">
@@ -428,8 +409,8 @@
 		<div id="step-3" data-jmpress="zoom after step-2">Since we’re adding complexity to our code, it’s important to use a well-defined <strong>interface</strong> (such as in the module we created) for all operations. We need to implement a Facade Design Pattern which will communicate with Redis. That way, when and if we’ll want replace Redis with something else, we will only change this Facade without the  need to search and replace the code where all the references to Redis exist. Modules could help here.</div>
 	</div>
 
-	<div class="step step20" data-x="0" data-y="2800" data-scale="0.2" data-rotate-x="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =20= </span>
+	<div class="step step19" data-x="4000" data-y="2100" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =19= </span>
 		<h1>Web Proxy Servers</h1>
 		<h2>Apache is cool, but...</h2>
 		<h3 id="step-0" data-jmpress="zoom after step">
@@ -454,8 +435,8 @@ server {
 
 	</div>
 
-	<div class="step step21" data-x="1000" data-y="2800" data-scale="0.4" data-rotate-y="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =21= </span>
+	<div class="step step20" data-x="0" data-y="2800" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =20= </span>
 		<code>
 			<pre id="step-0" data-jmpress="zoom after step">
 server {
@@ -489,8 +470,8 @@ server {
 
 	</div>
 
-	<div class="step step22" data-x="2000" data-y="2800" data-scale="0.2" data-rotate-x="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =22= </span>
+	<div class="step step21" data-x="1000" data-y="2800" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =21= </span>
 		<h2>Configuration for Memcached</h2>
 
 		<code>

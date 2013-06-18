@@ -26,7 +26,6 @@ class Product < ActiveRecord::Base
   has_many :reviews, :through => :product_reviews
 
   belongs_to :category
-  has_many :cart_items
 
   attr_accessible :description, :name, :serves, :order_id, :price, 
     :image, :crop_x, :crop_y, :crop_w, :crop_h, :remove_image, :image_cache
