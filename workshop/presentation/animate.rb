@@ -30,7 +30,7 @@ begin
 		end
 
 		if line =~ /~m/
-			line = line.sub('~m', 'id="step-' << ($substep.to_s) << '" ~m')
+			line = line.sub('~m', 'class="step-' << ($substep.to_s) << '" ~m')
 
 			if $substep != 0
 				line = line.sub('~m', 'data-jmpress="zoom after step-' << (($substep -1).to_s) << '"')

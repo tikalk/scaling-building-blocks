@@ -26,75 +26,75 @@
 		<img class="slide1 image4" src="images/slide1/nginx.png"/>
 		<h1>What will be covered</h1>
 		<ul>
-			<li id="step-0" data-jmpress="zoom after step">What is scalability and When it should be considered.</li>
-			<li id="step-1" data-jmpress="zoom after step-0">"Disk and memory is less costly than making your user wait", - Steve Huffman, Reddit</li>
-			<li id="step-2" data-jmpress="zoom after step-1">Concurrent massive landing</li>
-			<li id="step-3" data-jmpress="zoom after step-2">Good Indicator: Response time is increasing</li>
-			<li id="step-4" data-jmpress="zoom after step-3">Response time = Server + Network + Client</li>
+			<li class="step-0" data-jmpress="zoom after step">What is scalability and When it should be considered.</li>
+			<li class="step-1" data-jmpress="zoom after step-0">"Disk and memory is less costly than making your user wait", - Steve Huffman, Reddit</li>
+			<li class="step-2" data-jmpress="zoom after step-1">Concurrent massive landing</li>
+			<li class="step-3" data-jmpress="zoom after step-2">Good Indicator: Response time is increasing</li>
+			<li class="step-4" data-jmpress="zoom after step-3">Response time = Server + Network + Client</li>
 		</ul>
 
-		<h2 id="step-5" data-jmpress="zoom after step-4">Who went through scaling</h2>
+		<h2 class="step-5" data-jmpress="zoom after step-4">Who went through scaling</h2>
 		<ul>
-			<li id="step-6" data-jmpress="zoom after step-5">Twitter, Gogobot all the big names like Shopify, Groupon etc.</li>
-			<li id="step-7" data-jmpress="zoom after step-6">All the other non-ruby websites like Tumblr, Instagram etc.</li>
-			<li id="step-8" data-jmpress="zoom after step-7">They share something common: Technology and the way it's used</li>
+			<li class="step-6" data-jmpress="zoom after step-5">Twitter, Gogobot all the big names like Shopify, Groupon etc.</li>
+			<li class="step-7" data-jmpress="zoom after step-6">All the other non-ruby websites like Tumblr, Instagram etc.</li>
+			<li class="step-8" data-jmpress="zoom after step-7">They share something common: Technology and the way it's used</li>
 		</ul>
 
 		<br/>
-		<h2 id="step-9" data-jmpress="zoom after step-8">Let's install some things that we'll need</h2>
-		<p id="step-10" data-jmpress="zoom after step-9" class='code'>sudo apt-get install siege memcached redis<p>
+		<h2 class="step-9" data-jmpress="zoom after step-8">Let's install some things that we'll need</h2>
+		<p class="step-10" data-jmpress="zoom after step-9" class='code'>sudo apt-get install siege memcached redis<p>
 	</div>
 
 	<div class="step step2" data-x="2000" data-y="0" data-scale="0.2" data-rotate-x="30">
 		<span style ="position:absolute; left:20px; bottom:0;"> =2= </span>
 		<h2>Main Topics</h2>
 		<ul>
-			<li id="step-0" data-jmpress="zoom after step">Caching categorized</li>
-			<li id="step-1" data-jmpress="zoom after step-0">Code Optimization</li>
+			<li class="step-0" data-jmpress="zoom after step">Caching categorized</li>
+			<li class="step-1" data-jmpress="zoom after step-0">Code Optimization</li>
 				<ul>
-					<li id="step-2" data-jmpress="zoom after step-1">Profile, find bottlenecks with existing tools</li>
-					<li id="step-3" data-jmpress="zoom after step-2">Delayed Jobs</li>
-					<li id="step-4" data-jmpress="zoom after step-3">Replace software with services</li>
+					<li class="step-2" data-jmpress="zoom after step-1">Profile, find bottlenecks with existing tools</li>
+					<li class="step-3" data-jmpress="zoom after step-2">Delayed Jobs</li>
+					<li class="step-4" data-jmpress="zoom after step-3">Replace software with services</li>
 						<ul>
-							<li id="step-5" data-jmpress="zoom after step-4">Solr for search</li>
-							<li id="step-6" data-jmpress="zoom after step-5">Sinatra for computations etc.</li>
+							<li class="step-5" data-jmpress="zoom after step-4">Solr for search</li>
+							<li class="step-6" data-jmpress="zoom after step-5">Sinatra for computations etc.</li>
 						</ul>
 				</ul>
-			<li id="step-7" data-jmpress="zoom after step-6">Improve our Databases</li>
+			<li class="step-7" data-jmpress="zoom after step-6">Improve our Databases</li>
 			<ul>
-				<li id="step-8" data-jmpress="zoom after step-7">NoSQL - Redis</li>
-				<li id="step-9" data-jmpress="zoom after step-8">Fine-tune existing MySQL database:</li>
+				<li class="step-8" data-jmpress="zoom after step-7">NoSQL - Redis</li>
+				<li class="step-9" data-jmpress="zoom after step-8">Fine-tune existing MySQL database:</li>
 					<ul>
-					<li id="step-10" data-jmpress="zoom after step-9">Indexes</li>
-					<li id="step-11" data-jmpress="zoom after step-10">Configuration</li>
-					<li id="step-12" data-jmpress="zoom after step-11">De-normalization</li>
+					<li class="step-10" data-jmpress="zoom after step-9">Indexes</li>
+					<li class="step-11" data-jmpress="zoom after step-10">Configuration</li>
+					<li class="step-12" data-jmpress="zoom after step-11">De-normalization</li>
 					</ul>
 			</ul>
-			<li id="step-13" data-jmpress="zoom after step-12">More tips and tricks</li>
+			<li class="step-13" data-jmpress="zoom after step-12">More tips and tricks</li>
 		</ul>
 	</div>
 
 	<div class="step step3" data-x="3000" data-y="0" data-scale="0.4" data-rotate-y="30">
 		<span style ="position:absolute; left:20px; bottom:0;"> =3= </span>
 		<h2>What is web application?</h2><br/>
-		<div id="step-0" data-jmpress="zoom after step">Web applications are mainly just a... 
-			<span id="step-1" data-jmpress="zoom after step-0" style="color:#4f4">Database</span> 
-			<span id="step-2" data-jmpress="zoom after step-1">PLUS some manipulation on it.</span> 
+		<div class="step-0" data-jmpress="zoom after step">Web applications are mainly just a... 
+			<span class="step-1" data-jmpress="zoom after step-0" style="color:#4f4">Database</span> 
+			<span class="step-2" data-jmpress="zoom after step-1">PLUS some manipulation on it.</span> 
 		</div>
-		<div id="step-3" data-jmpress="zoom after step-2">(A general and convenient concept.) </div><br/>
-		<div id="step-4" data-jmpress="zoom after step-3">Scaling <strong>vertically</strong> <br />
-			<span id="step-5" data-jmpress="zoom after step-4" style="margin: 0 0 0 70px">means buying more computing power (e.g. machines) and spreading the requests among them.</span></div><br/>
-		<div id="step-6" data-jmpress="zoom after step-5">Scaling <strong>horizontally</strong> <br/> <span ~m style="margin: 0 0 0 70px">means improving or optimizing the code such that there's no need to scale up vertically.</span></div><br/>
-		<div id="step-7" data-jmpress="zoom after step-6">Can we call it scaling? Using external services like Google when including jqueury.js?</div>
+		<div class="step-3" data-jmpress="zoom after step-2">(A general and convenient concept.) </div><br/>
+		<div class="step-4" data-jmpress="zoom after step-3">Scaling <strong>vertically</strong> <br />
+			<span class="step-5" data-jmpress="zoom after step-4" style="margin: 0 0 0 70px">means buying more computing power (e.g. machines) and spreading the requests among them.</span></div><br/>
+		<div class="step-6" data-jmpress="zoom after step-5">Scaling <strong>horizontally</strong> <br/> <span ~m style="margin: 0 0 0 70px">means improving or optimizing the code such that there's no need to scale up vertically.</span></div><br/>
+		<div class="step-7" data-jmpress="zoom after step-6">Can we call it scaling? Using external services like Google when including jqueury.js?</div>
 	</div>
 
 	<div class="step step4" data-x="4000" data-y="0" data-scale="0.2" data-rotate-x="30">
 		<span style ="position:absolute; left:20px; bottom:0;"> =4= </span>
 		<h1>Quick walk through our app</h1>
-		<div id="step-0" data-jmpress="zoom after step">Instead of carrying a large database, we'll just generate a few records, make relations and clone them several thousand times like so:</div>
+		<div class="step-0" data-jmpress="zoom after step">Instead of carrying a large database, we'll just generate a few records, make relations and clone them several thousand times like so:</div>
 		
 		<code>
-			<pre id="step-1" data-jmpress="zoom after step-0">
+			<pre class="step-1" data-jmpress="zoom after step-0">
 			plast = Product.last
 			for i in 0..4000
 			    dupobj = plast.dup
@@ -104,8 +104,8 @@
 			</pre>
 		</code>
 
-		<code id="step-2" data-jmpress="zoom after step-1">
-			<pre id="step-3" data-jmpress="zoom after step-2">
+		<code class="step-2" data-jmpress="zoom after step-1">
+			<pre class="step-3" data-jmpress="zoom after step-2">
 			# Populate the likes and reviews
 			# 100 times randomly add likes and reviews to products
 			like_ids_range = Like.first.id..Like.last.id
@@ -121,26 +121,26 @@
 			</pre>
 		</code>
 
-		<div id="step-4" data-jmpress="zoom after step-3">The scripts are located under <code>/migration/presentation</code></div>
+		<div class="step-4" data-jmpress="zoom after step-3">The scripts are located under <code>/migration/presentation</code></div>
 	</div>
 
 	<div class="step step5" data-x="0" data-y="700" data-scale="0.4" data-rotate-y="30">
 		<span style ="position:absolute; left:20px; bottom:0;"> =5= </span>
 		<h1>Caching</h1>
-		<h2 id="step-0" data-jmpress="zoom after step">What is the problem with current app?</h2><br/>
-		<div id="step-1" data-jmpress="zoom after step-0">Let's dig through the server logs.</div>
-		<div id="step-2" data-jmpress="zoom after step-1">What is caching and how it will help.</div>
-		<div id="step-3" data-jmpress="zoom after step-2">How caching works. Scenario: User --> (hits) --> The Server</div>
+		<h2 class="step-0" data-jmpress="zoom after step">What is the problem with current app?</h2><br/>
+		<div class="step-1" data-jmpress="zoom after step-0">Let's dig through the server logs.</div>
+		<div class="step-2" data-jmpress="zoom after step-1">What is caching and how it will help.</div>
+		<div class="step-3" data-jmpress="zoom after step-2">How caching works. Scenario: User --> (hits) --> The Server</div>
 		<br/>
-		<div id="step-4" data-jmpress="zoom after step-3">What are the Rails cahing types</div>
+		<div class="step-4" data-jmpress="zoom after step-3">What are the Rails cahing types</div>
 		<ul>
-			<li id="step-5" data-jmpress="zoom after step-4">Page - where are the stored files?</li>
-			<li id="step-6" data-jmpress="zoom after step-5">Action</li>
-			<li id="step-7" data-jmpress="zoom after step-6">Fragment</li>
-			<li id="step-8" data-jmpress="zoom after step-7">SQL Caching</li>
+			<li class="step-5" data-jmpress="zoom after step-4">Page - where are the stored files?</li>
+			<li class="step-6" data-jmpress="zoom after step-5">Action</li>
+			<li class="step-7" data-jmpress="zoom after step-6">Fragment</li>
+			<li class="step-8" data-jmpress="zoom after step-7">SQL Caching</li>
 		</ul>
 
-		<div id="step-9" data-jmpress="zoom after step-8">Cache expiration - methods, sweepers, but... there’s a better way (later) and a couple of gems.</div>
+		<div class="step-9" data-jmpress="zoom after step-8">Cache expiration - methods, sweepers, but... there’s a better way (later) and a couple of gems.</div>
 
 	</div>
 
@@ -148,54 +148,54 @@
 		<span style ="position:absolute; left:20px; bottom:0;"> =6= </span>
 		<h2>Available Cache Stores and their difference?</h2>
 		<ul>
-			<li id="step-0" data-jmpress="zoom after step">Base class: ActiveSupport::Cache::Store</li>
-			<li id="step-1" data-jmpress="zoom after step-0"> read, write, delete, exist?, and fetch</li>
-			<li id="step-2" data-jmpress="zoom after step-1">FileStore</li>
-			<li id="step-3" data-jmpress="zoom after step-2">MemoryStore for only 1 process</li>
-			<li id="step-4" data-jmpress="zoom after step-3">Memcached <span ~m>use Dalli or memcache-client</span></li>
-			<li id="step-5" data-jmpress="zoom after step-4">Create your own, you're not limited!</li>
+			<li class="step-0" data-jmpress="zoom after step">Base class: ActiveSupport::Cache::Store</li>
+			<li class="step-1" data-jmpress="zoom after step-0"> read, write, delete, exist?, and fetch</li>
+			<li class="step-2" data-jmpress="zoom after step-1">FileStore</li>
+			<li class="step-3" data-jmpress="zoom after step-2">MemoryStore for only 1 process</li>
+			<li class="step-4" data-jmpress="zoom after step-3">Memcached <span ~m>use Dalli or memcache-client</span></li>
+			<li class="step-5" data-jmpress="zoom after step-4">Create your own, you're not limited!</li>
 		</ul>
 		
-		<div id="step-6" data-jmpress="zoom after step-5">How caching strategies can be applied on a random website</div>
+		<div class="step-6" data-jmpress="zoom after step-5">How caching strategies can be applied on a random website</div>
 	</div>
 
 
 	<div class="step step7" data-x="2000" data-y="700" data-scale="0.4" data-rotate-y="30">
 		<span style ="position:absolute; left:20px; bottom:0;"> =7= </span>
 		<h2>From pure SQL to NoSQL</h2>
-		<div id="step-0" data-jmpress="zoom after step">What is Database Indexing and how it works [+ links below]. </div>
+		<div class="step-0" data-jmpress="zoom after step">What is Database Indexing and how it works [+ links below]. </div>
 		<ul>
-			<li id="step-1" data-jmpress="zoom after step-0">MySQL alternatives - Postgres  / MyISAM - InnoDB with ACID http://www.wikivs.com/wiki/MySQL_vs_PostgreSQL</li>
-			<li id="step-2" data-jmpress="zoom after step-1">http://dev.mysql.com/doc/refman/5.5/en/optimization-indexes.html</li>
+			<li class="step-1" data-jmpress="zoom after step-0">MySQL alternatives - Postgres  / MyISAM - InnoDB with ACID http://www.wikivs.com/wiki/MySQL_vs_PostgreSQL</li>
+			<li class="step-2" data-jmpress="zoom after step-1">http://dev.mysql.com/doc/refman/5.5/en/optimization-indexes.html</li>
 		</ul>
-		<div id="step-3" data-jmpress="zoom after step-2">Should we de-normalize? Pros and Cons.</div>
-		<div id="step-4" data-jmpress="zoom after step-3">Concepts. Key-Value - what / why </div>
-		<div id="step-5" data-jmpress="zoom after step-4">Open Schema: Thing + Data <br/>http://www.slideshare.net/carsonified/steve-huffman-lessons-learned-while-at-redditcom</div>
-		<div id="step-6" data-jmpress="zoom after step-5">Rails indexes by default :id. How do we add a migration with indexes.</div>
-		<div id="step-7" data-jmpress="zoom after step-6">Benchmark comparison before and after on a string search field with LIKE %abc%.</div>
-		<div id="step-8" data-jmpress="zoom after step-7">List of NoSQL solutions, Hadoop, MongoDB, Riak, Redis, Cassandra CouchDB etc.</div>
+		<div class="step-3" data-jmpress="zoom after step-2">Should we de-normalize? Pros and Cons.</div>
+		<div class="step-4" data-jmpress="zoom after step-3">Concepts. Key-Value - what / why </div>
+		<div class="step-5" data-jmpress="zoom after step-4">Open Schema: Thing + Data <br/>http://www.slideshare.net/carsonified/steve-huffman-lessons-learned-while-at-redditcom</div>
+		<div class="step-6" data-jmpress="zoom after step-5">Rails indexes by default :id. How do we add a migration with indexes.</div>
+		<div class="step-7" data-jmpress="zoom after step-6">Benchmark comparison before and after on a string search field with LIKE %abc%.</div>
+		<div class="step-8" data-jmpress="zoom after step-7">List of NoSQL solutions, Hadoop, MongoDB, Riak, Redis, Cassandra CouchDB etc.</div>
 		<ul>
-			<li id="step-9" data-jmpress="zoom after step-8">Link: http://kkovacs.eu/cassandra-vs-mongodb-vs-couchdb-vs-redis</li>
-			<li id="step-10" data-jmpress="zoom after step-9">There’s more: http://nosql-database.org/</li>
+			<li class="step-9" data-jmpress="zoom after step-8">Link: http://kkovacs.eu/cassandra-vs-mongodb-vs-couchdb-vs-redis</li>
+			<li class="step-10" data-jmpress="zoom after step-9">There’s more: http://nosql-database.org/</li>
 		</ul>
 	</div>
 
 	<div class="step step8" data-x="3000" data-y="700" data-scale="0.2" data-rotate-x="30">
 		<span style ="position:absolute; left:20px; bottom:0;"> =8= </span>
-		<h2 id="step-0" data-jmpress="zoom after step">Installing and configuring Redis on *nix and Redis and Redis-Objects gems.</h2>
+		<h2 class="step-0" data-jmpress="zoom after step">Installing and configuring Redis on *nix and Redis and Redis-Objects gems.</h2>
 		<br/>
-		<div id="step-1" data-jmpress="zoom after step-0">Redis commands walkthrough with $ redis-cli or $ rails c (ask)</div>
+		<div class="step-1" data-jmpress="zoom after step-0">Redis commands walkthrough with $ redis-cli or $ rails c (ask)</div>
 		<ul>
-			<li id="step-2" data-jmpress="zoom after step-1">http://redis.io/commands</li>
-			<li id="step-3" data-jmpress="zoom after step-2">https://github.com/nateware/redis-objects#readme</li>
-			<li id="step-4" data-jmpress="zoom after step-3">SADD myset “someval”, SISMEMBER myset “someval”, SMEMBERS myset</li>
-			<li id="step-5" data-jmpress="zoom after step-4">Let's go to redis commands page and play there.</li>
-			<li id="step-6" data-jmpress="zoom after step-5">For redis-objects @set = Redis::Set.new('set_name');   @set << 'a' … </li>
-			<li id="step-7" data-jmpress="zoom after step-6">Twitter-like example http://jimneath.org/2011/03/24/using-redis-with-ruby-on-rails.html</li>
+			<li class="step-2" data-jmpress="zoom after step-1">http://redis.io/commands</li>
+			<li class="step-3" data-jmpress="zoom after step-2">https://github.com/nateware/redis-objects#readme</li>
+			<li class="step-4" data-jmpress="zoom after step-3">SADD myset “someval”, SISMEMBER myset “someval”, SMEMBERS myset</li>
+			<li class="step-5" data-jmpress="zoom after step-4">Let's go to redis commands page and play there.</li>
+			<li class="step-6" data-jmpress="zoom after step-5">For redis-objects @set = Redis::Set.new('set_name');   @set << 'a' … </li>
+			<li class="step-7" data-jmpress="zoom after step-6">Twitter-like example http://jimneath.org/2011/03/24/using-redis-with-ruby-on-rails.html</li>
 		</ul>
-		<div id="step-8" data-jmpress="zoom after step-7">More advanced: </div>
-		<div id="step-9" data-jmpress="zoom after step-8">http://www.christianoestreich.com/2011/11/redis-hashsets-performance/</div>
-		<div id="step-10" data-jmpress="zoom after step-9">http://instagram-engineering.tumblr.com/post/12202313862/storing-hundreds-of-millions-of-simple-key-value-pairs</div>
+		<div class="step-8" data-jmpress="zoom after step-7">More advanced: </div>
+		<div class="step-9" data-jmpress="zoom after step-8">http://www.christianoestreich.com/2011/11/redis-hashsets-performance/</div>
+		<div class="step-10" data-jmpress="zoom after step-9">http://instagram-engineering.tumblr.com/post/12202313862/storing-hundreds-of-millions-of-simple-key-value-pairs</div>
 	</div>
 
 
@@ -203,54 +203,54 @@
 		<span style ="position:absolute; left:20px; bottom:0;"> =9= </span>
 		<h1>Delayed Jobs</h1><br/>
 
-		<div id="step-0" data-jmpress="zoom after step">What? Why do we need them. </div>
-		<div id="step-1" data-jmpress="zoom after step-0">Do the minimum to end the request. The rest throw to delayed jobs.</div>
+		<div class="step-0" data-jmpress="zoom after step">What? Why do we need them. </div>
+		<div class="step-1" data-jmpress="zoom after step-0">Do the minimum to end the request. The rest throw to delayed jobs.</div>
 		<ul>
-			<li id="step-2" data-jmpress="zoom after step-1">Send emails </li> 
-			<li id="step-3" data-jmpress="zoom after step-2">Remove spam </li>
-			<li id="step-4" data-jmpress="zoom after step-3">Get data from external API </li>
-			<li id="step-5" data-jmpress="zoom after step-4">Update search index</li>
-			<li id="step-6" data-jmpress="zoom after step-5">Compute user statistics</li>
+			<li class="step-2" data-jmpress="zoom after step-1">Send emails </li> 
+			<li class="step-3" data-jmpress="zoom after step-2">Remove spam </li>
+			<li class="step-4" data-jmpress="zoom after step-3">Get data from external API </li>
+			<li class="step-5" data-jmpress="zoom after step-4">Update search index</li>
+			<li class="step-6" data-jmpress="zoom after step-5">Compute user statistics</li>
 		</ul>
-		<div id="step-7" data-jmpress="zoom after step-6">Available gems - resque, <strong>sidekick</strong>, delayed_job advantages - performance </div>
+		<div class="step-7" data-jmpress="zoom after step-6">Available gems - resque, <strong>sidekick</strong>, delayed_job advantages - performance </div>
 		<ul>
-			<li id="step-8" data-jmpress="zoom after step-7">https://github.com/mperham/sidekiq/wiki/FAQ</li>
+			<li class="step-8" data-jmpress="zoom after step-7">https://github.com/mperham/sidekiq/wiki/FAQ</li>
 		</ul>
-		<div id="step-9" data-jmpress="zoom after step-8">Installation</div>
-		<div id="step-10" data-jmpress="zoom after step-9">Writing a simple worker that sends an email, execute it N times.</div>
-		<div id="step-11" data-jmpress="zoom after step-10">Watch the process through Web UI</div>
-		<div id="step-12" data-jmpress="zoom after step-11">Writing a simple worker that resizes an image.</div>
+		<div class="step-9" data-jmpress="zoom after step-8">Installation</div>
+		<div class="step-10" data-jmpress="zoom after step-9">Writing a simple worker that sends an email, execute it N times.</div>
+		<div class="step-11" data-jmpress="zoom after step-10">Watch the process through Web UI</div>
+		<div class="step-12" data-jmpress="zoom after step-11">Writing a simple worker that resizes an image.</div>
 	</div>
 
 
 	<div class="step step10" data-x="0" data-y="1400" data-scale="0.2" data-rotate-x="30">
 		<span style ="position:absolute; left:20px; bottom:0;"> =10= </span>
 		<h1>Solr-based Search</h1>
-		<h2 id="step-0" data-jmpress="zoom after step">What is Solr.</h2><br/>
+		<h2 class="step-0" data-jmpress="zoom after step">What is Solr.</h2><br/>
 			
-		<div id="step-1" data-jmpress="zoom after step-0">Solr features</div>
-		<div id="step-2" data-jmpress="zoom after step-1">Who uses it</div>
-		<div id="step-3" data-jmpress="zoom after step-2">Sunspot gem - intro how it works</div>
-		<div id="step-4" data-jmpress="zoom after step-3">Installation, running</div>
-		<div id="step-5" data-jmpress="zoom after step-4">Configuring searchable inside a model</div>
-		<div id="step-6" data-jmpress="zoom after step-5">Index</div>
-		<div id="step-7" data-jmpress="zoom after step-6">Performing a search</div>
-		<div id="step-8" data-jmpress="zoom after step-7">Benchmarking before and after [+ verify with below data]</div>
-		<div id="step-9" data-jmpress="zoom after step-8">Different configuration options e.g. make parts of a string searchable - configure schema.xml</div>
-		<div id="step-10" data-jmpress="zoom after step-9">Bonus - searching for similar documents, using weights</div>
-		<div id="step-11" data-jmpress="zoom after step-10">What about Production?</div>
+		<div class="step-1" data-jmpress="zoom after step-0">Solr features</div>
+		<div class="step-2" data-jmpress="zoom after step-1">Who uses it</div>
+		<div class="step-3" data-jmpress="zoom after step-2">Sunspot gem - intro how it works</div>
+		<div class="step-4" data-jmpress="zoom after step-3">Installation, running</div>
+		<div class="step-5" data-jmpress="zoom after step-4">Configuring searchable inside a model</div>
+		<div class="step-6" data-jmpress="zoom after step-5">Index</div>
+		<div class="step-7" data-jmpress="zoom after step-6">Performing a search</div>
+		<div class="step-8" data-jmpress="zoom after step-7">Benchmarking before and after [+ verify with below data]</div>
+		<div class="step-9" data-jmpress="zoom after step-8">Different configuration options e.g. make parts of a string searchable - configure schema.xml</div>
+		<div class="step-10" data-jmpress="zoom after step-9">Bonus - searching for similar documents, using weights</div>
+		<div class="step-11" data-jmpress="zoom after step-10">What about Production?</div>
 	</div>
 
 
 	<div class="step step11" data-x="1000" data-y="1400" data-scale="0.4" data-rotate-y="30">
 		<span style ="position:absolute; left:20px; bottom:0;"> =11= </span>
 		<h1>Candies</h1>			
-		<div id="step-0" data-jmpress="zoom after step">Client-side caching, pros and cons</div>
-		<div id="step-1" data-jmpress="zoom after step-0">Nginx + Unicorn / Thin (What? Why not Apache)</div>
-		<div id="step-2" data-jmpress="zoom after step-1">JRuby</div>
-		<div id="step-3" data-jmpress="zoom after step-2">Sinatra services, embedding c </div>
-		<div id="step-4" data-jmpress="zoom after step-3">innodb_buffer_pool_size</div>
-		<div id="step-5" data-jmpress="zoom after step-4">Deployment with Capistrano</div>
+		<div class="step-0" data-jmpress="zoom after step">Client-side caching, pros and cons</div>
+		<div class="step-1" data-jmpress="zoom after step-0">Nginx + Unicorn / Thin (What? Why not Apache)</div>
+		<div class="step-2" data-jmpress="zoom after step-1">JRuby</div>
+		<div class="step-3" data-jmpress="zoom after step-2">Sinatra services, embedding c </div>
+		<div class="step-4" data-jmpress="zoom after step-3">innodb_buffer_pool_size</div>
+		<div class="step-5" data-jmpress="zoom after step-4">Deployment with Capistrano</div>
 	</div>
 
 
@@ -261,15 +261,15 @@
 		<span style ="position:absolute; left:20px; bottom:0;"> =12= </span>
 		<h2>Measure the response time</h2>
 
-		<h3 id="step-0" data-jmpress="zoom after step">We'll use siege</h3><br/>
-		<div id="step-1" data-jmpress="zoom after step-0"><code>siege -c50 -d10 [-t30S] -i -f site.txt</code></div><br/>
+		<h3 class="step-0" data-jmpress="zoom after step">We'll use siege</h3><br/>
+		<div class="step-1" data-jmpress="zoom after step-0"><code>siege -c50 -d10 [-t30S] -i -f site.txt</code></div><br/>
 
-		<div id="step-2" data-jmpress="zoom after step-1">(The -d NUM option sets a random interval between 0 and NUM that each "user" will sleep for between requests. While the -c NUM option sets the concurrent number of simulated users. -t: for how long to run tests or Ctrl-C)</div>
+		<div class="step-2" data-jmpress="zoom after step-1">(The -d NUM option sets a random interval between 0 and NUM that each "user" will sleep for between requests. While the -c NUM option sets the concurrent number of simulated users. -t: for how long to run tests or Ctrl-C)</div>
 
-		<div id="step-3" data-jmpress="zoom after step-2">site.txt is has a collection of URLs, one per line:</div><br/>
+		<div class="step-3" data-jmpress="zoom after step-2">site.txt is has a collection of URLs, one per line:</div><br/>
 
 		<code>
-			<pre id="step-4" data-jmpress="zoom after step-3">
+			<pre class="step-4" data-jmpress="zoom after step-3">
 				http://localhost:3000/products/galery?page=1
 				http://localhost:3000/products/galery?page=50
 				 … 
@@ -278,9 +278,9 @@
 		</code>
 		<br/>
 
-		<div id="step-5" data-jmpress="zoom after step-4">The pages URLs will be requested in random order.</div>
+		<div class="step-5" data-jmpress="zoom after step-4">The pages URLs will be requested in random order.</div>
 		
-		<div id="step-6" data-jmpress="zoom after step-5" style="background: #eee">
+		<div class="step-6" data-jmpress="zoom after step-5" style="background: #eee">
 			No cache:  Transaction rate:       3.72 trans/sec <span data-jmpress="drive-left after 4000ms step" style="color:#4f4"> Mmmm... not bad for an old laptop!</span><br/>
 		</div>
 	</div>
@@ -290,17 +290,17 @@
 		<span style ="position:absolute; left:20px; bottom:0;"> =13= </span>
 		<h2>Add the cache</h2>
 
-		<h3 id="step-0" data-jmpress="zoom after step">Add to development.rb:</h3>
+		<h3 class="step-0" data-jmpress="zoom after step">Add to development.rb:</h3>
 		<code>
-			<pre id="step-1" data-jmpress="zoom after step-0"> 
+			<pre class="step-1" data-jmpress="zoom after step-0"> 
 				config.action_controller.perform_caching = true
 				config.cache_store = :file_store, "#{Rails.root}/tmp/cache"
 			</pre>
 		</code>
 
-		<h3 id="step-2" data-jmpress="zoom after step-1">And add to the products controller:</h3>
+		<h3 class="step-2" data-jmpress="zoom after step-1">And add to the products controller:</h3>
 		<code>
-			<pre id="step-3" data-jmpress="zoom after step-2"> 
+			<pre class="step-3" data-jmpress="zoom after step-2"> 
 				caches_action :galery, :cache_path => :products_cache_path.to_proc
 				def products_cache_path
 					current_user_id = current_user.nil?? 0 : current_user.id
@@ -309,7 +309,7 @@
 			</pre>
 		</code>
 		<br/>
-		<div id="step-4" data-jmpress="zoom after step-3">
+		<div class="step-4" data-jmpress="zoom after step-3">
 			Transaction rate:	       <strong>84.42</strong> trans/sec   <span data-jmpress="drive-left after 4000ms step" style="color:#4f4">WOW!!</span><br/>
 			And once again:<br/>
 			Transaction rate:	       <strong>91.20</strong> trans/sec   (Which makes sense.) <span data-jmpress="drive-left after 4300ms step" style="color:#4f4">Weee!!</span><br/><br/>
@@ -318,35 +318,35 @@
 
 	<div class="step step14" data-x="4000" data-y="1400" data-scale="0.2" data-rotate-x="30">
 		<span style ="position:absolute; left:20px; bottom:0;"> =14= </span>
-		<h3 id="step-0" data-jmpress="zoom after step">Measure, compare, drive conclusions!</h3>
-		<div id="step-1" data-jmpress="zoom after step-0">We'll use siege and Ruby's benchmark to measure the results. Like this:</div>
+		<h3 class="step-0" data-jmpress="zoom after step">Measure, compare, drive conclusions!</h3>
+		<div class="step-1" data-jmpress="zoom after step-0">We'll use siege and Ruby's benchmark to measure the results. Like this:</div>
 		
 		<code>
-			<pre id="step-2" data-jmpress="zoom after step-1">
+			<pre class="step-2" data-jmpress="zoom after step-1">
 			require 'benchmark'
 			Benchmark.measure { 1000.times { plast.dup.save! } }
 			</pre>
 		</code>
 
-		<div id="step-3" data-jmpress="zoom after step-2">We're measuring the <strong>relative time</strong>. On my Lenovo ThinkPad T500 with several other processes running the results were:</div>
+		<div class="step-3" data-jmpress="zoom after step-2">We're measuring the <strong>relative time</strong>. On my Lenovo ThinkPad T500 with several other processes running the results were:</div>
 
-		<div id="step-4" data-jmpress="zoom after step-3">
+		<div class="step-4" data-jmpress="zoom after step-3">
 			=>   5.590000   0.170000   5.760000 ( 89.742811)  =SECONDS=
 		</div><br/>
 
-		<div id="step-5" data-jmpress="zoom after step-4">Once again, and the results are:</div>
+		<div class="step-5" data-jmpress="zoom after step-4">Once again, and the results are:</div>
 
-		<div id="step-6" data-jmpress="zoom after step-5">
+		<div class="step-6" data-jmpress="zoom after step-5">
 			=>   5.650000   0.200000   5.850000 ( 91.374391)
 		</div><br/>
 
-		<div id="step-7" data-jmpress="zoom after step-6">One more time:</div>
+		<div class="step-7" data-jmpress="zoom after step-6">One more time:</div>
 
-		<div id="step-8" data-jmpress="zoom after step-7">
+		<div class="step-8" data-jmpress="zoom after step-7">
 			=>   5.540000   0.220000   5.760000 ( 96.141258)
 		</div><br/>
 
-		<div id="step-9" data-jmpress="zoom after step-8"> From 3 requests per second to 96, that's difference!<br/>
+		<div class="step-9" data-jmpress="zoom after step-8"> From 3 requests per second to 96, that's difference!<br/>
 			89.7 -> 91.37 -> 96.14 For only one table with less than 10 columns!
 		</div>
 	</div>
@@ -356,19 +356,19 @@
 		<h2>Switching to another cache_store.</h2>
 
 		<code>
-			<pre id="step-0" data-jmpress="zoom after step">
+			<pre class="step-0" data-jmpress="zoom after step">
 				gem 'dalli'
 				config.cache_store = :dalli_store
 			</pre>
 		</code>
 
-		<div id="step-1" data-jmpress="zoom after step-0">Transaction rate:	       89.67 trans/sec </div>
-		<div id="step-2" data-jmpress="zoom after step-1">No improvement :((</div>
+		<div class="step-1" data-jmpress="zoom after step-0">Transaction rate:	       89.67 trans/sec </div>
+		<div class="step-2" data-jmpress="zoom after step-1">No improvement :((</div>
 
-		<div id="step-3" data-jmpress="zoom after step-2">It's not surprising though. The more data you have, the more performance boost you'll feel.
+		<div class="step-3" data-jmpress="zoom after step-2">It's not surprising though. The more data you have, the more performance boost you'll feel.
 		</div>
 
-		<div id="step-4" data-jmpress="zoom after step-3">
+		<div class="step-4" data-jmpress="zoom after step-3">
 			More on the subject: <a href="http://blog.endpoint.com/2011/07/raw-caching-performance-in-rubyrails.html">read here</a><br/>
 			Dali with even more parameters: <a href="https://github.com/mperham/dalli">read here</a>
 		</div>
@@ -376,7 +376,7 @@
 
 	<div class="step step16" data-x="1000" data-y="2100" data-scale="0.2" data-rotate-x="30">
 		<span style ="position:absolute; left:20px; bottom:0;"> =16= </span>
-		<div id="step-0" data-jmpress="zoom after step"><span class="code">rails s Puma</span><br/><br/>
+		<div class="step-0" data-jmpress="zoom after step"><span class="code">rails s Puma</span><br/><br/>
 			89.7 -> 91.37 -> 96.14 For only one table with less than 10 columns!<br/>
 			Transaction rate:	       97.84 trans/sec  (Even better)<br/><br/>
 
@@ -388,9 +388,9 @@
 	<div class="step step17" data-x="2000" data-y="2100" data-scale="0.4" data-rotate-y="30">
 		<span style ="position:absolute; left:20px; bottom:0;"> =17= </span>
 		<h2>Add indices to DB</h2><br/>
-		<div id="step-0" data-jmpress="zoom after step">Indices have their own logic depending on DB. A very simple generic explanation: it’s a lookup table - instead of iteration from beginning. More detailed click <a href="http://dev.mysql.com/doc/refman/5.0/en/mysql-indexes.html">is here</a>.</div><br/>
+		<div class="step-0" data-jmpress="zoom after step">Indices have their own logic depending on DB. A very simple generic explanation: it’s a lookup table - instead of iteration from beginning. More detailed click <a href="http://dev.mysql.com/doc/refman/5.0/en/mysql-indexes.html">is here</a>.</div><br/>
 		<code>
-			<pre id="step-1" data-jmpress="zoom after step-0">
+			<pre class="step-1" data-jmpress="zoom after step-0">
 			CREATE TABLE test (
 			    id         INT NOT NULL,
 			    last_name  CHAR(30) NOT NULL,
@@ -400,41 +400,41 @@
 			);
 			</pre>
 		</code>
-		<div id="step-2" data-jmpress="zoom after step-1">The index can be used for lookups that specify values for combinations. For example: (last_name,  first_name). That index can also be used just a last_name because it is leftmost in the index.</div>
+		<div class="step-2" data-jmpress="zoom after step-1">The index can be used for lookups that specify values for combinations. For example: (last_name,  first_name). That index can also be used just a last_name because it is leftmost in the index.</div>
 	</div>
 
 	<div class="step step18" data-x="3000" data-y="2100" data-scale="0.2" data-rotate-x="30">
 		<span style ="position:absolute; left:20px; bottom:0;"> =18= </span>
 		<h1>Utilizing Redis</h1>
 		<h2>What's all the hype about?</h2>
-		<h3 id="step-0" data-jmpress="zoom after step">
+		<h3 class="step-0" data-jmpress="zoom after step">
 			Redis is an open source, BSD licensed, advanced key-value store. It is often referred to as a data structure server since keys can contain strings, hashes, lists, sets and sorted sets.
 		</h3><br/>
-		<div id="step-1" data-jmpress="zoom after step-0">
+		<div class="step-1" data-jmpress="zoom after step-0">
 			In other words, Redis is an ultra-fast key-value in-memory database with lots of options used by the 'big fishes' like Twitter, Instagram, Tumblr, Flickr, Stackoverflow etc. <br/>
 			Can be even more fine tuned for better performance, read about it on Instagram's developers blog.
 		</div>
 
-		<div id="step-2" data-jmpress="zoom after step-1">Right after migration of likes to redis (changed only the output in products) improvement was about <strong>⅕  increase in speed</strong> (<strong>2.43</strong> trans/sec -> <strong>2.93</strong> trans/sec --> (and with reviews on redis) --> <strong>3.14</strong> trans/sec ).</div><br/>
-		<div id="step-3" data-jmpress="zoom after step-2">Since we’re adding complexity to our code, it’s important to use a well-defined <strong>interface</strong> (such as in the module we created) for all operations. We need to implement a Facade Design Pattern which will communicate with Redis. That way, when and if we’ll want replace Redis with something else, we will only change this Facade without the  need to search and replace the code where all the references to Redis exist. Modules could help here.</div>
+		<div class="step-2" data-jmpress="zoom after step-1">Right after migration of likes to redis (changed only the output in products) improvement was about <strong>⅕  increase in speed</strong> (<strong>2.43</strong> trans/sec -> <strong>2.93</strong> trans/sec --> (and with reviews on redis) --> <strong>3.14</strong> trans/sec ).</div><br/>
+		<div class="step-3" data-jmpress="zoom after step-2">Since we’re adding complexity to our code, it’s important to use a well-defined <strong>interface</strong> (such as in the module we created) for all operations. We need to implement a Facade Design Pattern which will communicate with Redis. That way, when and if we’ll want replace Redis with something else, we will only change this Facade without the  need to search and replace the code where all the references to Redis exist. Modules could help here.</div>
 		
-		<div id="step-4" data-jmpress="zoom after step-3"><strong>Monitoring</strong></div>
-		<div id="step-5" data-jmpress="zoom after step-4">gem install redmon</div>
+		<div class="step-4" data-jmpress="zoom after step-3"><strong>Monitoring</strong></div>
+		<div class="step-5" data-jmpress="zoom after step-4">gem install redmon</div>
 	</div>
 
 	<div class="step step19" data-x="4000" data-y="2100" data-scale="0.4" data-rotate-y="30">
 		<span style ="position:absolute; left:20px; bottom:0;"> =19= </span>
 		<h1>Web Proxy Servers</h1>
 		<h2>Apache is cool, but...</h2>
-		<h3 id="step-0" data-jmpress="zoom after step">
+		<h3 class="step-0" data-jmpress="zoom after step">
 			<strong>Nginx</strong> is a high-performance HTTP server and reverse proxy. What's in the package: high performance, stability, rich feature set, simple configuration, and low resource consumption with predictable amounts of memory under load.
 		</h3><br/>
-		<div id="step-1" data-jmpress="zoom after step-0">
+		<div class="step-1" data-jmpress="zoom after step-0">
 			Typical configuration might look like:
 		</div>
 
 		<code>
-			<pre id="step-2" data-jmpress="zoom after step-1">
+			<pre class="step-2" data-jmpress="zoom after step-1">
 upstream app {
 	server unix:/srv/app/current/tmp/sockets/unicorn.sock fail_timeout=0;
 }
@@ -451,7 +451,7 @@ server {
 	<div class="step step20" data-x="0" data-y="2800" data-scale="0.2" data-rotate-x="30">
 		<span style ="position:absolute; left:20px; bottom:0;"> =20= </span>
 		<code>
-			<pre id="step-0" data-jmpress="zoom after step">
+			<pre class="step-0" data-jmpress="zoom after step">
 server {
 	listen 80;
 	client_max_body_size 2G;
@@ -488,19 +488,19 @@ server {
 		<h2>Configuration for Memcached</h2>
 
 		<code>
-			<pre id="step-0" data-jmpress="zoom after step">
+			<pre class="step-0" data-jmpress="zoom after step">
 				gem 'dalli'
 				config.cache_store = :dalli_store
 			</pre>
 			<a href='https://github.com/datagraph/rack-throttle'>Rate limiting gem</a>
 		</code>
 
-		<div id="step-1" data-jmpress="zoom after step-0">"Memcache everything", - Reddit</div>
-		<ul id="step-2" data-jmpress="zoom after step-1">
-			<div id="step-3" data-jmpress="zoom after step-2">DB data</div>
-			<div id="step-4" data-jmpress="zoom after step-3">Session Data</div>
-			<div id="step-5" data-jmpress="zoom after step-4">Rendered pages</div>
-			<div id="step-6" data-jmpress="zoom after step-5">Memoize internal functions</div>
+		<div class="step-1" data-jmpress="zoom after step-0">"Memcache everything", - Reddit</div>
+		<ul class="step-2" data-jmpress="zoom after step-1">
+			<div class="step-3" data-jmpress="zoom after step-2">DB data</div>
+			<div class="step-4" data-jmpress="zoom after step-3">Session Data</div>
+			<div class="step-5" data-jmpress="zoom after step-4">Rendered pages</div>
+			<div class="step-6" data-jmpress="zoom after step-5">Memoize internal functions</div>
 		</ul>
 	</div>
 
@@ -508,10 +508,10 @@ server {
 		<span style ="position:absolute; left:20px; bottom:0;"> =22= </span>
 		<h2>Security and troubleshooting</h2>
 
-		<div id="step-0" data-jmpress="zoom after step">
+		<div class="step-0" data-jmpress="zoom after step">
 			<a href='http://code.google.com/p/memcached/wiki/NewProgrammingTricks'>memcached tricks</a>
 		</div>
-		<div id="step-1" data-jmpress="zoom after step-0">Supervise can restart a server when situation isn't obvious</div>
+		<div class="step-1" data-jmpress="zoom after step-0">Supervise can restart a server when situation isn't obvious</div>
 	</div>
 
 	<div class="step step23" data-x="3000" data-y="2800" data-scale="0.4" data-rotate-y="30">
