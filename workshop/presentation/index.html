@@ -417,6 +417,9 @@
 
 		<div ~m>Right after migration of likes to redis (changed only the output in products) improvement was about <strong>⅕  increase in speed</strong> (<strong>2.43</strong> trans/sec -> <strong>2.93</strong> trans/sec --> (and with reviews on redis) --> <strong>3.14</strong> trans/sec ).</div><br/>
 		<div ~m>Since we’re adding complexity to our code, it’s important to use a well-defined <strong>interface</strong> (such as in the module we created) for all operations. We need to implement a Facade Design Pattern which will communicate with Redis. That way, when and if we’ll want replace Redis with something else, we will only change this Facade without the  need to search and replace the code where all the references to Redis exist. Modules could help here.</div>
+		
+		<div ~m><strong>Monitoring</strong></div>
+		<div ~m>gem install redmon</div>
 	</div>
 
 	<div ~s>
@@ -492,7 +495,7 @@ server {
 			<a href='https://github.com/datagraph/rack-throttle'>Rate limiting gem</a>
 		</code>
 
-		<div ~m>"Memcache everything", - Redis</div>
+		<div ~m>"Memcache everything", - Reddit</div>
 		<ul ~m>
 			<div ~m>DB data</div>
 			<div ~m>Session Data</div>
@@ -515,6 +518,7 @@ server {
 		~n
 		<h2>References</h2>
 		<a href='http://highscalability.com/blog/2010/5/17/7-lessons-learned-while-building-reddit-to-270-million-page.html'>reddit lessons learned</a>
+		<a href='http://www.slideshare.net/dvirsky/kicking-ass-with-redis'>Amazing Redis Patterns</a>
 	</div>
 
 </div>

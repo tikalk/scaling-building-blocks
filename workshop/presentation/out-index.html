@@ -27,21 +27,22 @@
 		<h1>What will be covered</h1>
 		<ul>
 			<li id="step-0" data-jmpress="zoom after step">What is scalability and When it should be considered.</li>
-			<li id="step-1" data-jmpress="zoom after step-0">Concurrent massive landing</li>
-			<li id="step-2" data-jmpress="zoom after step-1">Good Indicator: Response time is increasing</li>
-			<li id="step-3" data-jmpress="zoom after step-2">Response time = Server + Network + Client</li>
+			<li id="step-1" data-jmpress="zoom after step-0">"Disk and memory is less costly than making your user wait", - Steve Huffman, Reddit</li>
+			<li id="step-2" data-jmpress="zoom after step-1">Concurrent massive landing</li>
+			<li id="step-3" data-jmpress="zoom after step-2">Good Indicator: Response time is increasing</li>
+			<li id="step-4" data-jmpress="zoom after step-3">Response time = Server + Network + Client</li>
 		</ul>
 
-		<h2 id="step-4" data-jmpress="zoom after step-3">Who went through scaling</h2>
+		<h2 id="step-5" data-jmpress="zoom after step-4">Who went through scaling</h2>
 		<ul>
-			<li id="step-5" data-jmpress="zoom after step-4">Twitter, Gogobot all the big names like Shopify, Groupon etc.</li>
-			<li id="step-6" data-jmpress="zoom after step-5">All the other non-ruby websites like Tumblr, Instagram etc.</li>
-			<li id="step-7" data-jmpress="zoom after step-6">They share something common: Technology and the way it's used</li>
+			<li id="step-6" data-jmpress="zoom after step-5">Twitter, Gogobot all the big names like Shopify, Groupon etc.</li>
+			<li id="step-7" data-jmpress="zoom after step-6">All the other non-ruby websites like Tumblr, Instagram etc.</li>
+			<li id="step-8" data-jmpress="zoom after step-7">They share something common: Technology and the way it's used</li>
 		</ul>
 
 		<br/>
-		<h2 id="step-8" data-jmpress="zoom after step-7">Let's install some things that we'll need</h2>
-		<p id="step-9" data-jmpress="zoom after step-8" class='code'>sudo apt-get install siege memcached redis<p>
+		<h2 id="step-9" data-jmpress="zoom after step-8">Let's install some things that we'll need</h2>
+		<p id="step-10" data-jmpress="zoom after step-9" class='code'>sudo apt-get install siege memcached redis<p>
 	</div>
 
 	<div class="step step2" data-x="2000" data-y="0" data-scale="0.2" data-rotate-x="30">
@@ -162,19 +163,20 @@
 	<div class="step step7" data-x="2000" data-y="700" data-scale="0.4" data-rotate-y="30">
 		<span style ="position:absolute; left:20px; bottom:0;"> =7= </span>
 		<h2>From pure SQL to NoSQL</h2>
-		<div id="step-0" data-jmpress="zoom after step">What is Database Indexing and how it works [+ info below]. </div>
+		<div id="step-0" data-jmpress="zoom after step">What is Database Indexing and how it works [+ links below]. </div>
 		<ul>
 			<li id="step-1" data-jmpress="zoom after step-0">MySQL alternatives - Postgres  / MyISAM - InnoDB with ACID http://www.wikivs.com/wiki/MySQL_vs_PostgreSQL</li>
 			<li id="step-2" data-jmpress="zoom after step-1">http://dev.mysql.com/doc/refman/5.5/en/optimization-indexes.html</li>
 		</ul>
 		<div id="step-3" data-jmpress="zoom after step-2">Should we de-normalize? Pros and Cons.</div>
-		<div id="step-4" data-jmpress="zoom after step-3">Rails indexes by default :id. How do we add a migration with indexes.</div>
-		<div id="step-5" data-jmpress="zoom after step-4">Benchmark comparison before and after on a string search field with LIKE %abc%.</div>
-		<div id="step-6" data-jmpress="zoom after step-5">Concepts. Key-Value - what / why </div>
-		<div id="step-7" data-jmpress="zoom after step-6">List of NoSQL solutions, Hadoop, MongoDB, Riak, Redis, Cassandra CouchDB etc.</div>
+		<div id="step-4" data-jmpress="zoom after step-3">Concepts. Key-Value - what / why </div>
+		<div id="step-5" data-jmpress="zoom after step-4">Open Schema: Thing + Data <br/>http://www.slideshare.net/carsonified/steve-huffman-lessons-learned-while-at-redditcom</div>
+		<div id="step-6" data-jmpress="zoom after step-5">Rails indexes by default :id. How do we add a migration with indexes.</div>
+		<div id="step-7" data-jmpress="zoom after step-6">Benchmark comparison before and after on a string search field with LIKE %abc%.</div>
+		<div id="step-8" data-jmpress="zoom after step-7">List of NoSQL solutions, Hadoop, MongoDB, Riak, Redis, Cassandra CouchDB etc.</div>
 		<ul>
-			<li id="step-8" data-jmpress="zoom after step-7">Link: http://kkovacs.eu/cassandra-vs-mongodb-vs-couchdb-vs-redis</li>
-			<li id="step-9" data-jmpress="zoom after step-8">There’s more: http://nosql-database.org/</li>
+			<li id="step-9" data-jmpress="zoom after step-8">Link: http://kkovacs.eu/cassandra-vs-mongodb-vs-couchdb-vs-redis</li>
+			<li id="step-10" data-jmpress="zoom after step-9">There’s more: http://nosql-database.org/</li>
 		</ul>
 	</div>
 
@@ -202,14 +204,22 @@
 		<h1>Delayed Jobs</h1><br/>
 
 		<div id="step-0" data-jmpress="zoom after step">What? Why do we need them. </div>
-		<div id="step-1" data-jmpress="zoom after step-0">Available gems - resque, <strong>sidekick</strong>, delayed_job advantages - performance </div>
+		<div id="step-1" data-jmpress="zoom after step-0">Do the minimum to end the request. The rest throw to delayed jobs.</div>
 		<ul>
-			<li id="step-2" data-jmpress="zoom after step-1">https://github.com/mperham/sidekiq/wiki/FAQ</li>
+			<li id="step-2" data-jmpress="zoom after step-1">Send emails </li> 
+			<li id="step-3" data-jmpress="zoom after step-2">Remove spam </li>
+			<li id="step-4" data-jmpress="zoom after step-3">Get data from external API </li>
+			<li id="step-5" data-jmpress="zoom after step-4">Update search index</li>
+			<li id="step-6" data-jmpress="zoom after step-5">Compute user statistics</li>
 		</ul>
-		<div id="step-3" data-jmpress="zoom after step-2">Installation</div>
-		<div id="step-4" data-jmpress="zoom after step-3">Writing a simple worker that sends an email, execute it N times.</div>
-		<div id="step-5" data-jmpress="zoom after step-4">Watch the process through Web UI</div>
-		<div id="step-6" data-jmpress="zoom after step-5">Writing a simple worker that resizes an image.</div>
+		<div id="step-7" data-jmpress="zoom after step-6">Available gems - resque, <strong>sidekick</strong>, delayed_job advantages - performance </div>
+		<ul>
+			<li id="step-8" data-jmpress="zoom after step-7">https://github.com/mperham/sidekiq/wiki/FAQ</li>
+		</ul>
+		<div id="step-9" data-jmpress="zoom after step-8">Installation</div>
+		<div id="step-10" data-jmpress="zoom after step-9">Writing a simple worker that sends an email, execute it N times.</div>
+		<div id="step-11" data-jmpress="zoom after step-10">Watch the process through Web UI</div>
+		<div id="step-12" data-jmpress="zoom after step-11">Writing a simple worker that resizes an image.</div>
 	</div>
 
 
@@ -407,6 +417,9 @@
 
 		<div id="step-2" data-jmpress="zoom after step-1">Right after migration of likes to redis (changed only the output in products) improvement was about <strong>⅕  increase in speed</strong> (<strong>2.43</strong> trans/sec -> <strong>2.93</strong> trans/sec --> (and with reviews on redis) --> <strong>3.14</strong> trans/sec ).</div><br/>
 		<div id="step-3" data-jmpress="zoom after step-2">Since we’re adding complexity to our code, it’s important to use a well-defined <strong>interface</strong> (such as in the module we created) for all operations. We need to implement a Facade Design Pattern which will communicate with Redis. That way, when and if we’ll want replace Redis with something else, we will only change this Facade without the  need to search and replace the code where all the references to Redis exist. Modules could help here.</div>
+		
+		<div id="step-4" data-jmpress="zoom after step-3"><strong>Monitoring</strong></div>
+		<div id="step-5" data-jmpress="zoom after step-4">gem install redmon</div>
 	</div>
 
 	<div class="step step19" data-x="4000" data-y="2100" data-scale="0.4" data-rotate-y="30">
@@ -479,8 +492,35 @@ server {
 				gem 'dalli'
 				config.cache_store = :dalli_store
 			</pre>
+			<a href='https://github.com/datagraph/rack-throttle'>Rate limiting gem</a>
 		</code>
+
+		<div id="step-1" data-jmpress="zoom after step-0">"Memcache everything", - Reddit</div>
+		<ul id="step-2" data-jmpress="zoom after step-1">
+			<div id="step-3" data-jmpress="zoom after step-2">DB data</div>
+			<div id="step-4" data-jmpress="zoom after step-3">Session Data</div>
+			<div id="step-5" data-jmpress="zoom after step-4">Rendered pages</div>
+			<div id="step-6" data-jmpress="zoom after step-5">Memoize internal functions</div>
+		</ul>
 	</div>
+
+	<div class="step step22" data-x="2000" data-y="2800" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =22= </span>
+		<h2>Security and troubleshooting</h2>
+
+		<div id="step-0" data-jmpress="zoom after step">
+			<a href='http://code.google.com/p/memcached/wiki/NewProgrammingTricks'>memcached tricks</a>
+		</div>
+		<div id="step-1" data-jmpress="zoom after step-0">Supervise can restart a server when situation isn't obvious</div>
+	</div>
+
+	<div class="step step23" data-x="3000" data-y="2800" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =23= </span>
+		<h2>References</h2>
+		<a href='http://highscalability.com/blog/2010/5/17/7-lessons-learned-while-building-reddit-to-270-million-page.html'>reddit lessons learned</a>
+		<a href='http://www.slideshare.net/dvirsky/kicking-ass-with-redis'>Amazing Redis Patterns</a>
+	</div>
+
 </div>
 
 <script type="text/javascript">

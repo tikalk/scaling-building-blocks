@@ -18,6 +18,10 @@
 #
 
 class User < ActiveRecord::Base
+  include Redis::Objects
+  include UserFollowings
+  set :following
+  set :followers
   
   rolify
   has_many :orders
