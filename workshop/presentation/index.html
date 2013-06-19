@@ -19,28 +19,38 @@
 <body>
 
 <div id="simple">
-	<div id="home" ~s>
+
+	<div ~s>
 		~n
 		<img class="slide1 image1" src="images/slide1/ruby_logo.png"/>
 		<img class="slide1 image4" src="images/slide1/nginx.png"/>
-		<h1 ~m>What will be covered</h1>
+		<h1>What will be covered</h1>
 		<ul>
-			<li ~m>When we will need this?</li>
+			<li ~m>What is scalability and When it should be considered.</li>
+			<li ~m>"Disk and memory is less costly than making your user wait", - Steve Huffman, Reddit</li>
 			<li ~m>Concurrent massive landing</li>
-			<li ~m>The system is under stress</li>
-			<li ~m>Response time is growing</li>
-			<li ~m>If you want peaceful life, prepare yourself for the battle!</li>
+			<li ~m>Good Indicator: Response time is increasing</li>
+			<li ~m>Response time = Server + Network + Client</li>
 		</ul>
+
+		<h2 ~m>Who went through scaling</h2>
+		<ul>
+			<li ~m>Twitter, Gogobot all the big names like Shopify, Groupon etc.</li>
+			<li ~m>All the other non-ruby websites like Tumblr, Instagram etc.</li>
+			<li ~m>They share something common: Technology and the way it's used</li>
+		</ul>
+
 		<br/>
-		<h2 ~m>Prerequisites</h2>
+		<h2 ~m>Let's install some things that we'll need</h2>
 		<p ~m class='code'>sudo apt-get install siege memcached redis<p>
 	</div>
 
-	<div id="home" ~s>
+	<div ~s>
 		~n
-		<h2 ~m>Main Topics</h2>
+		<h2>Main Topics</h2>
 		<ul>
-			<li ~m>Optimize the code</li>
+			<li ~m>Caching categorized</li>
+			<li ~m>Code Optimization</li>
 				<ul>
 					<li ~m>Profile, find bottlenecks with existing tools</li>
 					<li ~m>Delayed Jobs</li>
@@ -50,9 +60,9 @@
 							<li ~m>Sinatra for computations etc.</li>
 						</ul>
 				</ul>
-			<li ~m>Database tweaks</li>
+			<li ~m>Improve our Databases</li>
 			<ul>
-				<li ~m>In-memory DB - Redis</li>
+				<li ~m>NoSQL - Redis</li>
 				<li ~m>Fine-tune existing MySQL database:</li>
 					<ul>
 					<li ~m>Indexes</li>
@@ -60,27 +70,28 @@
 					<li ~m>De-normalization</li>
 					</ul>
 			</ul>
-			<li ~m>Types of caching</li>
-			<li ~m>JRuby</li>
-			<li ~m>Adding Hardware</li>
+			<li ~m>More tips and tricks</li>
 		</ul>
 	</div>
 
-	<div id="home" ~s>
+	<div ~s>
 		~n
-		<h2 ~m>What is web application?</h2><br/>
-		<div ~m>By default SQLite is the development DB. <strong>It's not a production Database.</strong> </div><br/>
-		<div ~m>But it's working just out of the box.</div><br/>
-		<div ~m>This summarizes the following: Web applications are mainly just a... <span data-jmpress="drive-left after 3500ms step" style="color:#4f4">Database.</span></div><br/>
-		<div ~m>It's just a convenient concept. <br/>
-			So <strong>better algorithms for data manipulation give us horizontal scalability</strong>.</div><br/>
-		<div ~m>Other types of scaling include adding processing power, use external services etc.</div>
+		<h2>What is web application?</h2><br/>
+		<div ~m>Web applications are mainly just a... 
+			<span ~m style="color:#4f4">Database</span> 
+			<span ~m>PLUS some manipulation on it.</span> 
+		</div>
+		<div ~m>(A general and convenient concept.) </div><br/>
+		<div ~m>Scaling <strong>vertically</strong> <br />
+			<span ~m style="margin: 0 0 0 70px">means buying more computing power (e.g. machines) and spreading the requests among them.</span></div><br/>
+		<div ~m>Scaling <strong>horizontally</strong> <br/> <span ~m style="margin: 0 0 0 70px">means improving or optimizing the code such that there's no need to scale up vertically.</span></div><br/>
+		<div ~m>Can we call it scaling? Using external services like Google when including jqueury.js?</div>
 	</div>
 
-	<div id="home" ~s>
+	<div ~s>
 		~n
-		<h3 ~m>Let's create our application</h3>
-		<div ~m>We will use a prepared app. Instead of carrying a large database, we'll just generate a few records, make relations and clone them several thousand times like so:</div>
+		<h1>Quick walk through our app</h1>
+		<div ~m>Instead of carrying a large database, we'll just generate a few records, make relations and clone them several thousand times like so:</div>
 		
 		<code>
 			<pre ~m>
@@ -115,7 +126,140 @@
 
 	<div ~s>
 		~n
-		<h2 ~m>Measure the response time</h2>
+		<h1>Caching</h1>
+		<h2 ~m>What is the problem with current app?</h2><br/>
+		<div ~m>Let's dig through the server logs.</div>
+		<div ~m>What is caching and how it will help.</div>
+		<div ~m>How caching works. Scenario: User --> (hits) --> The Server</div>
+		<br/>
+		<div ~m>What are the Rails cahing types</div>
+		<ul>
+			<li ~m>Page - where are the stored files?</li>
+			<li ~m>Action</li>
+			<li ~m>Fragment</li>
+			<li ~m>SQL Caching</li>
+		</ul>
+
+		<div ~m>Cache expiration - methods, sweepers, but... there’s a better way (later) and a couple of gems.</div>
+
+	</div>
+
+	<div ~s>
+		~n
+		<h2>Available Cache Stores and their difference?</h2>
+		<ul>
+			<li ~m>Base class: ActiveSupport::Cache::Store</li>
+			<li ~m> read, write, delete, exist?, and fetch</li>
+			<li ~m>FileStore</li>
+			<li ~m>MemoryStore for only 1 process</li>
+			<li ~m>Memcached <span ~m>use Dalli or memcache-client</span></li>
+			<li ~m>Create your own, you're not limited!</li>
+		</ul>
+		
+		<div ~m>How caching strategies can be applied on a random website</div>
+	</div>
+
+
+	<div ~s>
+		~n
+		<h2>From pure SQL to NoSQL</h2>
+		<div ~m>What is Database Indexing and how it works [+ links below]. </div>
+		<ul>
+			<li ~m>MySQL alternatives - Postgres  / MyISAM - InnoDB with ACID http://www.wikivs.com/wiki/MySQL_vs_PostgreSQL</li>
+			<li ~m>http://dev.mysql.com/doc/refman/5.5/en/optimization-indexes.html</li>
+		</ul>
+		<div ~m>Should we de-normalize? Pros and Cons.</div>
+		<div ~m>Concepts. Key-Value - what / why </div>
+		<div ~m>Open Schema: Thing + Data <br/>http://www.slideshare.net/carsonified/steve-huffman-lessons-learned-while-at-redditcom</div>
+		<div ~m>Rails indexes by default :id. How do we add a migration with indexes.</div>
+		<div ~m>Benchmark comparison before and after on a string search field with LIKE %abc%.</div>
+		<div ~m>List of NoSQL solutions, Hadoop, MongoDB, Riak, Redis, Cassandra CouchDB etc.</div>
+		<ul>
+			<li ~m>Link: http://kkovacs.eu/cassandra-vs-mongodb-vs-couchdb-vs-redis</li>
+			<li ~m>There’s more: http://nosql-database.org/</li>
+		</ul>
+	</div>
+
+	<div ~s>
+		~n
+		<h2 ~m>Installing and configuring Redis on *nix and Redis and Redis-Objects gems.</h2>
+		<br/>
+		<div ~m>Redis commands walkthrough with $ redis-cli or $ rails c (ask)</div>
+		<ul>
+			<li ~m>http://redis.io/commands</li>
+			<li ~m>https://github.com/nateware/redis-objects#readme</li>
+			<li ~m>SADD myset “someval”, SISMEMBER myset “someval”, SMEMBERS myset</li>
+			<li ~m>Let's go to redis commands page and play there.</li>
+			<li ~m>For redis-objects @set = Redis::Set.new('set_name');   @set << 'a' … </li>
+			<li ~m>Twitter-like example http://jimneath.org/2011/03/24/using-redis-with-ruby-on-rails.html</li>
+		</ul>
+		<div ~m>More advanced: </div>
+		<div ~m>http://www.christianoestreich.com/2011/11/redis-hashsets-performance/</div>
+		<div ~m>http://instagram-engineering.tumblr.com/post/12202313862/storing-hundreds-of-millions-of-simple-key-value-pairs</div>
+	</div>
+
+
+	<div ~s>
+		~n
+		<h1>Delayed Jobs</h1><br/>
+
+		<div ~m>What? Why do we need them. </div>
+		<div ~m>Do the minimum to end the request. The rest throw to delayed jobs.</div>
+		<ul>
+			<li ~m>Send emails </li> 
+			<li ~m>Remove spam </li>
+			<li ~m>Get data from external API </li>
+			<li ~m>Update search index</li>
+			<li ~m>Compute user statistics</li>
+		</ul>
+		<div ~m>Available gems - resque, <strong>sidekick</strong>, delayed_job advantages - performance </div>
+		<ul>
+			<li ~m>https://github.com/mperham/sidekiq/wiki/FAQ</li>
+		</ul>
+		<div ~m>Installation</div>
+		<div ~m>Writing a simple worker that sends an email, execute it N times.</div>
+		<div ~m>Watch the process through Web UI</div>
+		<div ~m>Writing a simple worker that resizes an image.</div>
+	</div>
+
+
+	<div ~s>
+		~n
+		<h1>Solr-based Search</h1>
+		<h2 ~m>What is Solr.</h2><br/>
+			
+		<div ~m>Solr features</div>
+		<div ~m>Who uses it</div>
+		<div ~m>Sunspot gem - intro how it works</div>
+		<div ~m>Installation, running</div>
+		<div ~m>Configuring searchable inside a model</div>
+		<div ~m>Index</div>
+		<div ~m>Performing a search</div>
+		<div ~m>Benchmarking before and after [+ verify with below data]</div>
+		<div ~m>Different configuration options e.g. make parts of a string searchable - configure schema.xml</div>
+		<div ~m>Bonus - searching for similar documents, using weights</div>
+		<div ~m>What about Production?</div>
+	</div>
+
+
+	<div ~s>
+		~n
+		<h1>Candies</h1>			
+		<div ~m>Client-side caching, pros and cons</div>
+		<div ~m>Nginx + Unicorn / Thin (What? Why not Apache)</div>
+		<div ~m>JRuby</div>
+		<div ~m>Sinatra services, embedding c </div>
+		<div ~m>innodb_buffer_pool_size</div>
+		<div ~m>Deployment with Capistrano</div>
+	</div>
+
+
+
+	<!-- benchmarks -->
+
+	<div ~s>
+		~n
+		<h2>Measure the response time</h2>
 
 		<h3 ~m>We'll use siege</h3><br/>
 		<div ~m><code>siege -c50 -d10 [-t30S] -i -f site.txt</code></div><br/>
@@ -144,7 +288,7 @@
 
 	<div ~s>
 		~n
-		<h2 ~m>Add the cache</h2>
+		<h2>Add the cache</h2>
 
 		<h3 ~m>Add to development.rb:</h3>
 		<code>
@@ -172,7 +316,7 @@
 		</div>
 	</div>
 
-	<div id="home" ~s>
+	<div ~s>
 		~n
 		<h3 ~m>Measure, compare, drive conclusions!</h3>
 		<div ~m>We'll use siege and Ruby's benchmark to measure the results. Like this:</div>
@@ -209,7 +353,7 @@
 
 	<div ~s>
 		~n
-		<h2 ~m>Switching to another cache_store.</h2>
+		<h2>Switching to another cache_store.</h2>
 
 		<code>
 			<pre ~m>
@@ -241,9 +385,9 @@
 		</div>
 	</div>
 
-	<div id="home" ~s>
+	<div ~s>
 		~n
-		<h2 ~m>Add indices to DB</h2><br/>
+		<h2>Add indices to DB</h2><br/>
 		<div ~m>Indices have their own logic depending on DB. A very simple generic explanation: it’s a lookup table - instead of iteration from beginning. More detailed click <a href="http://dev.mysql.com/doc/refman/5.0/en/mysql-indexes.html">is here</a>.</div><br/>
 		<code>
 			<pre ~m>
@@ -261,8 +405,8 @@
 
 	<div ~s>
 		~n
-		<h1 ~m>Utilizing Redis</h1>
-		<h2 ~m>What's all the hype about?</h2>
+		<h1>Utilizing Redis</h1>
+		<h2>What's all the hype about?</h2>
 		<h3 ~m>
 			Redis is an open source, BSD licensed, advanced key-value store. It is often referred to as a data structure server since keys can contain strings, hashes, lists, sets and sorted sets.
 		</h3><br/>
@@ -273,12 +417,15 @@
 
 		<div ~m>Right after migration of likes to redis (changed only the output in products) improvement was about <strong>⅕  increase in speed</strong> (<strong>2.43</strong> trans/sec -> <strong>2.93</strong> trans/sec --> (and with reviews on redis) --> <strong>3.14</strong> trans/sec ).</div><br/>
 		<div ~m>Since we’re adding complexity to our code, it’s important to use a well-defined <strong>interface</strong> (such as in the module we created) for all operations. We need to implement a Facade Design Pattern which will communicate with Redis. That way, when and if we’ll want replace Redis with something else, we will only change this Facade without the  need to search and replace the code where all the references to Redis exist. Modules could help here.</div>
+		
+		<div ~m><strong>Monitoring</strong></div>
+		<div ~m>gem install redmon</div>
 	</div>
 
 	<div ~s>
 		~n
-		<h1 ~m>Web Proxy Servers</h1>
-		<h2 ~m>Apache is cool, but...</h2>
+		<h1>Web Proxy Servers</h1>
+		<h2>Apache is cool, but...</h2>
 		<h3 ~m>
 			<strong>Nginx</strong> is a high-performance HTTP server and reverse proxy. What's in the package: high performance, stability, rich feature set, simple configuration, and low resource consumption with predictable amounts of memory under load.
 		</h3><br/>
@@ -338,17 +485,42 @@ server {
 
 	<div ~s>
 		~n
-		<h2 ~m>Swi   dfsafdsaf </h2>
+		<h2>Configuration for Memcached</h2>
 
 		<code>
 			<pre ~m>
 				gem 'dalli'
 				config.cache_store = :dalli_store
 			</pre>
+			<a href='https://github.com/datagraph/rack-throttle'>Rate limiting gem</a>
 		</code>
 
-		<div ~m>asdasdfasdf </div>
+		<div ~m>"Memcache everything", - Reddit</div>
+		<ul ~m>
+			<div ~m>DB data</div>
+			<div ~m>Session Data</div>
+			<div ~m>Rendered pages</div>
+			<div ~m>Memoize internal functions</div>
+		</ul>
 	</div>
+
+	<div ~s>
+		~n
+		<h2>Security and troubleshooting</h2>
+
+		<div ~m>
+			<a href='http://code.google.com/p/memcached/wiki/NewProgrammingTricks'>memcached tricks</a>
+		</div>
+		<div ~m>Supervise can restart a server when situation isn't obvious</div>
+	</div>
+
+	<div ~s>
+		~n
+		<h2>References</h2>
+		<a href='http://highscalability.com/blog/2010/5/17/7-lessons-learned-while-building-reddit-to-270-million-page.html'>reddit lessons learned</a>
+		<a href='http://www.slideshare.net/dvirsky/kicking-ass-with-redis'>Amazing Redis Patterns</a>
+	</div>
+
 </div>
 
 <script type="text/javascript">
