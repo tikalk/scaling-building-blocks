@@ -27,6 +27,7 @@
 		<h1>What will be covered</h1>
 		<ul>
 			<li ~m>What is scalability and When it should be considered.</li>
+			<li ~m>"Disk and memory is less costly than making your user wait", - Steve Huffman, Reddit</li>
 			<li ~m>Concurrent massive landing</li>
 			<li ~m>Good Indicator: Response time is increasing</li>
 			<li ~m>Response time = Server + Network + Client</li>
@@ -162,15 +163,16 @@
 	<div ~s>
 		~n
 		<h2>From pure SQL to NoSQL</h2>
-		<div ~m>What is Database Indexing and how it works [+ info below]. </div>
+		<div ~m>What is Database Indexing and how it works [+ links below]. </div>
 		<ul>
 			<li ~m>MySQL alternatives - Postgres  / MyISAM - InnoDB with ACID http://www.wikivs.com/wiki/MySQL_vs_PostgreSQL</li>
 			<li ~m>http://dev.mysql.com/doc/refman/5.5/en/optimization-indexes.html</li>
 		</ul>
 		<div ~m>Should we de-normalize? Pros and Cons.</div>
+		<div ~m>Concepts. Key-Value - what / why </div>
+		<div ~m>Open Schema: Thing + Data <br/>http://www.slideshare.net/carsonified/steve-huffman-lessons-learned-while-at-redditcom</div>
 		<div ~m>Rails indexes by default :id. How do we add a migration with indexes.</div>
 		<div ~m>Benchmark comparison before and after on a string search field with LIKE %abc%.</div>
-		<div ~m>Concepts. Key-Value - what / why </div>
 		<div ~m>List of NoSQL solutions, Hadoop, MongoDB, Riak, Redis, Cassandra CouchDB etc.</div>
 		<ul>
 			<li ~m>Link: http://kkovacs.eu/cassandra-vs-mongodb-vs-couchdb-vs-redis</li>
@@ -202,6 +204,14 @@
 		<h1>Delayed Jobs</h1><br/>
 
 		<div ~m>What? Why do we need them. </div>
+		<div ~m>Do the minimum to end the request. The rest throw to delayed jobs.</div>
+		<ul>
+			<li ~m>Send emails </li> 
+			<li ~m>Remove spam </li>
+			<li ~m>Get data from external API </li>
+			<li ~m>Update search index</li>
+			<li ~m>Compute user statistics</li>
+		</ul>
 		<div ~m>Available gems - resque, <strong>sidekick</strong>, delayed_job advantages - performance </div>
 		<ul>
 			<li ~m>https://github.com/mperham/sidekiq/wiki/FAQ</li>
@@ -479,8 +489,34 @@ server {
 				gem 'dalli'
 				config.cache_store = :dalli_store
 			</pre>
+			<a href='https://github.com/datagraph/rack-throttle'>Rate limiting gem</a>
 		</code>
+
+		<div ~m>"Memcache everything", - Redis</div>
+		<ul ~m>
+			<div ~m>DB data</div>
+			<div ~m>Session Data</div>
+			<div ~m>Rendered pages</div>
+			<div ~m>Memoize internal functions</div>
+		</ul>
 	</div>
+
+	<div ~s>
+		~n
+		<h2>Security and troubleshooting</h2>
+
+		<div ~m>
+			<a href='http://code.google.com/p/memcached/wiki/NewProgrammingTricks'>memcached tricks</a>
+		</div>
+		<div ~m>Supervise can restart a server when situation isn't obvious</div>
+	</div>
+
+	<div ~s>
+		~n
+		<h2>References</h2>
+		<a href='http://highscalability.com/blog/2010/5/17/7-lessons-learned-while-building-reddit-to-270-million-page.html'>reddit lessons learned</a>
+	</div>
+
 </div>
 
 <script type="text/javascript">
