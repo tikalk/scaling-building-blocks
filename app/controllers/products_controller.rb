@@ -1,9 +1,9 @@
+# encoding: utf-8
 class ProductsController < ApplicationController
   before_filter :authenticate_user!, :only => [:destroy]
 
-  # Here our caching starts. It's similar to page caching, means very fast.
-  # But in addition to just caching a page, we can run a before filter!
-  caches_action :galery, :cache_path => :galery_cache_path.to_proc
+  # Here our caching starts. 
+  caches_page :galery
 
   # Here we build our unique sequences, each sequence is pointing to a cached
   # version of a page. Extremely important for users, orders and other private

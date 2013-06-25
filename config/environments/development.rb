@@ -12,8 +12,8 @@ Pinukimmm::Application.configure do
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
 
-  config.action_controller.perform_caching = true
-  config.cache_store = :dalli_store, { :namespace => 'pinukimmm', :expires_in => 1.day, :compress => true }
+  config.action_controller.perform_caching = false
+  #config.cache_store = :dalli_store, { :namespace => 'pinukimmm', :expires_in => 1.day, :compress => true }
   #config.cache_store = :file_store, "#{Rails.root}/tmp/cache"
   #config.cache_store = :redis_store, "redis://localhost:6379/0/cache", { expires_in: 90.minutes }
 
@@ -41,4 +41,5 @@ Pinukimmm::Application.configure do
 
   # for rails_admin // v.k.
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+
 end
