@@ -158,11 +158,11 @@
 
 		<div ~m>Lets play around with it</div><br/>
 
-		<div ~m>
+		<div ~m style="font-size: 1.2em; line-height: 1.8em;">
 			ps = Product.where("id &gt; ?", 0).includes(:likes).reverse_order().page(20).per(30)
 		</div><br/>
 
-		<div ~m>
+		<div ~m style="font-size: 1.2em; line-height: 1.8em;">
 			ps.each {|p| puts p.likes.first if !p.likes.nil? }
 		</div>
 	</div>

@@ -154,15 +154,15 @@
 		<span style ="position:absolute; left:20px; bottom:0;"> =6= </span>
 		<h2>Eager loading</h2><br/>
 
-		<a class="step-0" data-jmpress="zoom after step" style="display:block" href="http://guides.rubyonrails.org/active_record_querying.html#eager-loading-associations">Info on Rails Guides</a><br/>
+		<a class="step-0" data-jmpress="zoom after step" style="display:block; z-index: 999" href="http://guides.rubyonrails.org/active_record_querying.html#eager-loading-associations">Info on Rails Guides</a><br/>
 
 		<div class="step-1" data-jmpress="zoom after step-0">Lets play around with it</div><br/>
 
-		<div class="step-2" data-jmpress="zoom after step-1">
+		<div class="step-2" data-jmpress="zoom after step-1" style="font-size: 1.2em; line-height: 1.8em;">
 			ps = Product.where("id &gt; ?", 0).includes(:likes).reverse_order().page(20).per(30)
 		</div><br/>
 
-		<div class="step-3" data-jmpress="zoom after step-2">
+		<div class="step-3" data-jmpress="zoom after step-2" style="font-size: 1.2em; line-height: 1.8em;">
 			ps.each {|p| puts p.likes.first if !p.likes.nil? }
 		</div>
 	</div>
