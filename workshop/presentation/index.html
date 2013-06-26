@@ -113,8 +113,8 @@
 			product_ids_range = Product.first.id..Product.last.id
 			for i in 1..5000
 			  p = Product.find(Random.new.rand(product_ids_range))
-			  p.likes << Like.find(Random.new.rand(like_ids_range))
-			  p.reviews << Review.find(Random.rand(review_ids_range))
+			  p.likes &lt;&lt; Like.find(Random.new.rand(like_ids_range))
+			  p.reviews &lt;&lt; Review.find(Random.rand(review_ids_range))
 			  p.likes.first.likeability = Random.new.rand(1..5)
 			  p.save!
 			end
@@ -123,6 +123,32 @@
 
 		<div ~m>The scripts are located under <code>/migration/presentation</code></div>
 	</div>
+
+
+	<div ~s>
+		~n
+		<h2>Add indices to DB</h2><br/>
+		<div ~m>Indices have their own logic depending on DB. A very simple generic explanation: it’s a lookup table - instead of iteration from beginning. More detailed info <a style="z-index: 999" href="http://dev.mysql.com/doc/refman/5.0/en/mysql-indexes.html">is here</a>.</div><br/>
+
+		<code>
+			<pre ~m>
+			CREATE TABLE test (
+			    id         INT NOT NULL,
+			    last_name  CHAR(30) NOT NULL,
+			    first_name CHAR(30) NOT NULL,
+			    PRIMARY KEY (id),
+			    INDEX name (last_name,first_name)
+			);
+			</pre>
+		</code>
+
+		<div ~m>The index can be used for lookups that specify values for combinations. For example: (last_name,  first_name). That index can also be used just a last_name because it is leftmost in the index.</div><br/>
+
+		<div ~m>Maintaing pairs of DBs, A for Reading, B for writing, with replication</div><br/>
+
+		<div ~m><strong>innodb_buffer_pool_size</strong> &lt;&lt; GBs of RAM. Play around, find optimal. Default is 8MB</div>
+	</div>
+
 
 	<div ~s>
 		~n
@@ -141,8 +167,8 @@
 		</ul>
 
 		<div ~m>Cache expiration - methods, sweepers, but... there’s a better way (later) and a couple of gems.</div>
-
 	</div>
+
 
 	<div ~s>
 		~n
@@ -182,7 +208,28 @@
 
 	<div ~s>
 		~n
-		<h2 ~m>Installing and configuring Redis on *nix and Redis and Redis-Objects gems.</h2>
+		<h1>Utilizing Redis</h1>
+		<h3 ~m>
+			Redis is an open source, BSD licensed, advanced key-value store. It is often referred to as a data structure server since keys can contain strings, hashes, lists, sets and sorted sets.
+		</h3><br/>
+		<div ~m>
+			In other words, Redis is an ultra-fast key-value in-memory database with lots of options used by the 'big fishes' like Twitter, Instagram, Tumblr, Flickr, Stackoverflow etc. <br/>
+			Can be even more fine tuned for better performance, read about it on Instagram's developers blog.
+		</div>
+
+		<div ~m>Right after migration of likes to redis (changed only the output in products) improvement was about <strong>⅕  increase in speed</strong> (<strong>2.43</strong> trans/sec -> <strong>2.93</strong> trans/sec --> (and with reviews on redis) --> <strong>3.14</strong> trans/sec ).</div><br/>
+		<div ~m>Since we’re adding complexity to our code, it’s important to use a well-defined <strong>interface</strong> (such as in the module we created) for all operations. We need to implement a Facade Design Pattern which will communicate with Redis. That way, when and if we’ll want replace Redis with something else, we will only change this Facade without the  need to search and replace the code where all the references to Redis exist. Modules could help here.</div>
+		
+		<br/>
+		<div ~m><strong>Monitoring</strong></div>
+		<div ~m>redis-cli monitor</div>
+	</div>
+
+<!--asdf-->
+
+	<div ~s>
+		~n
+		<h2>Installing and configuring Redis on *nix and Redis and Redis-Objects gems.</h2>
 		<br/>
 		<div ~m>Redis commands walkthrough with $ redis-cli or $ rails c (ask)</div>
 		<ul>
@@ -190,7 +237,7 @@
 			<li ~m>https://github.com/nateware/redis-objects#readme</li>
 			<li ~m>SADD myset “someval”, SISMEMBER myset “someval”, SMEMBERS myset</li>
 			<li ~m>Let's go to redis commands page and play there.</li>
-			<li ~m>For redis-objects @set = Redis::Set.new('set_name');   @set << 'a' … </li>
+			<li ~m>For redis-objects @set = Redis::Set.new('set_name');   @set &lt;&lt; 'a' … </li>
 			<li ~m>Twitter-like example http://jimneath.org/2011/03/24/using-redis-with-ruby-on-rails.html</li>
 		</ul>
 		<div ~m>More advanced: </div>
@@ -386,42 +433,7 @@
 			http://guides.rubyonrails.org/caching_with_rails.html
 		</div>
 	</div>
-
-	<div ~s>
-		~n
-		<h2>Add indices to DB</h2><br/>
-		<div ~m>Indices have their own logic depending on DB. A very simple generic explanation: it’s a lookup table - instead of iteration from beginning. More detailed click <a href="http://dev.mysql.com/doc/refman/5.0/en/mysql-indexes.html">is here</a>.</div><br/>
-		<code>
-			<pre ~m>
-			CREATE TABLE test (
-			    id         INT NOT NULL,
-			    last_name  CHAR(30) NOT NULL,
-			    first_name CHAR(30) NOT NULL,
-			    PRIMARY KEY (id),
-			    INDEX name (last_name,first_name)
-			);
-			</pre>
-		</code>
-		<div ~m>The index can be used for lookups that specify values for combinations. For example: (last_name,  first_name). That index can also be used just a last_name because it is leftmost in the index.</div>
-	</div>
-
-	<div ~s>
-		~n
-		<h1>Utilizing Redis</h1>
-		<h3 ~m>
-			Redis is an open source, BSD licensed, advanced key-value store. It is often referred to as a data structure server since keys can contain strings, hashes, lists, sets and sorted sets.
-		</h3><br/>
-		<div ~m>
-			In other words, Redis is an ultra-fast key-value in-memory database with lots of options used by the 'big fishes' like Twitter, Instagram, Tumblr, Flickr, Stackoverflow etc. <br/>
-			Can be even more fine tuned for better performance, read about it on Instagram's developers blog.
-		</div>
-
-		<div ~m>Right after migration of likes to redis (changed only the output in products) improvement was about <strong>⅕  increase in speed</strong> (<strong>2.43</strong> trans/sec -> <strong>2.93</strong> trans/sec --> (and with reviews on redis) --> <strong>3.14</strong> trans/sec ).</div><br/>
-		<div ~m>Since we’re adding complexity to our code, it’s important to use a well-defined <strong>interface</strong> (such as in the module we created) for all operations. We need to implement a Facade Design Pattern which will communicate with Redis. That way, when and if we’ll want replace Redis with something else, we will only change this Facade without the  need to search and replace the code where all the references to Redis exist. Modules could help here.</div>
-		
-		<div ~m><strong>Monitoring</strong></div>
-		<div ~m>redis-cli monitor</div>
-	</div>
+	
 
 	<div ~s>
 		~n
