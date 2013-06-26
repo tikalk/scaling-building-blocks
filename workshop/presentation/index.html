@@ -248,6 +248,28 @@
 
 	<div ~s>
 		~n
+		<h2>Configuring Memcached</h2>
+
+		<code>
+			<pre ~m>
+				gem 'dalli'
+				config.cache_store = :dalli_store
+			</pre>
+			<a ~m href='https://github.com/datagraph/rack-throttle'>Rate limiting gem</a>
+		</code>
+
+		<div ~m>"Memcache everything", - Reddit</div>
+		<ul ~m>
+			<div ~m>DB data</div>
+			<div ~m>Session Data</div>
+			<div ~m>Rendered pages</div>
+			<div ~m>Memoize internal functions</div>
+		</ul>
+	</div>
+
+
+	<div ~s>
+		~n
 		<h1>Delayed Jobs</h1><br/>
 
 		<div ~m>What? Why do we need them. </div>
@@ -293,12 +315,11 @@
 
 	<div ~s>
 		~n
-		<h1>Candies</h1>			
+		<h1>==Candies==</h1>			
 		<div ~m>Client-side caching, pros and cons</div>
 		<div ~m>Nginx + Unicorn / Thin (What? Why not Apache)</div>
 		<div ~m>JRuby</div>
 		<div ~m>Sinatra services, embedding c </div>
-		<div ~m>innodb_buffer_pool_size</div>
 		<div ~m>Deployment with Capistrano</div>
 	</div>
 
@@ -337,36 +358,6 @@
 
 	<div ~s>
 		~n
-		<h2>Add the cache</h2>
-
-		<h3 ~m>Add to development.rb:</h3>
-		<code>
-			<pre ~m> 
-				config.action_controller.perform_caching = true
-				config.cache_store = :file_store, "#{Rails.root}/tmp/cache"
-			</pre>
-		</code>
-
-		<h3 ~m>And add to the products controller:</h3>
-		<code>
-			<pre ~m> 
-				caches_action :galery, :cache_path => :products_cache_path.to_proc
-				def products_cache_path
-					current_user_id = current_user.nil?? 0 : current_user.id
-					"home_index/#{params[:page]}/#{current_user_id}"
-				end
-			</pre>
-		</code>
-		<br/>
-		<div ~m>
-			Transaction rate:	       <strong>84.42</strong> trans/sec   <span data-jmpress="drive-left after 4000ms step" style="color:#4f4">WOW!!</span><br/>
-			And once again:<br/>
-			Transaction rate:	       <strong>91.20</strong> trans/sec   (Which makes sense.) <span data-jmpress="drive-left after 4300ms step" style="color:#4f4">Weee!!</span><br/><br/>
-		</div>
-	</div>
-
-	<div ~s>
-		~n
 		<h3 ~m>Measure, compare, drive conclusions!</h3>
 		<div ~m>We'll use siege and Ruby's benchmark to measure the results. Like this:</div>
 		
@@ -399,6 +390,38 @@
 			89.7 -> 91.37 -> 96.14 For only one table with less than 10 columns!
 		</div>
 	</div>
+
+
+	<div ~s>
+		~n
+		<h2>Add the cache</h2>
+
+		<h3 ~m>Add to development.rb:</h3>
+		<code>
+			<pre ~m> 
+				config.action_controller.perform_caching = true
+				config.cache_store = :file_store, "#{Rails.root}/tmp/cache"
+			</pre>
+		</code>
+
+		<h3 ~m>And add to the products controller:</h3>
+		<code>
+			<pre ~m> 
+				caches_action :galery, :cache_path => :products_cache_path.to_proc
+				def products_cache_path
+					current_user_id = current_user.nil?? 0 : current_user.id
+					"home_index/#{params[:page]}/#{current_user_id}"
+				end
+			</pre>
+		</code>
+		<br/>
+		<div ~m>
+			Transaction rate:	       <strong>84.42</strong> trans/sec   <span data-jmpress="drive-left after 4000ms step" style="color:#4f4">WOW!!</span><br/>
+			And once again:<br/>
+			Transaction rate:	       <strong>91.20</strong> trans/sec   (Which makes sense.) <span data-jmpress="drive-left after 4300ms step" style="color:#4f4">Weee!!</span><br/><br/>
+		</div>
+	</div>
+
 
 	<div ~s>
 		~n
@@ -496,26 +519,6 @@ server {
 
 	</div>
 
-	<div ~s>
-		~n
-		<h2>Configuration for Memcached</h2>
-
-		<code>
-			<pre ~m>
-				gem 'dalli'
-				config.cache_store = :dalli_store
-			</pre>
-			<a href='https://github.com/datagraph/rack-throttle'>Rate limiting gem</a>
-		</code>
-
-		<div ~m>"Memcache everything", - Reddit</div>
-		<ul ~m>
-			<div ~m>DB data</div>
-			<div ~m>Session Data</div>
-			<div ~m>Rendered pages</div>
-			<div ~m>Memoize internal functions</div>
-		</ul>
-	</div>
 
 	<div ~s>
 		~n
