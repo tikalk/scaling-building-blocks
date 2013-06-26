@@ -113,8 +113,8 @@
 			product_ids_range = Product.first.id..Product.last.id
 			for i in 1..5000
 			  p = Product.find(Random.new.rand(product_ids_range))
-			  p.likes << Like.find(Random.new.rand(like_ids_range))
-			  p.reviews << Review.find(Random.rand(review_ids_range))
+			  p.likes &lt;&lt; Like.find(Random.new.rand(like_ids_range))
+			  p.reviews &lt;&lt; Review.find(Random.rand(review_ids_range))
 			  p.likes.first.likeability = Random.new.rand(1..5)
 			  p.save!
 			end
@@ -124,8 +124,52 @@
 		<div class="step-4" data-jmpress="zoom after step-3">The scripts are located under <code>/migration/presentation</code></div>
 	</div>
 
+
 	<div class="step step5" data-x="0" data-y="700" data-scale="0.4" data-rotate-y="30">
 		<span style ="position:absolute; left:20px; bottom:0;"> =5= </span>
+		<h2>Add indices to DB</h2><br/>
+		<div class="step-0" data-jmpress="zoom after step">Indices have their own logic depending on DB. A very simple generic explanation: it’s a lookup table - instead of iteration from beginning. More detailed info <a href="http://dev.mysql.com/doc/refman/5.0/en/mysql-indexes.html">is here</a>.</div><br/>
+
+		<code>
+			<pre class="step-1" data-jmpress="zoom after step-0">
+			CREATE TABLE test (
+			    id         INT NOT NULL,
+			    last_name  CHAR(30) NOT NULL,
+			    first_name CHAR(30) NOT NULL,
+			    PRIMARY KEY (id),
+			    INDEX name (last_name,first_name)
+			);
+			</pre>
+		</code>
+
+		<div class="step-2" data-jmpress="zoom after step-1">The index can be used for lookups that specify values for combinations. For example: (last_name,  first_name). That index can also be used just a last_name because it is leftmost in the index.</div><br/>
+
+		<div class="step-3" data-jmpress="zoom after step-2">Maintaing pairs of DBs, A for Reading, B for writing, with replication</div><br/>
+
+		<div class="step-4" data-jmpress="zoom after step-3"><strong>innodb_buffer_pool_size</strong> &lt;&lt; GBs of RAM. Play around, find optimal. Default is 8MB</div>
+	</div>
+
+
+	<div class="step step6" data-x="1000" data-y="700" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =6= </span>
+		<h2>Eager loading</h2><br/>
+
+		<a class="step-0" data-jmpress="zoom after step" style="display:block" href="http://guides.rubyonrails.org/active_record_querying.html#eager-loading-associations">Info on Rails Guides</a><br/>
+
+		<div class="step-1" data-jmpress="zoom after step-0">Lets play around with it</div><br/>
+
+		<div class="step-2" data-jmpress="zoom after step-1">
+			ps = Product.where("id &gt; ?", 0).includes(:likes).reverse_order().page(20).per(30)
+		</div><br/>
+
+		<div class="step-3" data-jmpress="zoom after step-2">
+			ps.each {|p| puts p.likes.first if !p.likes.nil? }
+		</div>
+	</div>
+
+
+	<div class="step step7" data-x="2000" data-y="700" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =7= </span>
 		<h1>Caching</h1>
 		<h2 class="step-0" data-jmpress="zoom after step">What is the problem with current app?</h2><br/>
 		<div class="step-1" data-jmpress="zoom after step-0">Let's dig through the server logs.</div>
@@ -141,11 +185,11 @@
 		</ul>
 
 		<div class="step-9" data-jmpress="zoom after step-8">Cache expiration - methods, sweepers, but... there’s a better way (later) and a couple of gems.</div>
-
 	</div>
 
-	<div class="step step6" data-x="1000" data-y="700" data-scale="0.2" data-rotate-x="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =6= </span>
+
+	<div class="step step8" data-x="3000" data-y="700" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =8= </span>
 		<h2>Available Cache Stores and their difference?</h2>
 		<ul>
 			<li class="step-0" data-jmpress="zoom after step">Base class: ActiveSupport::Cache::Store</li>
@@ -160,8 +204,8 @@
 	</div>
 
 
-	<div class="step step7" data-x="2000" data-y="700" data-scale="0.4" data-rotate-y="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =7= </span>
+	<div class="step step9" data-x="4000" data-y="700" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =9= </span>
 		<h2>From pure SQL to NoSQL</h2>
 		<div class="step-0" data-jmpress="zoom after step">What is Database Indexing and how it works [+ links below]. </div>
 		<ul>
@@ -180,27 +224,70 @@
 		</ul>
 	</div>
 
-	<div class="step step8" data-x="3000" data-y="700" data-scale="0.2" data-rotate-x="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =8= </span>
-		<h2 class="step-0" data-jmpress="zoom after step">Installing and configuring Redis on *nix and Redis and Redis-Objects gems.</h2>
+	<div class="step step10" data-x="0" data-y="1400" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =10= </span>
+		<h1>Utilizing Redis</h1>
+		<h3 class="step-0" data-jmpress="zoom after step">
+			Redis is an open source, BSD licensed, advanced key-value store. It is often referred to as a data structure server since keys can contain strings, hashes, lists, sets and sorted sets.
+		</h3><br/>
+		<div class="step-1" data-jmpress="zoom after step-0">
+			In other words, Redis is an ultra-fast key-value in-memory database with lots of options used by the 'big fishes' like Twitter, Instagram, Tumblr, Flickr, Stackoverflow etc. <br/>
+			Can be even more fine tuned for better performance, read about it on Instagram's developers blog.
+		</div>
+
+		<div class="step-2" data-jmpress="zoom after step-1">Right after migration of likes to redis (changed only the output in products) improvement was about <strong>⅕  increase in speed</strong> (<strong>2.43</strong> trans/sec -> <strong>2.93</strong> trans/sec --> (and with reviews on redis) --> <strong>3.14</strong> trans/sec ).</div><br/>
+		<div class="step-3" data-jmpress="zoom after step-2">Since we’re adding complexity to our code, it’s important to use a well-defined <strong>interface</strong> (such as in the module we created) for all operations. We need to implement a Facade Design Pattern which will communicate with Redis. That way, when and if we’ll want replace Redis with something else, we will only change this Facade without the  need to search and replace the code where all the references to Redis exist. Modules could help here.</div>
+		
 		<br/>
-		<div class="step-1" data-jmpress="zoom after step-0">Redis commands walkthrough with $ redis-cli or $ rails c (ask)</div>
+		<div class="step-4" data-jmpress="zoom after step-3"><strong>Monitoring</strong></div>
+		<div class="step-5" data-jmpress="zoom after step-4">redis-cli monitor</div>
+	</div>
+
+<!--asdf-->
+
+	<div class="step step11" data-x="1000" data-y="1400" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =11= </span>
+		<h2>Installing and configuring Redis on *nix and Redis and Redis-Objects gems.</h2>
+		<br/>
+		<div class="step-0" data-jmpress="zoom after step">Redis commands walkthrough with $ redis-cli or $ rails c (ask)</div>
 		<ul>
-			<li class="step-2" data-jmpress="zoom after step-1">http://redis.io/commands</li>
-			<li class="step-3" data-jmpress="zoom after step-2">https://github.com/nateware/redis-objects#readme</li>
-			<li class="step-4" data-jmpress="zoom after step-3">SADD myset “someval”, SISMEMBER myset “someval”, SMEMBERS myset</li>
-			<li class="step-5" data-jmpress="zoom after step-4">Let's go to redis commands page and play there.</li>
-			<li class="step-6" data-jmpress="zoom after step-5">For redis-objects @set = Redis::Set.new('set_name');   @set << 'a' … </li>
-			<li class="step-7" data-jmpress="zoom after step-6">Twitter-like example http://jimneath.org/2011/03/24/using-redis-with-ruby-on-rails.html</li>
+			<li class="step-1" data-jmpress="zoom after step-0">http://redis.io/commands</li>
+			<li class="step-2" data-jmpress="zoom after step-1">https://github.com/nateware/redis-objects#readme</li>
+			<li class="step-3" data-jmpress="zoom after step-2">SADD myset “someval”, SISMEMBER myset “someval”, SMEMBERS myset</li>
+			<li class="step-4" data-jmpress="zoom after step-3">Let's go to redis commands page and play there.</li>
+			<li class="step-5" data-jmpress="zoom after step-4">For redis-objects @set = Redis::Set.new('set_name');   @set &lt;&lt; 'a' … </li>
+			<li class="step-6" data-jmpress="zoom after step-5">Twitter-like example http://jimneath.org/2011/03/24/using-redis-with-ruby-on-rails.html</li>
 		</ul>
-		<div class="step-8" data-jmpress="zoom after step-7">More advanced: </div>
-		<div class="step-9" data-jmpress="zoom after step-8">http://www.christianoestreich.com/2011/11/redis-hashsets-performance/</div>
-		<div class="step-10" data-jmpress="zoom after step-9">http://instagram-engineering.tumblr.com/post/12202313862/storing-hundreds-of-millions-of-simple-key-value-pairs</div>
+		<div class="step-7" data-jmpress="zoom after step-6">More advanced: </div>
+		<div class="step-8" data-jmpress="zoom after step-7">http://www.christianoestreich.com/2011/11/redis-hashsets-performance/</div>
+		<div class="step-9" data-jmpress="zoom after step-8">http://instagram-engineering.tumblr.com/post/12202313862/storing-hundreds-of-millions-of-simple-key-value-pairs</div>
 	</div>
 
 
-	<div class="step step9" data-x="4000" data-y="700" data-scale="0.4" data-rotate-y="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =9= </span>
+	<div class="step step12" data-x="2000" data-y="1400" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =12= </span>
+		<h2>Configuring Memcached</h2>
+
+		<code>
+			<pre class="step-0" data-jmpress="zoom after step">
+				gem 'dalli'
+				config.cache_store = :dalli_store
+			</pre>
+			<a class="step-1" data-jmpress="zoom after step-0" href='https://github.com/datagraph/rack-throttle'>Rate limiting gem</a>
+		</code>
+
+		<div class="step-2" data-jmpress="zoom after step-1">"Memcache everything", - Reddit</div>
+		<ul class="step-3" data-jmpress="zoom after step-2">
+			<div class="step-4" data-jmpress="zoom after step-3">DB data</div>
+			<div class="step-5" data-jmpress="zoom after step-4">Session Data</div>
+			<div class="step-6" data-jmpress="zoom after step-5">Rendered pages</div>
+			<div class="step-7" data-jmpress="zoom after step-6">Memoize internal functions</div>
+		</ul>
+	</div>
+
+
+	<div class="step step13" data-x="3000" data-y="1400" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =13= </span>
 		<h1>Delayed Jobs</h1><br/>
 
 		<div class="step-0" data-jmpress="zoom after step">What? Why do we need them. </div>
@@ -223,8 +310,8 @@
 	</div>
 
 
-	<div class="step step10" data-x="0" data-y="1400" data-scale="0.2" data-rotate-x="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =10= </span>
+	<div class="step step14" data-x="4000" data-y="1400" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =14= </span>
 		<h1>Solr-based Search</h1>
 		<h2 class="step-0" data-jmpress="zoom after step">What is Solr.</h2><br/>
 			
@@ -244,23 +331,22 @@
 	</div>
 
 
-	<div class="step step11" data-x="1000" data-y="1400" data-scale="0.4" data-rotate-y="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =11= </span>
-		<h1>Candies</h1>			
+	<div class="step step15" data-x="0" data-y="2100" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =15= </span>
+		<h1>==Candies==</h1>			
 		<div class="step-0" data-jmpress="zoom after step">Client-side caching, pros and cons</div>
 		<div class="step-1" data-jmpress="zoom after step-0">Nginx + Unicorn / Thin (What? Why not Apache)</div>
 		<div class="step-2" data-jmpress="zoom after step-1">JRuby</div>
 		<div class="step-3" data-jmpress="zoom after step-2">Sinatra services, embedding c </div>
-		<div class="step-4" data-jmpress="zoom after step-3">innodb_buffer_pool_size</div>
-		<div class="step-5" data-jmpress="zoom after step-4">Deployment with Capistrano</div>
+		<div class="step-4" data-jmpress="zoom after step-3">Deployment with Capistrano</div>
 	</div>
 
 
 
 	<!-- benchmarks -->
 
-	<div class="step step12" data-x="2000" data-y="1400" data-scale="0.2" data-rotate-x="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =12= </span>
+	<div class="step step16" data-x="1000" data-y="2100" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =16= </span>
 		<h2>Measure the response time</h2>
 
 		<h3 class="step-0" data-jmpress="zoom after step">We'll use siege</h3><br/>
@@ -288,38 +374,8 @@
 	</div>
 
 
-	<div class="step step13" data-x="3000" data-y="1400" data-scale="0.4" data-rotate-y="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =13= </span>
-		<h2>Add the cache</h2>
-
-		<h3 class="step-0" data-jmpress="zoom after step">Add to development.rb:</h3>
-		<code>
-			<pre class="step-1" data-jmpress="zoom after step-0"> 
-				config.action_controller.perform_caching = true
-				config.cache_store = :file_store, "#{Rails.root}/tmp/cache"
-			</pre>
-		</code>
-
-		<h3 class="step-2" data-jmpress="zoom after step-1">And add to the products controller:</h3>
-		<code>
-			<pre class="step-3" data-jmpress="zoom after step-2"> 
-				caches_action :galery, :cache_path => :products_cache_path.to_proc
-				def products_cache_path
-					current_user_id = current_user.nil?? 0 : current_user.id
-					"home_index/#{params[:page]}/#{current_user_id}"
-				end
-			</pre>
-		</code>
-		<br/>
-		<div class="step-4" data-jmpress="zoom after step-3">
-			Transaction rate:	       <strong>84.42</strong> trans/sec   <span data-jmpress="drive-left after 4000ms step" style="color:#4f4">WOW!!</span><br/>
-			And once again:<br/>
-			Transaction rate:	       <strong>91.20</strong> trans/sec   (Which makes sense.) <span data-jmpress="drive-left after 4300ms step" style="color:#4f4">Weee!!</span><br/><br/>
-		</div>
-	</div>
-
-	<div class="step step14" data-x="4000" data-y="1400" data-scale="0.2" data-rotate-x="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =14= </span>
+	<div class="step step17" data-x="2000" data-y="2100" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =17= </span>
 		<h3 class="step-0" data-jmpress="zoom after step">Measure, compare, drive conclusions!</h3>
 		<div class="step-1" data-jmpress="zoom after step-0">We'll use siege and Ruby's benchmark to measure the results. Like this:</div>
 		
@@ -353,8 +409,40 @@
 		</div>
 	</div>
 
-	<div class="step step15" data-x="0" data-y="2100" data-scale="0.4" data-rotate-y="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =15= </span>
+
+	<div class="step step18" data-x="3000" data-y="2100" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =18= </span>
+		<h2>Add the cache</h2>
+
+		<h3 class="step-0" data-jmpress="zoom after step">Add to development.rb:</h3>
+		<code>
+			<pre class="step-1" data-jmpress="zoom after step-0"> 
+				config.action_controller.perform_caching = true
+				config.cache_store = :file_store, "#{Rails.root}/tmp/cache"
+			</pre>
+		</code>
+
+		<h3 class="step-2" data-jmpress="zoom after step-1">And add to the products controller:</h3>
+		<code>
+			<pre class="step-3" data-jmpress="zoom after step-2"> 
+				caches_action :galery, :cache_path => :products_cache_path.to_proc
+				def products_cache_path
+					current_user_id = current_user.nil?? 0 : current_user.id
+					"home_index/#{params[:page]}/#{current_user_id}"
+				end
+			</pre>
+		</code>
+		<br/>
+		<div class="step-4" data-jmpress="zoom after step-3">
+			Transaction rate:	       <strong>84.42</strong> trans/sec   <span data-jmpress="drive-left after 4000ms step" style="color:#4f4">WOW!!</span><br/>
+			And once again:<br/>
+			Transaction rate:	       <strong>91.20</strong> trans/sec   (Which makes sense.) <span data-jmpress="drive-left after 4300ms step" style="color:#4f4">Weee!!</span><br/><br/>
+		</div>
+	</div>
+
+
+	<div class="step step19" data-x="4000" data-y="2100" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =19= </span>
 		<h2>Switching to another cache_store.</h2>
 
 		<code>
@@ -376,8 +464,8 @@
 		</div>
 	</div>
 
-	<div class="step step16" data-x="1000" data-y="2100" data-scale="0.2" data-rotate-x="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =16= </span>
+	<div class="step step20" data-x="0" data-y="2800" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =20= </span>
 		<div class="step-0" data-jmpress="zoom after step"><span class="code">rails s Puma</span><br/><br/>
 			89.7 -> 91.37 -> 96.14 For only one table with less than 10 columns!<br/>
 			Transaction rate:	       97.84 trans/sec  (Even better)<br/><br/>
@@ -386,46 +474,10 @@
 			http://guides.rubyonrails.org/caching_with_rails.html
 		</div>
 	</div>
+	
 
-	<div class="step step17" data-x="2000" data-y="2100" data-scale="0.4" data-rotate-y="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =17= </span>
-		<h2>Add indices to DB</h2><br/>
-		<div class="step-0" data-jmpress="zoom after step">Indices have their own logic depending on DB. A very simple generic explanation: it’s a lookup table - instead of iteration from beginning. More detailed click <a href="http://dev.mysql.com/doc/refman/5.0/en/mysql-indexes.html">is here</a>.</div><br/>
-		<code>
-			<pre class="step-1" data-jmpress="zoom after step-0">
-			CREATE TABLE test (
-			    id         INT NOT NULL,
-			    last_name  CHAR(30) NOT NULL,
-			    first_name CHAR(30) NOT NULL,
-			    PRIMARY KEY (id),
-			    INDEX name (last_name,first_name)
-			);
-			</pre>
-		</code>
-		<div class="step-2" data-jmpress="zoom after step-1">The index can be used for lookups that specify values for combinations. For example: (last_name,  first_name). That index can also be used just a last_name because it is leftmost in the index.</div>
-	</div>
-
-	<div class="step step18" data-x="3000" data-y="2100" data-scale="0.2" data-rotate-x="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =18= </span>
-		<h1>Utilizing Redis</h1>
-		<h2>What's all the hype about?</h2>
-		<h3 class="step-0" data-jmpress="zoom after step">
-			Redis is an open source, BSD licensed, advanced key-value store. It is often referred to as a data structure server since keys can contain strings, hashes, lists, sets and sorted sets.
-		</h3><br/>
-		<div class="step-1" data-jmpress="zoom after step-0">
-			In other words, Redis is an ultra-fast key-value in-memory database with lots of options used by the 'big fishes' like Twitter, Instagram, Tumblr, Flickr, Stackoverflow etc. <br/>
-			Can be even more fine tuned for better performance, read about it on Instagram's developers blog.
-		</div>
-
-		<div class="step-2" data-jmpress="zoom after step-1">Right after migration of likes to redis (changed only the output in products) improvement was about <strong>⅕  increase in speed</strong> (<strong>2.43</strong> trans/sec -> <strong>2.93</strong> trans/sec --> (and with reviews on redis) --> <strong>3.14</strong> trans/sec ).</div><br/>
-		<div class="step-3" data-jmpress="zoom after step-2">Since we’re adding complexity to our code, it’s important to use a well-defined <strong>interface</strong> (such as in the module we created) for all operations. We need to implement a Facade Design Pattern which will communicate with Redis. That way, when and if we’ll want replace Redis with something else, we will only change this Facade without the  need to search and replace the code where all the references to Redis exist. Modules could help here.</div>
-		
-		<div class="step-4" data-jmpress="zoom after step-3"><strong>Monitoring</strong></div>
-		<div class="step-5" data-jmpress="zoom after step-4">gem install redmon</div>
-	</div>
-
-	<div class="step step19" data-x="4000" data-y="2100" data-scale="0.4" data-rotate-y="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =19= </span>
+	<div class="step step21" data-x="1000" data-y="2800" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =21= </span>
 		<h1>Web Proxy Servers</h1>
 		<h2>Apache is cool, but...</h2>
 		<h3 class="step-0" data-jmpress="zoom after step">
@@ -450,8 +502,8 @@ server {
 
 	</div>
 
-	<div class="step step20" data-x="0" data-y="2800" data-scale="0.2" data-rotate-x="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =20= </span>
+	<div class="step step22" data-x="2000" data-y="2800" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =22= </span>
 		<code>
 			<pre class="step-0" data-jmpress="zoom after step">
 server {
@@ -485,29 +537,9 @@ server {
 
 	</div>
 
-	<div class="step step21" data-x="1000" data-y="2800" data-scale="0.4" data-rotate-y="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =21= </span>
-		<h2>Configuration for Memcached</h2>
 
-		<code>
-			<pre class="step-0" data-jmpress="zoom after step">
-				gem 'dalli'
-				config.cache_store = :dalli_store
-			</pre>
-			<a href='https://github.com/datagraph/rack-throttle'>Rate limiting gem</a>
-		</code>
-
-		<div class="step-1" data-jmpress="zoom after step-0">"Memcache everything", - Reddit</div>
-		<ul class="step-2" data-jmpress="zoom after step-1">
-			<div class="step-3" data-jmpress="zoom after step-2">DB data</div>
-			<div class="step-4" data-jmpress="zoom after step-3">Session Data</div>
-			<div class="step-5" data-jmpress="zoom after step-4">Rendered pages</div>
-			<div class="step-6" data-jmpress="zoom after step-5">Memoize internal functions</div>
-		</ul>
-	</div>
-
-	<div class="step step22" data-x="2000" data-y="2800" data-scale="0.2" data-rotate-x="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =22= </span>
+	<div class="step step23" data-x="3000" data-y="2800" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =23= </span>
 		<h2>Security and troubleshooting</h2>
 
 		<div class="step-0" data-jmpress="zoom after step">
@@ -516,8 +548,8 @@ server {
 		<div class="step-1" data-jmpress="zoom after step-0">Supervise can restart a server when situation isn't obvious</div>
 	</div>
 
-	<div class="step step23" data-x="3000" data-y="2800" data-scale="0.4" data-rotate-y="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =23= </span>
+	<div class="step step24" data-x="4000" data-y="2800" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =24= </span>
 		<h2>References</h2>
 		<a href='http://highscalability.com/blog/2010/5/17/7-lessons-learned-while-building-reddit-to-270-million-page.html'>reddit lessons learned</a>
 		<a href='http://www.slideshare.net/dvirsky/kicking-ass-with-redis'>Amazing Redis Patterns</a>
