@@ -21,6 +21,8 @@ Pinukimmm::Application.routes.draw do
   match 'current_cart_checkout' => 'carts#checkout'
 
 
+
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
