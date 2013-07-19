@@ -15,7 +15,7 @@ GIT
 
 GIT
   remote: git://github.com/sunspot/sunspot.git
-  revision: 701af455469715f3b4c104aaa155307013cc0428
+  revision: 5488725cb2587973e7ff809f234eb437a76424f4
   branch: master
   specs:
     sunspot (2.0.0)
