@@ -83,9 +83,10 @@
 		</div>
 		<div class="step-3" data-jmpress="zoom after step-2">(A general and convenient concept.) </div><br/>
 		<div class="step-4" data-jmpress="zoom after step-3">Scaling <strong>vertically</strong> <br />
-			<span class="step-5" data-jmpress="zoom after step-4" style="margin: 0 0 0 70px">means buying more computing power (e.g. machines) and spreading the requests among them.</span></div><br/>
+			<span class="step-5" data-jmpress="zoom after step-4" style="margin: 0 0 0 70px">means buying more computing power (e.g. memory / more machines) and spreading the requests among them.</span></div><br/>
 		<div class="step-6" data-jmpress="zoom after step-5">Scaling <strong>horizontally</strong> <br/> <span ~m style="margin: 0 0 0 70px">means improving or optimizing the code such that there's no need to scale up vertically.</span></div><br/>
-		<div class="step-7" data-jmpress="zoom after step-6">Can we call it scaling? Using external services like Google when including jqueury.js?</div>
+		<div class="step-7" data-jmpress="zoom after step-6">How about assets pipeline?</div><br/>
+		<div class="step-8" data-jmpress="zoom after step-7">Can we call it scaling? Using external services like Google when including jqueury.js?</div>
 	</div>
 
 	<div class="step step4" data-x="4000" data-y="0" data-scale="0.2" data-rotate-x="30">
@@ -178,6 +179,7 @@
 			<li class="step-9" data-jmpress="zoom after step-8">Link: http://kkovacs.eu/cassandra-vs-mongodb-vs-couchdb-vs-redis</li>
 			<li class="step-10" data-jmpress="zoom after step-9">There’s more: http://nosql-database.org/</li>
 		</ul>
+		<div class="step-11" data-jmpress="zoom after step-10">Cachier gem - tagging based caching.</div>
 	</div>
 
 	<div class="step step8" data-x="3000" data-y="700" data-scale="0.2" data-rotate-x="30">
@@ -212,7 +214,7 @@
 			<li class="step-5" data-jmpress="zoom after step-4">Update search index</li>
 			<li class="step-6" data-jmpress="zoom after step-5">Compute user statistics</li>
 		</ul>
-		<div class="step-7" data-jmpress="zoom after step-6">Available gems - resque, <strong>sidekick</strong>, delayed_job advantages - performance </div>
+		<div class="step-7" data-jmpress="zoom after step-6">Available gems - resque, <strong>sidekiq</strong>, delayed_job advantages - performance </div>
 		<ul>
 			<li class="step-8" data-jmpress="zoom after step-7">https://github.com/mperham/sidekiq/wiki/FAQ</li>
 		</ul>
@@ -222,43 +224,318 @@
 		<div class="step-12" data-jmpress="zoom after step-11">Writing a simple worker that resizes an image.</div>
 	</div>
 
-
 	<div class="step step10" data-x="0" data-y="1400" data-scale="0.2" data-rotate-x="30">
 		<span style ="position:absolute; left:20px; bottom:0;"> =10= </span>
 		<h1>Solr-based Search</h1>
 		<h2 class="step-0" data-jmpress="zoom after step">What is Solr.</h2><br/>
 			
-		<div class="step-1" data-jmpress="zoom after step-0">Solr features</div>
-		<div class="step-2" data-jmpress="zoom after step-1">Who uses it</div>
+		<div class="step-1" data-jmpress="zoom after step-0">Solr features - speed, sharding, weights, facets, more like this, geo, formats, acts as DB </div>
+		<div class="step-2" data-jmpress="zoom after step-1">Reliable - who uses it?</div>
 		<div class="step-3" data-jmpress="zoom after step-2">Sunspot gem - intro how it works</div>
 		<div class="step-4" data-jmpress="zoom after step-3">Installation, running</div>
 		<div class="step-5" data-jmpress="zoom after step-4">Configuring searchable inside a model</div>
-		<div class="step-6" data-jmpress="zoom after step-5">Index</div>
+		<div class="step-6" data-jmpress="zoom after step-5">Index (+ deltas)</div>
 		<div class="step-7" data-jmpress="zoom after step-6">Performing a search</div>
 		<div class="step-8" data-jmpress="zoom after step-7">Benchmarking before and after [+ verify with below data]</div>
 		<div class="step-9" data-jmpress="zoom after step-8">Different configuration options e.g. make parts of a string searchable - configure schema.xml</div>
 		<div class="step-10" data-jmpress="zoom after step-9">Bonus - searching for similar documents, using weights</div>
-		<div class="step-11" data-jmpress="zoom after step-10">What about Production?</div>
+		<div class="step-11" data-jmpress="zoom after step-10">What about Production?</div><br/>
+		<div class="step-12" data-jmpress="zoom after step-11"><strong>Tips</strong></div>
+		<div class="step-13" data-jmpress="zoom after step-12"><strong>Don't forget to restart Sor after each change to config files, e.g. schema.xml</strong></div>
 	</div>
-
 
 	<div class="step step11" data-x="1000" data-y="1400" data-scale="0.4" data-rotate-y="30">
 		<span style ="position:absolute; left:20px; bottom:0;"> =11= </span>
+		<h1>Solr 4 New Features</h1>
+			
+		<div class="step-0" data-jmpress="zoom after step">Dynamic fields   => suffix _s means  it's a string!</div>
+		<div class="step-1" data-jmpress="zoom after step-0">Robust: Doesn't loose data if JVM crashes between commits. Unlike Lucene, can restore from logs.</div>
+		<div class="step-2" data-jmpress="zoom after step-1">Higher availability: A request goes to multiple nodes in cluster. If one goes down, the request still works.</div>
+		<div class="step-3" data-jmpress="zoom after step-2">AutoCommit every N seconds</div>
+		<div class="step-4" data-jmpress="zoom after step-3">Geo-Spatial: can index geometric polygons, circles etc..</div>
+		<code>
+			<pre class="step-5" data-jmpress="zoom after step-4">
+				indexing example: 
+                	"geo":"50.01,40.55"
+  				search example fq=geo:"Intersects(-74.12, -68.542)"   
+                	fq=geo:"Intersects(POLYGON(-74.12, -68.542))"   
+			</pre>
+		</code>
+
+		<code>
+			<pre class="step-6" data-jmpress="zoom after step-5">
+				docfreq(field, term)   ->  frequency of a term
+				termfreq(field, term)  -> number of term in document
+			</pre>
+		</code>
+
+		<div class="step-7" data-jmpress="zoom after step-6">More Like feature this is based on these above</div>
+	</div>
+
+
+	<div class="step step12" data-x="2000" data-y="1400" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =12= </span>
+		<h2>Solr 4 New Features</h2>
+
+		<div class="step-0" data-jmpress="zoom after step">NEW! Pseudo-Joins</div> 
+
+		<code>
+			<pre class="step-1" data-jmpress="zoom after step-0">
+				docfreq(field, term)   ->  frequency of a term
+				termfreq(field, term)  -> number of term in document
+			</pre>
+		</code>
+
+		<pre class="step-2" data-jmpress="zoom after step-1">
+
+    BLOG                   POST
+    ====                   ====
+    id   -------\          id
+    name         \------   blog_id
+                           title
+
+       	</pre>	
+
+		<div class="step-3" data-jmpress="zoom after step-2">Query right-to-left:   fq={!join from=blog_id to=id}body:kamasutra</div> 
+		<div class="step-4" data-jmpress="zoom after step-3">* Self-joins</div> 
+		<div class="step-5" data-jmpress="zoom after step-4">* Date ranges</div> 
+		<div class="step-6" data-jmpress="zoom after step-5">* Multiple joins (:post has_many :authors that has_many :books)</div> 
+		<div class="step-7" data-jmpress="zoom after step-6">O(Number of terms in join fields) :: not that speedy.</div> 				
+
+	</div>
+
+	<div class="step step13" data-x="3000" data-y="1400" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =13= </span>
+		<code>
+			<pre class="step-0" data-jmpress="zoom after step">
+
+	Gemfile:
+ ==========================
+ gem 'redis-rails'
+ gem 'sidekiq'
+
+
+ app/workers/checkout_worker.rb
+ ==========================
+
+ class CheckoutWorker
+  include Sidekiq::Worker
+
+  def perform(cart_id)
+   perform_active_checkout(user)
+   on_success(cart_id)  
+    sleep..(6)
+  end
+
+  			</pre>
+  		</code>
+  	</div>
+
+
+	<div class="step step14" data-x="4000" data-y="1400" data-scale="0.2" data-rotate-x="30">
+		<h2 class="step-0" data-jmpress="zoom after step">step 5-2: Updates DB job</h2><br/>
+
+
+		<code>
+			<pre class="step-1" data-jmpress="zoom after step-0">
+ app/controllers/carts_controller.rb
+ ==========================
+  def checkout
+    @cart = current_cart
+    CheckoutWorker.perform_async(@cart.id) if @cart.token.nil?
+  end
+  			</pre>
+  		</code>
+
+
+		<code>
+			<pre class="step-2" data-jmpress="zoom after step-1">
+
+ workers/update_database_worker.rb
+ ==========================
+
+ Update Products names
+  			</pre>
+  		</code>
+  		<span style ="position:absolute; left:20px; bottom:0;"> =14= </span>
+  	</div>
+
+	<div class="step step15" data-x="0" data-y="2100" data-scale="0.4" data-rotate-y="30">
+		<h2 class="step-0" data-jmpress="zoom after step">Installing Solr</h2><br/>
+		<div class="step-1" data-jmpress="zoom after step-0">== Install Solr</div>
+		<div class="step-2" data-jmpress="zoom after step-1">Using these instructions:<br/> https://groups.google.com/forum/?fromgroups=#!topic/ruby-sunspot/c6OVesLyaSI</div>
+
+		<div class="step-3" data-jmpress="zoom after step-2">Or check how this branch uses solr-gems</div>
+
+		<div class="step-4" data-jmpress="zoom after step-3">== To start solr</div>
+		<code class="step-5" data-jmpress="zoom after step-4">bundle exec rake sunspot:solr:start</code>
+
+		<div class="step-6" data-jmpress="zoom after step-5">== To reindex</div>
+		<code class="step-7" data-jmpress="zoom after step-6">rake sunspot:solr:reindex   (without bundle exec)</code>
+
+		<div class="step-8" data-jmpress="zoom after step-7">== Sample search </div>  
+		<code class="step-9" data-jmpress="zoom after step-8">Product.search { fulltext "מלפפון" }.results</code>
+	</div>
+
+
+
+  	<div class="step step16" data-x="1000" data-y="2100" data-scale="0.2" data-rotate-x="30">
+		<h2>step-7: Product search with Solr</h2>
+		<code>
+			<pre class="step-0" data-jmpress="zoom after step">
+ Gemfile:
+ ==========================
+
+ # Solr 4
+ gem 'sunspot_rails', github: 'sunspot/sunspot', branch: 'master'
+ gem "sunspot_with_kaminari", '~> 0.2.0'
+
+ gem 'progress_bar'
+ gem 'sunspot_with_kaminari'
+
+
+ schema.xml
+ ==========
+
+ 
+ sunspot.yml
+ ===========
+
+ production:
+   solr:
+     hostname: localhost
+     port: 8983
+     log_level: WARNING
+
+  			</pre>
+  		</code>
+  		<span style ="position:absolute; left:20px; bottom:0;"> =16= </span>
+  	</div>
+
+	<div class="step step17" data-x="2000" data-y="2100" data-scale="0.4" data-rotate-y="30">
+		<h2 class="step-0" data-jmpress="zoom after step">step-7: Product search with Solr</h2><br/>
+		<code>
+			<pre class="step-1" data-jmpress="zoom after step-0">
+development:
+  solr:
+    hostname: localhost
+    port: 8982
+    log_level: INFO
+
+test:
+  solr:
+    hostname: localhost
+    port: 8981
+    log_level: WARNING
+
+    test:
+  solr:
+    hostname: localhost
+    port: 8981
+    log_level: WARNING
+
+    </pre>
+  		</code>
+  		<span style ="position:absolute; left:20px; bottom:0;"> =17= </span>
+  	</div>
+
+  	<div class="step step18" data-x="3000" data-y="2100" data-scale="0.2" data-rotate-x="30">
+		<h2 class="step-0" data-jmpress="zoom after step">step-7: Product search with Solr</h2><br/>
+		<code>
+			<pre class="step-1" data-jmpress="zoom after step-0">
+
+ product.rb:
+ ==========================
+ searchable do
+    text :name
+    integer :price
+ end
+
+
+ products_controller.rb:
+ ==========================
+ @products = Product.search { fulltext q; paginate :page => params[:page], :per_page => 30 }.results
+
+    </pre>
+  		</code>
+  		<span style ="position:absolute; left:20px; bottom:0;"> =18= </span>
+  	</div>
+
+
+  	<div class="step step19" data-x="4000" data-y="2100" data-scale="0.4" data-rotate-y="30">
+  		<span style ="position:absolute; left:20px; bottom:0;"> =19= </span>
+		<h2 class="step-0" data-jmpress="zoom after step">step-8: Solr on Hits, who needs another DB?</h2><br/>
+		<code>
+			<pre class="step-1" data-jmpress="zoom after step-0">
+ product.rb
+ ==========================
+
+  searchable do
+    integer :id, :stored => true
+    text :name, :stored => true
+    integer :price, :stored => true
+    integer :number_of_likers, :stored => true 
+    float :average_likeability, :stored => true
+    integer :number_of_reviews, :stored => true
+    string :product_path, :stored => true do 
+      Rails.application.routes.url_helpers.product_path(self)
+    end
+  end
+
+
+
+ products_controller.rb
+ ==========================
+
+   @products = Product.search { fulltext q; paginate :page => params[:page], :per_page => 30 }.hits
+			</pre>
+  		</code>
+  	</div>
+
+
+	<div class="step step20" data-x="0" data-y="2800" data-scale="0.2" data-rotate-x="30">
+	<span style ="position:absolute; left:20px; bottom:0;"> =20= </span>
+		<h2 class="step-0" data-jmpress="zoom after step">(...continued) step-8: Solr on Hits</h2><br/>
+		<code>
+			<pre class="step-1" data-jmpress="zoom after step-0">
+
+
+ search.html.erb
+ ===================
+
+	&lt;td&gt;&lt;%= link_to h(product.stored(:name)), product.stored(:product_path) %&gt;&lt;/td&gt;
+	&lt;td&gt;&lt;%= number_to_currency(product.stored(:price)) %&gt;&lt;/td&gt;
+
+	&lt;td&gt;&lt;%= image_tag 'carousel-02-1469a00ede72cd4fd93ffe908b73b8b9.jpg', :style =&gt; 'width: 160px; height: auto' %&gt;
+	&lt;/td&gt;
+	&lt;td&gt;
+	  Num.Likes: &lt;%= product.stored(:number_of_likers) %&gt;&lt;br/&gt;
+	  Avg.Likeability: &lt;%= product.stored(:average_likeability) %&gt;&lt;br/&gt;
+	  Num.Reviews: &lt;%= product.stored(:number_of_reviews) %&gt;&lt;br/&gt;
+
+			</pre>
+		</code>
+  	</div>
+
+
+	<div class="step step21" data-x="1000" data-y="2800" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =21= </span>
 		<h1>Candies</h1>			
 		<div class="step-0" data-jmpress="zoom after step">Client-side caching, pros and cons</div>
 		<div class="step-1" data-jmpress="zoom after step-0">Nginx + Unicorn / Thin (What? Why not Apache)</div>
 		<div class="step-2" data-jmpress="zoom after step-1">JRuby</div>
 		<div class="step-3" data-jmpress="zoom after step-2">Sinatra services, embedding c </div>
-		<div class="step-4" data-jmpress="zoom after step-3">innodb_buffer_pool_size</div>
-		<div class="step-5" data-jmpress="zoom after step-4">Deployment with Capistrano</div>
+    	<div class="step-4" data-jmpress="zoom after step-3">(Let's write some background DB job?)</div>
+		<div class="step-5" data-jmpress="zoom after step-4">innodb_buffer_pool_size</div>
+		<div class="step-6" data-jmpress="zoom after step-5">Deployment with Capistrano</div>
 	</div>
 
 
 
 	<!-- benchmarks -->
 
-	<div class="step step12" data-x="2000" data-y="1400" data-scale="0.2" data-rotate-x="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =12= </span>
+	<div class="step step22" data-x="2000" data-y="2800" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =22= </span>
 		<h2>Measure the response time</h2>
 
 		<h3 class="step-0" data-jmpress="zoom after step">We'll use siege</h3><br/>
@@ -286,8 +563,8 @@
 	</div>
 
 
-	<div class="step step13" data-x="3000" data-y="1400" data-scale="0.4" data-rotate-y="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =13= </span>
+	<div class="step step23" data-x="3000" data-y="2800" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =23= </span>
 		<h2>Add the cache</h2>
 
 		<h3 class="step-0" data-jmpress="zoom after step">Add to development.rb:</h3>
@@ -316,8 +593,8 @@
 		</div>
 	</div>
 
-	<div class="step step14" data-x="4000" data-y="1400" data-scale="0.2" data-rotate-x="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =14= </span>
+	<div class="step step24" data-x="4000" data-y="2800" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =24= </span>
 		<h3 class="step-0" data-jmpress="zoom after step">Measure, compare, drive conclusions!</h3>
 		<div class="step-1" data-jmpress="zoom after step-0">We'll use siege and Ruby's benchmark to measure the results. Like this:</div>
 		
@@ -351,8 +628,8 @@
 		</div>
 	</div>
 
-	<div class="step step15" data-x="0" data-y="2100" data-scale="0.4" data-rotate-y="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =15= </span>
+	<div class="step step25" data-x="0" data-y="3500" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =25= </span>
 		<h2>Switching to another cache_store.</h2>
 
 		<code>
@@ -374,8 +651,8 @@
 		</div>
 	</div>
 
-	<div class="step step16" data-x="1000" data-y="2100" data-scale="0.2" data-rotate-x="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =16= </span>
+	<div class="step step26" data-x="1000" data-y="3500" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =26= </span>
 		<div class="step-0" data-jmpress="zoom after step"><span class="code">rails s Puma</span><br/><br/>
 			89.7 -> 91.37 -> 96.14 For only one table with less than 10 columns!<br/>
 			Transaction rate:	       97.84 trans/sec  (Even better)<br/><br/>
@@ -385,8 +662,8 @@
 		</div>
 	</div>
 
-	<div class="step step17" data-x="2000" data-y="2100" data-scale="0.4" data-rotate-y="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =17= </span>
+	<div class="step step27" data-x="2000" data-y="3500" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =27= </span>
 		<h2>Add indices to DB</h2><br/>
 		<div class="step-0" data-jmpress="zoom after step">Indices have their own logic depending on DB. A very simple generic explanation: it’s a lookup table - instead of iteration from beginning. More detailed click <a href="http://dev.mysql.com/doc/refman/5.0/en/mysql-indexes.html">is here</a>.</div><br/>
 		<code>
@@ -403,10 +680,9 @@
 		<div class="step-2" data-jmpress="zoom after step-1">The index can be used for lookups that specify values for combinations. For example: (last_name,  first_name). That index can also be used just a last_name because it is leftmost in the index.</div>
 	</div>
 
-	<div class="step step18" data-x="3000" data-y="2100" data-scale="0.2" data-rotate-x="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =18= </span>
+	<div class="step step28" data-x="3000" data-y="3500" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =28= </span>
 		<h1>Utilizing Redis</h1>
-		<h2>What's all the hype about?</h2>
 		<h3 class="step-0" data-jmpress="zoom after step">
 			Redis is an open source, BSD licensed, advanced key-value store. It is often referred to as a data structure server since keys can contain strings, hashes, lists, sets and sorted sets.
 		</h3><br/>
@@ -419,11 +695,11 @@
 		<div class="step-3" data-jmpress="zoom after step-2">Since we’re adding complexity to our code, it’s important to use a well-defined <strong>interface</strong> (such as in the module we created) for all operations. We need to implement a Facade Design Pattern which will communicate with Redis. That way, when and if we’ll want replace Redis with something else, we will only change this Facade without the  need to search and replace the code where all the references to Redis exist. Modules could help here.</div>
 		
 		<div class="step-4" data-jmpress="zoom after step-3"><strong>Monitoring</strong></div>
-		<div class="step-5" data-jmpress="zoom after step-4">gem install redmon</div>
+		<div class="step-5" data-jmpress="zoom after step-4">redis-cli monitor</div>
 	</div>
 
-	<div class="step step19" data-x="4000" data-y="2100" data-scale="0.4" data-rotate-y="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =19= </span>
+	<div class="step step29" data-x="4000" data-y="3500" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =29= </span>
 		<h1>Web Proxy Servers</h1>
 		<h2>Apache is cool, but...</h2>
 		<h3 class="step-0" data-jmpress="zoom after step">
@@ -448,8 +724,8 @@ server {
 
 	</div>
 
-	<div class="step step20" data-x="0" data-y="2800" data-scale="0.2" data-rotate-x="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =20= </span>
+	<div class="step step30" data-x="0" data-y="4200" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =30= </span>
 		<code>
 			<pre class="step-0" data-jmpress="zoom after step">
 server {
@@ -483,8 +759,8 @@ server {
 
 	</div>
 
-	<div class="step step21" data-x="1000" data-y="2800" data-scale="0.4" data-rotate-y="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =21= </span>
+	<div class="step step31" data-x="1000" data-y="4200" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =31= </span>
 		<h2>Configuration for Memcached</h2>
 
 		<code>
@@ -504,8 +780,8 @@ server {
 		</ul>
 	</div>
 
-	<div class="step step22" data-x="2000" data-y="2800" data-scale="0.2" data-rotate-x="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =22= </span>
+	<div class="step step32" data-x="2000" data-y="4200" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =32= </span>
 		<h2>Security and troubleshooting</h2>
 
 		<div class="step-0" data-jmpress="zoom after step">
@@ -514,8 +790,8 @@ server {
 		<div class="step-1" data-jmpress="zoom after step-0">Supervise can restart a server when situation isn't obvious</div>
 	</div>
 
-	<div class="step step23" data-x="3000" data-y="2800" data-scale="0.4" data-rotate-y="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =23= </span>
+	<div class="step step33" data-x="3000" data-y="4200" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =33= </span>
 		<h2>References</h2>
 		<a href='http://highscalability.com/blog/2010/5/17/7-lessons-learned-while-building-reddit-to-270-million-page.html'>reddit lessons learned</a>
 		<a href='http://www.slideshare.net/dvirsky/kicking-ass-with-redis'>Amazing Redis Patterns</a>

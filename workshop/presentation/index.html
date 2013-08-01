@@ -83,8 +83,9 @@
 		</div>
 		<div ~m>(A general and convenient concept.) </div><br/>
 		<div ~m>Scaling <strong>vertically</strong> <br />
-			<span ~m style="margin: 0 0 0 70px">means buying more computing power (e.g. machines) and spreading the requests among them.</span></div><br/>
+			<span ~m style="margin: 0 0 0 70px">means buying more computing power (e.g. memory / more machines) and spreading the requests among them.</span></div><br/>
 		<div ~m>Scaling <strong>horizontally</strong> <br/> <span ~m style="margin: 0 0 0 70px">means improving or optimizing the code such that there's no need to scale up vertically.</span></div><br/>
+		<div ~m>How about assets pipeline?</div><br/>
 		<div ~m>Can we call it scaling? Using external services like Google when including jqueury.js?</div>
 	</div>
 
@@ -178,6 +179,7 @@
 			<li ~m>Link: http://kkovacs.eu/cassandra-vs-mongodb-vs-couchdb-vs-redis</li>
 			<li ~m>There’s more: http://nosql-database.org/</li>
 		</ul>
+		<div ~m>Cachier gem - tagging based caching.</div>
 	</div>
 
 	<div ~s>
@@ -212,7 +214,7 @@
 			<li ~m>Update search index</li>
 			<li ~m>Compute user statistics</li>
 		</ul>
-		<div ~m>Available gems - resque, <strong>sidekick</strong>, delayed_job advantages - performance </div>
+		<div ~m>Available gems - resque, <strong>sidekiq</strong>, delayed_job advantages - performance </div>
 		<ul>
 			<li ~m>https://github.com/mperham/sidekiq/wiki/FAQ</li>
 		</ul>
@@ -222,18 +224,17 @@
 		<div ~m>Writing a simple worker that resizes an image.</div>
 	</div>
 
-
 	<div ~s>
 		~n
 		<h1>Solr-based Search</h1>
 		<h2 ~m>What is Solr.</h2><br/>
 			
-		<div ~m>Solr features</div>
-		<div ~m>Who uses it</div>
+		<div ~m>Solr features - speed, sharding, weights, facets, more like this, geo, formats, acts as DB </div>
+		<div ~m>Reliable - who uses it?</div>
 		<div ~m>Sunspot gem - intro how it works</div>
 		<div ~m>Installation, running</div>
 		<div ~m>Configuring searchable inside a model</div>
-		<div ~m>Index</div>
+		<div ~m>Index (+ deltas)</div>
 		<div ~m>Performing a search</div>
 		<div ~m>Benchmarking before and after [+ verify with below data]</div>
 		<div ~m>Different configuration options e.g. make parts of a string searchable - configure schema.xml</div>
@@ -243,6 +244,279 @@
 		<div ~m><strong>Don't forget to restart Sor after each change to config files, e.g. schema.xml</strong></div>
 	</div>
 
+	<div ~s>
+		~n
+		<h1>Solr 4 New Features</h1>
+			
+		<div ~m>Dynamic fields   => suffix _s means  it's a string!</div>
+		<div ~m>Robust: Doesn't loose data if JVM crashes between commits. Unlike Lucene, can restore from logs.</div>
+		<div ~m>Higher availability: A request goes to multiple nodes in cluster. If one goes down, the request still works.</div>
+		<div ~m>AutoCommit every N seconds</div>
+		<div ~m>Geo-Spatial: can index geometric polygons, circles etc..</div>
+		<code>
+			<pre ~m>
+				indexing example: 
+                	"geo":"50.01,40.55"
+  				search example fq=geo:"Intersects(-74.12, -68.542)"   
+                	fq=geo:"Intersects(POLYGON(-74.12, -68.542))"   
+			</pre>
+		</code>
+
+		<code>
+			<pre ~m>
+				docfreq(field, term)   ->  frequency of a term
+				termfreq(field, term)  -> number of term in document
+			</pre>
+		</code>
+
+		<div ~m>More Like feature this is based on these above</div>
+	</div>
+
+
+	<div ~s>
+		~n
+		<h2>Solr 4 New Features</h2>
+
+		<div ~m>NEW! Pseudo-Joins</div> 
+
+		<code>
+			<pre ~m>
+				docfreq(field, term)   ->  frequency of a term
+				termfreq(field, term)  -> number of term in document
+			</pre>
+		</code>
+
+		<pre ~m>
+
+    BLOG                   POST
+    ====                   ====
+    id   -------\          id
+    name         \------   blog_id
+                           title
+
+       	</pre>	
+
+		<div ~m>Query right-to-left:   fq={!join from=blog_id to=id}body:kamasutra</div> 
+		<div ~m>* Self-joins</div> 
+		<div ~m>* Date ranges</div> 
+		<div ~m>* Multiple joins (:post has_many :authors that has_many :books)</div> 
+		<div ~m>O(Number of terms in join fields) :: not that speedy.</div> 				
+
+	</div>
+
+	<div ~s>
+		~n
+		<code>
+			<pre ~m>
+
+	Gemfile:
+ ==========================
+ gem 'redis-rails'
+ gem 'sidekiq'
+
+
+ app/workers/checkout_worker.rb
+ ==========================
+
+ class CheckoutWorker
+  include Sidekiq::Worker
+
+  def perform(cart_id)
+   perform_active_checkout(user)
+   on_success(cart_id)  
+    sleep..(6)
+  end
+
+  			</pre>
+  		</code>
+  	</div>
+
+
+	<div ~s>
+		<h2 ~m>step 5-2: Updates DB job</h2><br/>
+
+
+		<code>
+			<pre ~m>
+ app/controllers/carts_controller.rb
+ ==========================
+  def checkout
+    @cart = current_cart
+    CheckoutWorker.perform_async(@cart.id) if @cart.token.nil?
+  end
+  			</pre>
+  		</code>
+
+
+		<code>
+			<pre ~m>
+
+ workers/update_database_worker.rb
+ ==========================
+
+ Update Products names
+  			</pre>
+  		</code>
+  		~n
+  	</div>
+
+	<div ~s>
+		<h2 ~m>Installing Solr</h2><br/>
+		<div ~m>== Install Solr</div>
+		<div ~m>Using these instructions:<br/> https://groups.google.com/forum/?fromgroups=#!topic/ruby-sunspot/c6OVesLyaSI</div>
+
+		<div ~m>Or check how this branch uses solr-gems</div>
+
+		<div ~m>== To start solr</div>
+		<code ~m>bundle exec rake sunspot:solr:start</code>
+
+		<div ~m>== To reindex</div>
+		<code ~m>rake sunspot:solr:reindex   (without bundle exec)</code>
+
+		<div ~m>== Sample search </div>  
+		<code ~m>Product.search { fulltext "מלפפון" }.results</code>
+	</div>
+
+
+
+  	<div ~s>
+		<h2>step-7: Product search with Solr</h2>
+		<code>
+			<pre ~m>
+ Gemfile:
+ ==========================
+
+ # Solr 4
+ gem 'sunspot_rails', github: 'sunspot/sunspot', branch: 'master'
+ gem "sunspot_with_kaminari", '~> 0.2.0'
+
+ gem 'progress_bar'
+ gem 'sunspot_with_kaminari'
+
+
+ schema.xml
+ ==========
+
+ 
+ sunspot.yml
+ ===========
+
+ production:
+   solr:
+     hostname: localhost
+     port: 8983
+     log_level: WARNING
+
+  			</pre>
+  		</code>
+  		~n
+  	</div>
+
+	<div ~s>
+		<h2 ~m>step-7: Product search with Solr</h2><br/>
+		<code>
+			<pre ~m>
+development:
+  solr:
+    hostname: localhost
+    port: 8982
+    log_level: INFO
+
+test:
+  solr:
+    hostname: localhost
+    port: 8981
+    log_level: WARNING
+
+    test:
+  solr:
+    hostname: localhost
+    port: 8981
+    log_level: WARNING
+
+    </pre>
+  		</code>
+  		~n
+  	</div>
+
+  	<div ~s>
+		<h2 ~m>step-7: Product search with Solr</h2><br/>
+		<code>
+			<pre ~m>
+
+ product.rb:
+ ==========================
+ searchable do
+    text :name
+    integer :price
+ end
+
+
+ products_controller.rb:
+ ==========================
+ @products = Product.search { fulltext q; paginate :page => params[:page], :per_page => 30 }.results
+
+    </pre>
+  		</code>
+  		~n
+  	</div>
+
+
+  	<div ~s>
+  		~n
+		<h2 ~m>step-8: Solr on Hits, who needs another DB?</h2><br/>
+		<code>
+			<pre ~m>
+ product.rb
+ ==========================
+
+  searchable do
+    integer :id, :stored => true
+    text :name, :stored => true
+    integer :price, :stored => true
+    integer :number_of_likers, :stored => true 
+    float :average_likeability, :stored => true
+    integer :number_of_reviews, :stored => true
+    string :product_path, :stored => true do 
+      Rails.application.routes.url_helpers.product_path(self)
+    end
+  end
+
+
+
+ products_controller.rb
+ ==========================
+
+   @products = Product.search { fulltext q; paginate :page => params[:page], :per_page => 30 }.hits
+			</pre>
+  		</code>
+  	</div>
+
+
+	<div ~s>
+	~n
+		<h2 ~m>(...continued) step-8: Solr on Hits</h2><br/>
+		<code>
+			<pre ~m>
+
+
+ search.html.erb
+ ===================
+
+	&lt;td&gt;&lt;%= link_to h(product.stored(:name)), product.stored(:product_path) %&gt;&lt;/td&gt;
+	&lt;td&gt;&lt;%= number_to_currency(product.stored(:price)) %&gt;&lt;/td&gt;
+
+	&lt;td&gt;&lt;%= image_tag 'carousel-02-1469a00ede72cd4fd93ffe908b73b8b9.jpg', :style =&gt; 'width: 160px; height: auto' %&gt;
+	&lt;/td&gt;
+	&lt;td&gt;
+	  Num.Likes: &lt;%= product.stored(:number_of_likers) %&gt;&lt;br/&gt;
+	  Avg.Likeability: &lt;%= product.stored(:average_likeability) %&gt;&lt;br/&gt;
+	  Num.Reviews: &lt;%= product.stored(:number_of_reviews) %&gt;&lt;br/&gt;
+
+			</pre>
+		</code>
+  	</div>
+
 
 	<div ~s>
 		~n
@@ -251,6 +525,7 @@
 		<div ~m>Nginx + Unicorn / Thin (What? Why not Apache)</div>
 		<div ~m>JRuby</div>
 		<div ~m>Sinatra services, embedding c </div>
+    	<div ~m>(Let's write some background DB job?)</div>
 		<div ~m>innodb_buffer_pool_size</div>
 		<div ~m>Deployment with Capistrano</div>
 	</div>
@@ -408,7 +683,6 @@
 	<div ~s>
 		~n
 		<h1>Utilizing Redis</h1>
-		<h2>What's all the hype about?</h2>
 		<h3 ~m>
 			Redis is an open source, BSD licensed, advanced key-value store. It is often referred to as a data structure server since keys can contain strings, hashes, lists, sets and sorted sets.
 		</h3><br/>
@@ -421,7 +695,7 @@
 		<div ~m>Since we’re adding complexity to our code, it’s important to use a well-defined <strong>interface</strong> (such as in the module we created) for all operations. We need to implement a Facade Design Pattern which will communicate with Redis. That way, when and if we’ll want replace Redis with something else, we will only change this Facade without the  need to search and replace the code where all the references to Redis exist. Modules could help here.</div>
 		
 		<div ~m><strong>Monitoring</strong></div>
-		<div ~m>gem install redmon</div>
+		<div ~m>redis-cli monitor</div>
 	</div>
 
 	<div ~s>
