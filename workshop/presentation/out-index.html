@@ -184,25 +184,105 @@
 
 	<div class="step step8" data-x="3000" data-y="700" data-scale="0.2" data-rotate-x="30">
 		<span style ="position:absolute; left:20px; bottom:0;"> =8= </span>
-		<h2 class="step-0" data-jmpress="zoom after step">Installing and configuring Redis on *nix and Redis and Redis-Objects gems.</h2>
+		<h2>Installing and configuring Redis on *nix and Redis and Redis-Objects gems.</h2>
 		<br/>
-		<div class="step-1" data-jmpress="zoom after step-0">Redis commands walkthrough with $ redis-cli or $ rails c (ask)</div>
-		<ul>
-			<li class="step-2" data-jmpress="zoom after step-1">http://redis.io/commands</li>
-			<li class="step-3" data-jmpress="zoom after step-2">https://github.com/nateware/redis-objects#readme</li>
-			<li class="step-4" data-jmpress="zoom after step-3">SADD myset “someval”, SISMEMBER myset “someval”, SMEMBERS myset</li>
-			<li class="step-5" data-jmpress="zoom after step-4">Let's go to redis commands page and play there.</li>
-			<li class="step-6" data-jmpress="zoom after step-5">For redis-objects @set = Redis::Set.new('set_name');   @set << 'a' … </li>
-			<li class="step-7" data-jmpress="zoom after step-6">Twitter-like example http://jimneath.org/2011/03/24/using-redis-with-ruby-on-rails.html</li>
-		</ul>
-		<div class="step-8" data-jmpress="zoom after step-7">More advanced: </div>
-		<div class="step-9" data-jmpress="zoom after step-8">http://www.christianoestreich.com/2011/11/redis-hashsets-performance/</div>
-		<div class="step-10" data-jmpress="zoom after step-9">http://instagram-engineering.tumblr.com/post/12202313862/storing-hundreds-of-millions-of-simple-key-value-pairs</div>
+		<code class="step-0" data-jmpress="zoom after step">sudo apt-get install redis-server</code>
+		<div class="step-1" data-jmpress="zoom after step-0">Not fully ACID. Guarantees consistency and isolation. </div>
+		<div class="step-2" data-jmpress="zoom after step-1">Choosing between NoSQL and SQL: better performance for temporary dynamic data. SQL - for stable and predictable data.</div>
+		<div class="step-3" data-jmpress="zoom after step-2">Example for a key:</div>
+		<code>
+			<pre  class="step-4" data-jmpress="zoom after step-3">
+			catering:product:3:likeability
+            keep and eye on the size (strcmp) but don't overuse.
+	        </pre>
+	    </code>
+		<div class="step-5" data-jmpress="zoom after step-4">Strings: max 512 MB</div>
+		<div class="step-6" data-jmpress="zoom after step-5">Lists: implemented as C-linked lists. Good for news feeds, stacks etc.</div>
+		<div class="step-7" data-jmpress="zoom after step-6">Sets - Common friends</div>
+		<div class="step-8" data-jmpress="zoom after step-7">Sorted Sets - Ordered stuff like Todos, Countries lists</div>
+		<div class="step-9" data-jmpress="zoom after step-8">Hashes - perfect for Objects</div>
 	</div>
-
 
 	<div class="step step9" data-x="4000" data-y="700" data-scale="0.4" data-rotate-y="30">
 		<span style ="position:absolute; left:20px; bottom:0;"> =9= </span>
+		<h2>Redis commands</h2>
+		<br/>
+		<code class="step-0" data-jmpress="zoom after step"><pre>
+			gem 'redis'
+			  -or-
+			gem 'redis-objects'
+		</pre></code>
+
+		<code class="step-1" data-jmpress="zoom after step-0"><pre>
+		class User < ActiveRecord::Base
+			def products
+			  b = $redis.smembers("products:#{self.id}")
+			  Product.where :id => b
+			end
+			def addproduct(product)
+			  $redis.sadd("products:#{self.id}", product.id)
+			end
+			def delproduct(product)
+			  $redis.srem("products:#{self.id}", product.id)
+			end
+			def common(user)
+			  common_products = $redis.sinter("products:#{self.id}", "products:#{user.id}")
+			  Product.where :id => common_products
+			end
+		end
+		</pre></code>
+
+	</div>
+
+	<div class="step step10" data-x="0" data-y="1400" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =10= </span>
+		<h2>(...continued) Redis commands</h2>
+
+		<div class="step-0" data-jmpress="zoom after step">Simple Total/Individual users counters: SET/GET/INCR</div>
+
+		<code class="step-1" data-jmpress="zoom after step-0"><pre>
+		KEYS * / a*b 
+		TYPE keyname
+		</pre></code>
+
+
+		<code class="step-2" data-jmpress="zoom after step-1"><pre>
+		PUB/SUB for chat or events notifications PUBLISH / SUBSCRIBE / UNSUBSCRIBE
+		</pre></code>
+
+
+		<code class="step-3" data-jmpress="zoom after step-2"><pre>
+		MULTI -> EXEC - transactional
+		</pre></code>
+		redis.rb has $redis.multi that takes a {block} putting EXEC implicitely at the end of it.
+		<code class="step-4" data-jmpress="zoom after step-3"><pre>
+		HINCR / HINCRBY  t: O(1)
+		</pre></code>
+	</div>
+
+
+
+	<div class="step step11" data-x="1000" data-y="1400" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =11= </span>
+		<h2>(...continued)Installing and configuring Redis</h2>
+		<br/>
+		<div class="step-0" data-jmpress="zoom after step">Redis commands walkthrough with $ redis-cli or $ rails c</div>
+		<ul>
+			<li class="step-1" data-jmpress="zoom after step-0">http://redis.io/commands</li>
+			<li class="step-2" data-jmpress="zoom after step-1">https://github.com/nateware/redis-objects#readme</li>
+			<li class="step-3" data-jmpress="zoom after step-2">SADD myset “someval”, SISMEMBER myset “someval”, SMEMBERS myset</li>
+			<li class="step-4" data-jmpress="zoom after step-3">Let's go to redis commands page and play there.</li>
+			<li class="step-5" data-jmpress="zoom after step-4">For redis-objects @set = Redis::Set.new('set_name');   @set << 'a' … </li>
+			<li class="step-6" data-jmpress="zoom after step-5">Twitter-like example http://jimneath.org/2011/03/24/using-redis-with-ruby-on-rails.html</li>
+		</ul>
+		<div class="step-7" data-jmpress="zoom after step-6">More advanced: </div>
+		<div class="step-8" data-jmpress="zoom after step-7">http://www.christianoestreich.com/2011/11/redis-hashsets-performance/</div>
+		<div class="step-9" data-jmpress="zoom after step-8">http://instagram-engineering.tumblr.com/post/12202313862/storing-hundreds-of-millions-of-simple-key-value-pairs</div>
+	</div>
+
+
+	<div class="step step12" data-x="2000" data-y="1400" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =12= </span>
 		<h1>Delayed Jobs</h1><br/>
 
 		<div class="step-0" data-jmpress="zoom after step">What? Why do we need them. </div>
@@ -224,28 +304,28 @@
 		<div class="step-12" data-jmpress="zoom after step-11">Writing a simple worker that resizes an image.</div>
 	</div>
 
-	<div class="step step10" data-x="0" data-y="1400" data-scale="0.2" data-rotate-x="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =10= </span>
+	<div class="step step13" data-x="3000" data-y="1400" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =13= </span>
 		<h1>Solr-based Search</h1>
-		<h2 class="step-0" data-jmpress="zoom after step">What is Solr.</h2><br/>
+		<h2>What is Solr.</h2><br/>
 			
-		<div class="step-1" data-jmpress="zoom after step-0">Solr features - speed, sharding, weights, facets, more like this, geo, formats, acts as DB </div>
-		<div class="step-2" data-jmpress="zoom after step-1">Reliable - who uses it?</div>
-		<div class="step-3" data-jmpress="zoom after step-2">Sunspot gem - intro how it works</div>
-		<div class="step-4" data-jmpress="zoom after step-3">Installation, running</div>
-		<div class="step-5" data-jmpress="zoom after step-4">Configuring searchable inside a model</div>
-		<div class="step-6" data-jmpress="zoom after step-5">Index (+ deltas)</div>
-		<div class="step-7" data-jmpress="zoom after step-6">Performing a search</div>
-		<div class="step-8" data-jmpress="zoom after step-7">Benchmarking before and after [+ verify with below data]</div>
-		<div class="step-9" data-jmpress="zoom after step-8">Different configuration options e.g. make parts of a string searchable - configure schema.xml</div>
-		<div class="step-10" data-jmpress="zoom after step-9">Bonus - searching for similar documents, using weights</div>
-		<div class="step-11" data-jmpress="zoom after step-10">What about Production?</div><br/>
-		<div class="step-12" data-jmpress="zoom after step-11"><strong>Tips</strong></div>
-		<div class="step-13" data-jmpress="zoom after step-12"><strong>Don't forget to restart Sor after each change to config files, e.g. schema.xml</strong></div>
+		<div class="step-0" data-jmpress="zoom after step">Solr features - speed, sharding, weights, facets, more like this, geo, formats, acts as DB </div>
+		<div class="step-1" data-jmpress="zoom after step-0">Reliable - who uses it?</div>
+		<div class="step-2" data-jmpress="zoom after step-1">Sunspot gem - intro how it works</div>
+		<div class="step-3" data-jmpress="zoom after step-2">Installation, running</div>
+		<div class="step-4" data-jmpress="zoom after step-3">Configuring searchable inside a model</div>
+		<div class="step-5" data-jmpress="zoom after step-4">Index (+ deltas)</div>
+		<div class="step-6" data-jmpress="zoom after step-5">Performing a search</div>
+		<div class="step-7" data-jmpress="zoom after step-6">Benchmarking before and after [+ verify with below data]</div>
+		<div class="step-8" data-jmpress="zoom after step-7">Different configuration options e.g. make parts of a string searchable - configure schema.xml</div>
+		<div class="step-9" data-jmpress="zoom after step-8">Bonus - searching for similar documents, using weights</div>
+		<div class="step-10" data-jmpress="zoom after step-9">What about Production?</div><br/>
+		<div class="step-11" data-jmpress="zoom after step-10"><strong>Tips</strong></div>
+		<div class="step-12" data-jmpress="zoom after step-11"><strong>Don't forget to restart Sor after each change to config files, e.g. schema.xml</strong></div>
 	</div>
 
-	<div class="step step11" data-x="1000" data-y="1400" data-scale="0.4" data-rotate-y="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =11= </span>
+	<div class="step step14" data-x="4000" data-y="1400" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =14= </span>
 		<h1>Solr 4 New Features</h1>
 			
 		<div class="step-0" data-jmpress="zoom after step">Dynamic fields   => suffix _s means  it's a string!</div>
@@ -273,8 +353,8 @@
 	</div>
 
 
-	<div class="step step12" data-x="2000" data-y="1400" data-scale="0.2" data-rotate-x="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =12= </span>
+	<div class="step step15" data-x="0" data-y="2100" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =15= </span>
 		<h2>Solr 4 New Features</h2>
 
 		<div class="step-0" data-jmpress="zoom after step">NEW! Pseudo-Joins</div> 
@@ -304,8 +384,8 @@
 
 	</div>
 
-	<div class="step step13" data-x="3000" data-y="1400" data-scale="0.4" data-rotate-y="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =13= </span>
+	<div class="step step16" data-x="1000" data-y="2100" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =16= </span>
 		<code>
 			<pre class="step-0" data-jmpress="zoom after step">
 
@@ -332,7 +412,7 @@
   	</div>
 
 
-	<div class="step step14" data-x="4000" data-y="1400" data-scale="0.2" data-rotate-x="30">
+	<div class="step step17" data-x="2000" data-y="2100" data-scale="0.4" data-rotate-y="30">
 		<h2 class="step-0" data-jmpress="zoom after step">step 5-2: Updates DB job</h2><br/>
 
 
@@ -357,29 +437,29 @@
  Update Products names
   			</pre>
   		</code>
-  		<span style ="position:absolute; left:20px; bottom:0;"> =14= </span>
+  		<span style ="position:absolute; left:20px; bottom:0;"> =17= </span>
   	</div>
 
-	<div class="step step15" data-x="0" data-y="2100" data-scale="0.4" data-rotate-y="30">
-		<h2 class="step-0" data-jmpress="zoom after step">Installing Solr</h2><br/>
-		<div class="step-1" data-jmpress="zoom after step-0">== Install Solr</div>
-		<div class="step-2" data-jmpress="zoom after step-1">Using these instructions:<br/> https://groups.google.com/forum/?fromgroups=#!topic/ruby-sunspot/c6OVesLyaSI</div>
+	<div class="step step18" data-x="3000" data-y="2100" data-scale="0.2" data-rotate-x="30">
+		<h2>Installing Solr</h2><br/>
+		<div class="step-0" data-jmpress="zoom after step">== Install Solr</div>
+		<div class="step-1" data-jmpress="zoom after step-0">Using these instructions:<br/> https://groups.google.com/forum/?fromgroups=#!topic/ruby-sunspot/c6OVesLyaSI</div>
 
-		<div class="step-3" data-jmpress="zoom after step-2">Or check how this branch uses solr-gems</div>
+		<div class="step-2" data-jmpress="zoom after step-1">Or check how this branch uses solr-gems</div>
 
-		<div class="step-4" data-jmpress="zoom after step-3">== To start solr</div>
-		<code class="step-5" data-jmpress="zoom after step-4">bundle exec rake sunspot:solr:start</code>
+		<div class="step-3" data-jmpress="zoom after step-2">== To start solr</div>
+		<code class="step-4" data-jmpress="zoom after step-3">bundle exec rake sunspot:solr:start</code>
 
-		<div class="step-6" data-jmpress="zoom after step-5">== To reindex</div>
-		<code class="step-7" data-jmpress="zoom after step-6">rake sunspot:solr:reindex   (without bundle exec)</code>
+		<div class="step-5" data-jmpress="zoom after step-4">== To reindex</div>
+		<code class="step-6" data-jmpress="zoom after step-5">rake sunspot:solr:reindex   (without bundle exec)</code>
 
-		<div class="step-8" data-jmpress="zoom after step-7">== Sample search </div>  
-		<code class="step-9" data-jmpress="zoom after step-8">Product.search { fulltext "מלפפון" }.results</code>
+		<div class="step-7" data-jmpress="zoom after step-6">== Sample search </div>  
+		<code class="step-8" data-jmpress="zoom after step-7">Product.search { fulltext "מלפפון" }.results</code>
 	</div>
 
 
 
-  	<div class="step step16" data-x="1000" data-y="2100" data-scale="0.2" data-rotate-x="30">
+  	<div class="step step19" data-x="4000" data-y="2100" data-scale="0.4" data-rotate-y="30">
 		<h2>step-7: Product search with Solr</h2>
 		<code>
 			<pre class="step-0" data-jmpress="zoom after step">
@@ -409,13 +489,13 @@
 
   			</pre>
   		</code>
-  		<span style ="position:absolute; left:20px; bottom:0;"> =16= </span>
+  		<span style ="position:absolute; left:20px; bottom:0;"> =19= </span>
   	</div>
 
-	<div class="step step17" data-x="2000" data-y="2100" data-scale="0.4" data-rotate-y="30">
-		<h2 class="step-0" data-jmpress="zoom after step">step-7: Product search with Solr</h2><br/>
+	<div class="step step20" data-x="0" data-y="2800" data-scale="0.2" data-rotate-x="30">
+		<h2>step-7: Product search with Solr</h2><br/>
 		<code>
-			<pre class="step-1" data-jmpress="zoom after step-0">
+			<pre class="step-0" data-jmpress="zoom after step">
 development:
   solr:
     hostname: localhost
@@ -436,13 +516,13 @@ test:
 
     </pre>
   		</code>
-  		<span style ="position:absolute; left:20px; bottom:0;"> =17= </span>
+  		<span style ="position:absolute; left:20px; bottom:0;"> =20= </span>
   	</div>
 
-  	<div class="step step18" data-x="3000" data-y="2100" data-scale="0.2" data-rotate-x="30">
-		<h2 class="step-0" data-jmpress="zoom after step">step-7: Product search with Solr</h2><br/>
+  	<div class="step step21" data-x="1000" data-y="2800" data-scale="0.4" data-rotate-y="30">
+		<h2>step-7: Product search with Solr</h2><br/>
 		<code>
-			<pre class="step-1" data-jmpress="zoom after step-0">
+			<pre class="step-0" data-jmpress="zoom after step">
 
  product.rb:
  ==========================
@@ -458,15 +538,15 @@ test:
 
     </pre>
   		</code>
-  		<span style ="position:absolute; left:20px; bottom:0;"> =18= </span>
+  		<span style ="position:absolute; left:20px; bottom:0;"> =21= </span>
   	</div>
 
 
-  	<div class="step step19" data-x="4000" data-y="2100" data-scale="0.4" data-rotate-y="30">
-  		<span style ="position:absolute; left:20px; bottom:0;"> =19= </span>
-		<h2 class="step-0" data-jmpress="zoom after step">step-8: Solr on Hits, who needs another DB?</h2><br/>
+  	<div class="step step22" data-x="2000" data-y="2800" data-scale="0.2" data-rotate-x="30">
+  		<span style ="position:absolute; left:20px; bottom:0;"> =22= </span>
+		<h2>step-8: Solr on Hits, who needs another DB?</h2><br/>
 		<code>
-			<pre class="step-1" data-jmpress="zoom after step-0">
+			<pre class="step-0" data-jmpress="zoom after step">
  product.rb
  ==========================
 
@@ -493,11 +573,11 @@ test:
   	</div>
 
 
-	<div class="step step20" data-x="0" data-y="2800" data-scale="0.2" data-rotate-x="30">
-	<span style ="position:absolute; left:20px; bottom:0;"> =20= </span>
-		<h2 class="step-0" data-jmpress="zoom after step">(...continued) step-8: Solr on Hits</h2><br/>
+	<div class="step step23" data-x="3000" data-y="2800" data-scale="0.4" data-rotate-y="30">
+	<span style ="position:absolute; left:20px; bottom:0;"> =23= </span>
+		<h2>(...continued) step-8: Solr on Hits</h2><br/>
 		<code>
-			<pre class="step-1" data-jmpress="zoom after step-0">
+			<pre class="step-0" data-jmpress="zoom after step">
 
 
  search.html.erb
@@ -518,8 +598,8 @@ test:
   	</div>
 
 
-	<div class="step step21" data-x="1000" data-y="2800" data-scale="0.4" data-rotate-y="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =21= </span>
+	<div class="step step24" data-x="4000" data-y="2800" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =24= </span>
 		<h1>Candies</h1>			
 		<div class="step-0" data-jmpress="zoom after step">Client-side caching, pros and cons</div>
 		<div class="step-1" data-jmpress="zoom after step-0">Nginx + Unicorn / Thin (What? Why not Apache)</div>
@@ -534,8 +614,8 @@ test:
 
 	<!-- benchmarks -->
 
-	<div class="step step22" data-x="2000" data-y="2800" data-scale="0.2" data-rotate-x="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =22= </span>
+	<div class="step step25" data-x="0" data-y="3500" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =25= </span>
 		<h2>Measure the response time</h2>
 
 		<h3 class="step-0" data-jmpress="zoom after step">We'll use siege</h3><br/>
@@ -563,8 +643,8 @@ test:
 	</div>
 
 
-	<div class="step step23" data-x="3000" data-y="2800" data-scale="0.4" data-rotate-y="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =23= </span>
+	<div class="step step26" data-x="1000" data-y="3500" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =26= </span>
 		<h2>Add the cache</h2>
 
 		<h3 class="step-0" data-jmpress="zoom after step">Add to development.rb:</h3>
@@ -593,8 +673,8 @@ test:
 		</div>
 	</div>
 
-	<div class="step step24" data-x="4000" data-y="2800" data-scale="0.2" data-rotate-x="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =24= </span>
+	<div class="step step27" data-x="2000" data-y="3500" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =27= </span>
 		<h3 class="step-0" data-jmpress="zoom after step">Measure, compare, drive conclusions!</h3>
 		<div class="step-1" data-jmpress="zoom after step-0">We'll use siege and Ruby's benchmark to measure the results. Like this:</div>
 		
@@ -628,8 +708,8 @@ test:
 		</div>
 	</div>
 
-	<div class="step step25" data-x="0" data-y="3500" data-scale="0.4" data-rotate-y="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =25= </span>
+	<div class="step step28" data-x="3000" data-y="3500" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =28= </span>
 		<h2>Switching to another cache_store.</h2>
 
 		<code>
@@ -651,8 +731,8 @@ test:
 		</div>
 	</div>
 
-	<div class="step step26" data-x="1000" data-y="3500" data-scale="0.2" data-rotate-x="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =26= </span>
+	<div class="step step29" data-x="4000" data-y="3500" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =29= </span>
 		<div class="step-0" data-jmpress="zoom after step"><span class="code">rails s Puma</span><br/><br/>
 			89.7 -> 91.37 -> 96.14 For only one table with less than 10 columns!<br/>
 			Transaction rate:	       97.84 trans/sec  (Even better)<br/><br/>
@@ -662,8 +742,8 @@ test:
 		</div>
 	</div>
 
-	<div class="step step27" data-x="2000" data-y="3500" data-scale="0.4" data-rotate-y="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =27= </span>
+	<div class="step step30" data-x="0" data-y="4200" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =30= </span>
 		<h2>Add indices to DB</h2><br/>
 		<div class="step-0" data-jmpress="zoom after step">Indices have their own logic depending on DB. A very simple generic explanation: it’s a lookup table - instead of iteration from beginning. More detailed click <a href="http://dev.mysql.com/doc/refman/5.0/en/mysql-indexes.html">is here</a>.</div><br/>
 		<code>
@@ -680,8 +760,8 @@ test:
 		<div class="step-2" data-jmpress="zoom after step-1">The index can be used for lookups that specify values for combinations. For example: (last_name,  first_name). That index can also be used just a last_name because it is leftmost in the index.</div>
 	</div>
 
-	<div class="step step28" data-x="3000" data-y="3500" data-scale="0.2" data-rotate-x="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =28= </span>
+	<div class="step step31" data-x="1000" data-y="4200" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =31= </span>
 		<h1>Utilizing Redis</h1>
 		<h3 class="step-0" data-jmpress="zoom after step">
 			Redis is an open source, BSD licensed, advanced key-value store. It is often referred to as a data structure server since keys can contain strings, hashes, lists, sets and sorted sets.
@@ -698,8 +778,8 @@ test:
 		<div class="step-5" data-jmpress="zoom after step-4">redis-cli monitor</div>
 	</div>
 
-	<div class="step step29" data-x="4000" data-y="3500" data-scale="0.4" data-rotate-y="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =29= </span>
+	<div class="step step32" data-x="2000" data-y="4200" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =32= </span>
 		<h1>Web Proxy Servers</h1>
 		<h2>Apache is cool, but...</h2>
 		<h3 class="step-0" data-jmpress="zoom after step">
@@ -724,8 +804,8 @@ server {
 
 	</div>
 
-	<div class="step step30" data-x="0" data-y="4200" data-scale="0.2" data-rotate-x="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =30= </span>
+	<div class="step step33" data-x="3000" data-y="4200" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =33= </span>
 		<code>
 			<pre class="step-0" data-jmpress="zoom after step">
 server {
@@ -759,8 +839,8 @@ server {
 
 	</div>
 
-	<div class="step step31" data-x="1000" data-y="4200" data-scale="0.4" data-rotate-y="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =31= </span>
+	<div class="step step34" data-x="4000" data-y="4200" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =34= </span>
 		<h2>Configuration for Memcached</h2>
 
 		<code>
@@ -780,8 +860,8 @@ server {
 		</ul>
 	</div>
 
-	<div class="step step32" data-x="2000" data-y="4200" data-scale="0.2" data-rotate-x="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =32= </span>
+	<div class="step step35" data-x="0" data-y="4900" data-scale="0.4" data-rotate-y="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =35= </span>
 		<h2>Security and troubleshooting</h2>
 
 		<div class="step-0" data-jmpress="zoom after step">
@@ -790,8 +870,8 @@ server {
 		<div class="step-1" data-jmpress="zoom after step-0">Supervise can restart a server when situation isn't obvious</div>
 	</div>
 
-	<div class="step step33" data-x="3000" data-y="4200" data-scale="0.4" data-rotate-y="30">
-		<span style ="position:absolute; left:20px; bottom:0;"> =33= </span>
+	<div class="step step36" data-x="1000" data-y="4900" data-scale="0.2" data-rotate-x="30">
+		<span style ="position:absolute; left:20px; bottom:0;"> =36= </span>
 		<h2>References</h2>
 		<a href='http://highscalability.com/blog/2010/5/17/7-lessons-learned-while-building-reddit-to-270-million-page.html'>reddit lessons learned</a>
 		<a href='http://www.slideshare.net/dvirsky/kicking-ass-with-redis'>Amazing Redis Patterns</a>

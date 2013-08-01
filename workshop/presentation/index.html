@@ -184,9 +184,89 @@
 
 	<div ~s>
 		~n
-		<h2 ~m>Installing and configuring Redis on *nix and Redis and Redis-Objects gems.</h2>
+		<h2>Installing and configuring Redis on *nix and Redis and Redis-Objects gems.</h2>
 		<br/>
-		<div ~m>Redis commands walkthrough with $ redis-cli or $ rails c (ask)</div>
+		<code ~m>sudo apt-get install redis-server</code>
+		<div ~m>Not fully ACID. Guarantees consistency and isolation. </div>
+		<div ~m>Choosing between NoSQL and SQL: better performance for temporary dynamic data. SQL - for stable and predictable data.</div>
+		<div ~m>Example for a key:</div>
+		<code>
+			<pre  ~m>
+			catering:product:3:likeability
+            keep and eye on the size (strcmp) but don't overuse.
+	        </pre>
+	    </code>
+		<div ~m>Strings: max 512 MB</div>
+		<div ~m>Lists: implemented as C-linked lists. Good for news feeds, stacks etc.</div>
+		<div ~m>Sets - Common friends</div>
+		<div ~m>Sorted Sets - Ordered stuff like Todos, Countries lists</div>
+		<div ~m>Hashes - perfect for Objects</div>
+	</div>
+
+	<div ~s>
+		~n
+		<h2>Redis commands</h2>
+		<br/>
+		<code ~m><pre>
+			gem 'redis'
+			  -or-
+			gem 'redis-objects'
+		</pre></code>
+
+		<code ~m><pre>
+		class User < ActiveRecord::Base
+			def products
+			  b = $redis.smembers("products:#{self.id}")
+			  Product.where :id => b
+			end
+			def addproduct(product)
+			  $redis.sadd("products:#{self.id}", product.id)
+			end
+			def delproduct(product)
+			  $redis.srem("products:#{self.id}", product.id)
+			end
+			def common(user)
+			  common_products = $redis.sinter("products:#{self.id}", "products:#{user.id}")
+			  Product.where :id => common_products
+			end
+		end
+		</pre></code>
+
+	</div>
+
+	<div ~s>
+		~n
+		<h2>(...continued) Redis commands</h2>
+
+		<div ~m>Simple Total/Individual users counters: SET/GET/INCR</div>
+
+		<code ~m><pre>
+		KEYS * / a*b 
+		TYPE keyname
+		</pre></code>
+
+
+		<code ~m><pre>
+		PUB/SUB for chat or events notifications PUBLISH / SUBSCRIBE / UNSUBSCRIBE
+		</pre></code>
+
+
+		<code ~m><pre>
+		MULTI -> EXEC - transactional
+		</pre></code>
+		redis.rb has $redis.multi that takes a {block} putting EXEC implicitely at the end of it.
+		<code ~m><pre>
+		HINCR / HINCRBY  t: O(1)
+		</pre></code>
+	</div>
+
+
+
+	<div ~s>
+		~n
+		<h2>(...continued)Installing and configuring Redis</h2>
+		<br/>
+		<div ~m>Redis commands walkthrough with $ redis-cli or $ rails c</div>
 		<ul>
 			<li ~m>http://redis.io/commands</li>
 			<li ~m>https://github.com/nateware/redis-objects#readme</li>
@@ -227,7 +307,7 @@
 	<div ~s>
 		~n
 		<h1>Solr-based Search</h1>
-		<h2 ~m>What is Solr.</h2><br/>
+		<h2>What is Solr.</h2><br/>
 			
 		<div ~m>Solr features - speed, sharding, weights, facets, more like this, geo, formats, acts as DB </div>
 		<div ~m>Reliable - who uses it?</div>
@@ -361,7 +441,7 @@
   	</div>
 
 	<div ~s>
-		<h2 ~m>Installing Solr</h2><br/>
+		<h2>Installing Solr</h2><br/>
 		<div ~m>== Install Solr</div>
 		<div ~m>Using these instructions:<br/> https://groups.google.com/forum/?fromgroups=#!topic/ruby-sunspot/c6OVesLyaSI</div>
 
@@ -413,7 +493,7 @@
   	</div>
 
 	<div ~s>
-		<h2 ~m>step-7: Product search with Solr</h2><br/>
+		<h2>step-7: Product search with Solr</h2><br/>
 		<code>
 			<pre ~m>
 development:
@@ -440,7 +520,7 @@ test:
   	</div>
 
   	<div ~s>
-		<h2 ~m>step-7: Product search with Solr</h2><br/>
+		<h2>step-7: Product search with Solr</h2><br/>
 		<code>
 			<pre ~m>
 
@@ -464,7 +544,7 @@ test:
 
   	<div ~s>
   		~n
-		<h2 ~m>step-8: Solr on Hits, who needs another DB?</h2><br/>
+		<h2>step-8: Solr on Hits, who needs another DB?</h2><br/>
 		<code>
 			<pre ~m>
  product.rb
@@ -495,7 +575,7 @@ test:
 
 	<div ~s>
 	~n
-		<h2 ~m>(...continued) step-8: Solr on Hits</h2><br/>
+		<h2>(...continued) step-8: Solr on Hits</h2><br/>
 		<code>
 			<pre ~m>
 
