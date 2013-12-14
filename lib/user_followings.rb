@@ -5,7 +5,6 @@ module UserFollowings
     base.extend ClassMethods
   end
 
-
   module InstanceMethods
     # follow a user
     def follow!(user)

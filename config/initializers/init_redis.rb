@@ -1,6 +1,6 @@
 require "redis"
 
-$redis = Redis.new
+$redis = Redis.new(host: '192.168.99.50', port: 6379)
 
 # init redis-objects
-Redis.current = Redis.new(:host => '127.0.0.1', :port => 6379)
+Redis.current = $redis

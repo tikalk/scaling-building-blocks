@@ -13,7 +13,7 @@ Pinukimmm::Application.configure do
   config.consider_all_requests_local       = true
 
   config.action_controller.perform_caching = false
-  config.cache_store = :dalli_store, { :namespace => 'pinukimmm', :expires_in => 1.day, :compress => true }
+  config.cache_store = :dalli_store, '192.168.99.50:11211', { :namespace => 'pinukimmm', :expires_in => 1.day, :compress => true }
   #config.cache_store = :file_store, "#{Rails.root}/tmp/cache"
   #config.cache_store = :redis_store, "redis://localhost:6379/0/cache", { expires_in: 90.minutes }
 
