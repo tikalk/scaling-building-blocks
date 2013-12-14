@@ -119,6 +119,8 @@ GEM
     factory_girl_rails (4.2.1)
       factory_girl (~> 4.2.0)
       railties (>= 3.0.0)
+    faker (1.2.0)
+      i18n (~> 0.5)
     ffi (1.8.1)
     font-awesome-sass-rails (3.0.2.2)
       railties (>= 3.1.1)
@@ -333,6 +335,7 @@ DEPENDENCIES
   dalli
   devise
   factory_girl_rails (~> 4.0)
+  faker
   guard
   guard-bundler
   guard-rspec

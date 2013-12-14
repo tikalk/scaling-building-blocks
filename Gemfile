@@ -61,6 +61,7 @@ group :development, :test do
   gem 'pry-stack_explorer'
   gem 'pry-debugger'
   gem 'pry-doc'
+  gem 'faker'
 end
 
 gem 'jquery-rails'
