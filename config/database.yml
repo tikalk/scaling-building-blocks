@@ -10,7 +10,7 @@ development:
   database: scalability_development
   pool: 5
   username: root
-  password: trap973
+  password: 
   socket: /tmp/mysql.sock
   host: 127.0.0.1
 
@@ -23,7 +23,7 @@ test:
   database: scalability_test
   pool: 5
   username: root
-  password: trap973
+  password: 
   socket: /tmp/mysql.sock
   host: 127.0.0.1
 
@@ -33,6 +33,6 @@ production:
   database: scalability_production
   pool: 5
   username: root
-  password: trap973
+  password: 
   socket: /tmp/mysql.sock
   host: 127.0.0.1
