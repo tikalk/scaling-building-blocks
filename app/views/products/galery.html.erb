@@ -13,7 +13,6 @@
       <th><%= model_class.human_attribute_name(:name) %></th>
       <th><%= model_class.human_attribute_name(:price) %></th>
       <th><%= model_class.human_attribute_name(:image) %></th>
-      <th>actions</th>
     </tr>
   </thead>
   <tbody>
@@ -21,28 +20,7 @@
       <tr>
         <td><%= link_to h(product.name), product %></td>
         <td><%= number_to_currency(product.price) %></td>
-        <td><%= image_tag 'carousel-02-1469a00ede72cd4fd93ffe908b73b8b9.jpg', :style => 'width: 160px; height: auto' %>
-        </td>
-        <td>
-          Num.Likes: <%= product.likes.count %><br/>
-          Avg.Likeability: <%= "%.1f" % (product.likes.sum(&:likeability).to_f / product.likes.count) if product.likes.count.to_f != 0 %><br/>
-          Num.Reviews: <%= product.reviews.count %><br/>
-        </td>
-        <td> 
-          <div class="action">
-            <%= link_to 'New Product', new_product_path %>
-          </div>
-          <div class="action">
-            <%= link_to 'Edit', edit_product_path(product) %>
-          </div>
-          <div class="action">
-            <%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %>
-          </div>
-          <%= form_for product.cart_items.build do |f| %>
-            <%= f.hidden_field :product_id %>
-            <%= f.submit "Add to Cart" %>
-          <% end %>
-        </td>
+        <td><%= image_tag product.image, :style => 'width: 160px; height: auto' %></td>
       </tr>
     <% end %>
   </tbody>
