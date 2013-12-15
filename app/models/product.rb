@@ -25,6 +25,7 @@ class Product < ActiveRecord::Base
   searchable do
     text :name
     integer :price
+    text(:name_text, as: :name_text) { name }
   end
 
   attr_accessible :description, :name, :serves, :order_id, :price, 
