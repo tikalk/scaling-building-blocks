@@ -34,12 +34,12 @@ end
                             image: "carousel-0#{[*1..3].sample}.jpg")
 
   puts "Creating product #{index} likes."
-  10.times do
+  [*2..10].sample.times do
     product.likes << Like.create(likeability: [*1..5].sample, user_id: users.sample.id)
   end
 
   puts "Creating product #{index} reviews."
-  10.times do
+  [*2..10].sample.times do
     product.reviews << Review.create(description: Faker::Lorem.sentence, user_id: users.sample.id)
   end
 end
