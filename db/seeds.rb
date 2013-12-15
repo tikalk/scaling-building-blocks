@@ -19,21 +19,27 @@ puts 'New user created: ' << user2.email
 users = []
 
 10.times do
-  users << User.create(email: Faker::Internet.email, password: 'foobar', password_confirmation: 'foobar')
+  users << User.create(email: Faker::Internet.email, 
+                       password: 'foobar1234', 
+                       password_confirmation: 'foobar1234', 
+                       full_name: "#{Faker::Name.first_name} #{Faker::Name.last_name}")
 end
 
-
-500.times do
+500.times do |index|
+  puts "Creating product: #{index}"
   product = Product.create(name: Faker::Company.name,
                             description: Faker::Lorem.paragraph(3),
                             serves: [*1..5].sample,
                             price: [*25..322].sample,
                             image: "carousel-0#{[*1..3].sample}.jpg")
+
+  puts "Creating product #{index} likes."
   10.times do
-    product.likes << Like.create(likeability: [*1..5].sample, user: users.sample)
+    product.likes << Like.create(likeability: [*1..5].sample, user_id: users.sample.id)
   end
 
+  puts "Creating product #{index} reviews."
   10.times do
-    product.reviews << Review.create(description: Faker::Lorem.sentence, user: users.sample)
+    product.reviews << Review.create(description: Faker::Lorem.sentence, user_id: users.sample.id)
   end
 end

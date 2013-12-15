@@ -12,5 +12,5 @@ class Like < ActiveRecord::Base
   belongs_to :product
   belongs_to :user
 
-  attr_accessible :user, :likeability
+  attr_accessible :user_id, :likeability
 end
