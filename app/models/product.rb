@@ -22,6 +22,11 @@ class Product < ActiveRecord::Base
   belongs_to :category
   has_many :cart_items
 
+  searchable do
+    text :name
+    integer :price
+  end
+
   attr_accessible :description, :name, :serves, :order_id, :price, 
     :image, :crop_x, :crop_y, :crop_w, :crop_h, :remove_image, :image_cache
 end

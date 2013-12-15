@@ -3,15 +3,6 @@
   <h2>מוצרים:</h2>
 </div>
 
-<div class="page-header">
-<h4>חיפוש מוצר:</h4>
-<%= form_tag search_products_path, :method => :get do |f| %>
-  <div class="field">
-    שם: <%= text_field :product, :name %>
-  </div>
-<% end %>
-</div>
-
 <div dir="ltr">
   <%= paginate @products %>
 </div>
@@ -38,7 +29,3 @@
 <div dir="ltr">
   <%= paginate @products %>
 </div>
-
-
-
-

@@ -19,6 +19,7 @@ gem 'activemerchant'
 gem 'kaminari'
 gem "redis", "~> 3.0.1"
 gem 'redis-objects'
+gem "sunspot_rails", "~> 2.1.0"
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -37,6 +38,7 @@ end
 group :development do
   gem 'rails-dev-boost', :git => 'git://github.com/thedarkone/rails-dev-boost.git'
   gem 'annotate', ">=2.5.0"
+  gem "sunspot_solr", "~> 2.1.0"
 end
 
 group :test do
