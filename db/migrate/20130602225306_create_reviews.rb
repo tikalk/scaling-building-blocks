@@ -3,6 +3,7 @@ class CreateReviews < ActiveRecord::Migration
     create_table :reviews do |t|
       t.string :description
       t.belongs_to :user
+      t.belongs_to :product
       t.timestamps
     end
   end

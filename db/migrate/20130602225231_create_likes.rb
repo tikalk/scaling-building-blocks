@@ -3,10 +3,11 @@ class CreateLikes < ActiveRecord::Migration
     create_table :likes do |t|
       t.integer :likeability
       t.belongs_to :user
+      t.belongs_to :product
       t.timestamps
     end
   end
-  
+
   def self.down
     drop_table :likes
   end

@@ -12,5 +12,5 @@ class Review < ActiveRecord::Base
   belongs_to :product
   belongs_to :user
 
-  attr_accessible :user_id, :description
+  attr_accessible :user_id, :description, :product_id
 end
